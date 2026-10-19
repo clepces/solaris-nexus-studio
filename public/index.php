@@ -17,6 +17,7 @@ require_once dirname(__DIR__) . '/src/backend/services/str-parser-service.php';
 require_once dirname(__DIR__) . '/src/backend/services/ram-profiler-service.php';
 require_once dirname(__DIR__) . '/src/backend/services/mod-orchestrator.php';
 require_once dirname(__DIR__) . '/src/backend/services/language-packager.php';
+require_once dirname(__DIR__) . '/src/backend/services/language-synthesizer.php';
 
 require_once dirname(__DIR__) . '/src/backend/controllers/string-controller.php';
 require_once dirname(__DIR__) . '/src/backend/controllers/mod-controller.php';
@@ -86,6 +87,9 @@ try {
         $controller = new ModController(null, null, $logger);
         $enabledPath = $config['sins']['mods_path'] . '/EnabledMods.txt';
         $response = $controller->saveEnabled($payload, $enabledPath, $config['paths']['backups']);
+    } elseif (str_ends_with($uri, '/api/mods/synthesize-session') && $method === 'POST') {
+        $controller = new ModController(null, null, $logger);
+        $response = $controller->synthesizeSession($payload, $config);
     } elseif (str_ends_with($uri, '/api/system/deploy-native') && $method === 'POST') {
         $controller = new SystemController(null, $logger);
         $response = $controller->deployNative($payload, $config);

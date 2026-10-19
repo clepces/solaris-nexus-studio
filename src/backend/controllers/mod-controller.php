@@ -118,4 +118,26 @@ final class ModController
             'budget' => $budget,
         ];
     }
+
+    /**
+     * Sintetiza dinámicamente un minimod JIT de idioma para la combinación activa de mods.
+     */
+    public function synthesizeSession(array $payload, array $config): array
+    {
+        $mods = $payload['mods'] ?? [];
+        if (empty($mods)) {
+            throw new \InvalidArgumentException('INVALID_PAYLOAD: "mods" array is required.');
+        }
+
+        $synthesizer = new \SolarisNexus\Backend\Services\LanguageSynthesizer(null, $this->orchestrator, $this->logger);
+        $modsPath = $config['sins']['mods_path'];
+        if (!is_dir($modsPath) && isset($_SERVER['USERPROFILE'])) {
+            $resolved = $_SERVER['USERPROFILE'] . DIRECTORY_SEPARATOR . $modsPath;
+            if (is_dir($resolved)) {
+                $modsPath = $resolved;
+            }
+        }
+
+        return $synthesizer->synthesizeSession($mods, $modsPath, $config['paths']['backups']);
+    }
 }

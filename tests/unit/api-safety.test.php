@@ -28,7 +28,7 @@ $systemController = new SystemController();
 $health = $systemController->health($config);
 
 assert($health['appName'] === 'Solaris Nexus Studio', 'App name correcto');
-assert($health['version'] === '0.1.1.0-alpha', 'Versión coincide con el hito v0.1.1.0-alpha');
+assert($health['version'] === '0.1.2.0-alpha', 'Versión coincide con el hito v0.1.2.0-alpha');
 assert($health['database'] === 'connected', 'Database conectada');
 echo "[OK] SystemController: Health check exitoso (Versión " . $health['version'] . " | DB: " . $health['database'] . ")." . PHP_EOL;
 
