@@ -18,6 +18,7 @@ require_once dirname(__DIR__) . '/src/backend/services/ram-profiler-service.php'
 require_once dirname(__DIR__) . '/src/backend/services/mod-orchestrator.php';
 require_once dirname(__DIR__) . '/src/backend/services/language-packager.php';
 require_once dirname(__DIR__) . '/src/backend/services/language-synthesizer.php';
+require_once dirname(__DIR__) . '/src/backend/services/convert-data-service.php';
 
 require_once dirname(__DIR__) . '/src/backend/controllers/string-controller.php';
 require_once dirname(__DIR__) . '/src/backend/controllers/mod-controller.php';
@@ -93,6 +94,9 @@ try {
     } elseif (str_ends_with($uri, '/api/system/deploy-native') && $method === 'POST') {
         $controller = new SystemController(null, $logger);
         $response = $controller->deployNative($payload, $config);
+    } elseif (str_ends_with($uri, '/api/engine/convert') && $method === 'POST') {
+        $controller = new SystemController(null, $logger);
+        $response = $controller->convertResource($payload, $config);
     } else {
         http_response_code(404);
         echo json_encode([

@@ -66,4 +66,18 @@ final class SystemController
 
         return $this->packager->deployNativeSpanish($installPath, $strContent, $backupDir);
     }
+
+    /**
+     * Convierte entidades o recursos entre texto y binario usando ConvertData_Rebellion.exe.
+     */
+    public function convertResource(array $payload, array $config): array
+    {
+        $type = $payload['type'] ?? 'entity';
+        $inputPath = $payload['input_path'] ?? '';
+        $outputPath = $payload['output_path'] ?? ($inputPath . '.converted');
+        $format = $payload['format'] ?? 'txt';
+
+        $service = new \SolarisNexus\Backend\Services\ConvertDataService($config['sins']['install_path'], $this->logger);
+        return $service->convert($type, $inputPath, $outputPath, $format);
+    }
 }
