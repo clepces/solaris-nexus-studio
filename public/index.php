@@ -19,10 +19,12 @@ require_once dirname(__DIR__) . '/src/backend/services/mod-orchestrator.php';
 require_once dirname(__DIR__) . '/src/backend/services/language-packager.php';
 require_once dirname(__DIR__) . '/src/backend/services/language-synthesizer.php';
 require_once dirname(__DIR__) . '/src/backend/services/convert-data-service.php';
+require_once dirname(__DIR__) . '/src/backend/services/entity-inspector-service.php';
 
 require_once dirname(__DIR__) . '/src/backend/controllers/string-controller.php';
 require_once dirname(__DIR__) . '/src/backend/controllers/mod-controller.php';
 require_once dirname(__DIR__) . '/src/backend/controllers/system-controller.php';
+require_once dirname(__DIR__) . '/src/backend/controllers/entity-controller.php';
 
 use SolarisNexus\Backend\Utils\LoggerService;
 use SolarisNexus\Backend\Utils\UuidGenerator;
@@ -30,6 +32,7 @@ use SolarisNexus\Config\AppConfig;
 use SolarisNexus\Backend\Controllers\StringController;
 use SolarisNexus\Backend\Controllers\ModController;
 use SolarisNexus\Backend\Controllers\SystemController;
+use SolarisNexus\Backend\Controllers\EntityController;
 
 $logger = new LoggerService();
 
@@ -97,6 +100,12 @@ try {
     } elseif (str_ends_with($uri, '/api/engine/convert') && $method === 'POST') {
         $controller = new SystemController(null, $logger);
         $response = $controller->convertResource($payload, $config);
+    } elseif (str_ends_with($uri, '/api/entities/inspect') && $method === 'POST') {
+        $controller = new EntityController(null, $logger);
+        $response = $controller->inspect($payload);
+    } elseif (str_ends_with($uri, '/api/entities/update') && $method === 'POST') {
+        $controller = new EntityController(null, $logger);
+        $response = $controller->update($payload, $config['paths']['backups']);
     } else {
         http_response_code(404);
         echo json_encode([

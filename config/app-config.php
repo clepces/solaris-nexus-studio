@@ -55,7 +55,7 @@ final class AppConfig
         self::$config = [
             'app_name' => 'Solaris Nexus Studio',
             'company' => 'Clepces org. ltd',
-            'version' => '0.1.3.0-alpha',
+            'version' => '0.2.0.0-alpha',
             'env' => $envData['APP_ENV'] ?? 'development',
             'debug' => filter_var($envData['APP_DEBUG'] ?? false, FILTER_VALIDATE_BOOLEAN),
             'url' => rtrim($envData['APP_URL'] ?? 'http://localhost', '/'),
