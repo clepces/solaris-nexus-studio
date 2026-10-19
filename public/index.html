@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solaris Nexus Studio - Clepces org. ltd</title>
+  <link rel="stylesheet" href="assets/css/main-theme.css">
+  <link rel="stylesheet" href="assets/css/datatable-virtual.css">
+</head>
+<body>
+
+  <!-- Cabecera Corporativa -->
+  <header>
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+        <path d="M2 12h20"></path>
+      </svg>
+      <h1>SOLARIS NEXUS STUDIO</h1>
+      <span class="version-badge">v0.1.0.0-alpha</span>
+      <span class="badge-tag badge-active">Clepces org. ltd</span>
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="tab-translation">
+        Estudio de Traducción <span class="badge-tag badge-active">Activo</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-mods">
+        Gestor VFS & Mods <span class="badge-tag badge-active">Activo</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-system">
+        Diagnóstico & Salud <span class="badge-tag badge-active">Activo</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-galaxy" style="opacity: 0.6; cursor: not-allowed;" title="Próximamente">
+        Galaxy Forge <span class="badge-tag badge-dev">Próximamente</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Contenedor Principal de Vistas -->
+  <main>
+    <!-- VISTA 1: ESTUDIO DE TRADUCCIÓN (VIRTUAL DATA GRID) -->
+    <section id="tab-translation" class="view-panel active">
+      <div class="toolbar">
+        <div class="search-box">
+          <input type="text" id="grid-search" placeholder="Filtrar por ID de cadena o contenido de texto...">
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline" id="btn-load-sample">Cargar Diccionario Demo (7.828)</button>
+          <button class="btn btn-success" id="btn-export-str">Exportar .str (UTF-8 BOM)</button>
+        </div>
+      </div>
+
+      <div class="virtual-grid-container">
+        <div class="grid-header">
+          <div>ID de Cadena</div>
+          <div>Texto Original (EN)</div>
+          <div>Traducción Activa (ES)</div>
+          <div>Tokens Motor</div>
+          <div style="text-align: right;">Acciones</div>
+        </div>
+        <div class="virtual-viewport" id="virtual-viewport">
+          <div class="virtual-runway" id="virtual-runway"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA 2: GESTOR DE MODS Y ORQUESTADOR VFS -->
+    <section id="tab-mods" class="view-panel">
+      <div class="mod-grid">
+        <div class="panel-card">
+          <div class="panel-title">
+            <span>Jerarquía de Mods Activos (EnabledMods.txt)</span>
+            <button class="btn btn-success" id="btn-inject-minimod" style="font-size: 0.8rem; padding: 4px 10px;">
+              + Inyectar Minimod (Prioridad 999)
+            </button>
+          </div>
+          <div class="mod-list" id="mod-active-list">
+            <!-- Renderizado dinámico de mods -->
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-title">
+            <span>Monitor de Memoria RAM 32-bit (LAA)</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Techo físico virtual del ejecutable DirectX 9: <strong>3.250 MB</strong>.
+          </p>
+
+          <div class="ram-meter-box">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+              <span>Presupuesto Estimado:</span>
+              <strong id="ram-meter-text">1.415 MB / 3.250 MB</strong>
+            </div>
+            <div class="ram-bar-container">
+              <div class="ram-bar-fill" id="ram-meter-fill"></div>
+            </div>
+            <div id="ram-risk-badge" style="font-size: 0.8rem; font-weight: 600; color: var(--accent-green);">
+              ESTADO: SEGURO (Bajo riesgo de MiniDump Crash)
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <button class="btn" id="btn-save-enabled-mods" style="width: 100%;">
+              Guardar Configuración VFS en Disco
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA 3: DIAGNÓSTICO & SALUD DEL SISTEMA -->
+    <section id="tab-system" class="view-panel">
+      <div class="panel-card" style="max-width: 720px; margin: 0 auto; width: 100%;">
+        <div class="panel-title">
+          <span>Diagnóstico de Entorno y Protocolo UUID Safety</span>
+          <button class="btn btn-outline" id="btn-refresh-health" style="font-size: 0.8rem; padding: 4px 10px;">
+            Actualizar
+          </button>
+        </div>
+        <div id="health-report-content" style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
+          <p>Consultando estado del servidor WAMP...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DE EDICIÓN CON TOKEN GUARD -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-string-id" style="font-size: 1.1rem; color: var(--accent-cyan);">IDS_SAMPLE_KEY</h3>
+        <button class="btn-icon" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted);">Texto Original (Inglés):</label>
+          <div id="modal-original-text" style="background: var(--bg-card); padding: 8px 12px; border-radius: 4px; font-size: 0.9rem; margin-top: 4px;"></div>
+        </div>
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted);">Traducción al Español:</label>
+          <textarea class="text-editor" id="modal-translated-input"></textarea>
+        </div>
+        <div id="modal-token-feedback" style="font-size: 0.85rem; padding: 8px; border-radius: 4px; display: none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="modal-cancel">Cancelar</button>
+        <button class="btn btn-success" id="modal-save">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC (CLIENT SPA) -->
+  <script>
+    // ESTADO REACTIVO DEL CLIENTE
+    const state = {
+      allEntries: [],
+      filteredEntries: [],
+      activeMods: [
+        { name: '[ES] Star Wars Interregnum Traduccion', priority: 999, isMinimod: true, ramMb: 15 },
+        { name: 'Star Wars Interregnum', priority: 989, isMinimod: false, ramMb: 1250 },
+        { name: 'Enhanced 4X Mod', priority: 979, isMinimod: false, ramMb: 450 }
+      ],
+      currentEditIndex: null,
+      rowHeight: 52,
+      visibleCount: 40,
+    };
+
+    // TAB SWITCHER
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-tab');
+        if (targetId === 'tab-galaxy') return;
+
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById(targetId).classList.add('active');
+      });
+    });
+
+    // GENERAR DATASET DE DEMOSTRACIÓN (7.828 ENTRADAS PARA PROBAR EL SCROLL VIRTUAL)
+    function generateDemoEntries() {
+      const keys = [
+        ['IDS_MAIN_MENU_TITLE', 'Sins of a Solar Empire: Rebellion', 'Sins of a Solar Empire: Rebellion'],
+        ['IDS_FLEET_STATUS', 'Fleet %s holding position with [VALUE] ships.', 'Flota %s manteniendo posición con [VALUE] naves.'],
+        ['IDS_CAPITAL_SHIP_NAME', 'Kol Class Battleship', 'Acorazado Clase Kol'],
+        ['IDS_TITAN_RAGNAROV', 'Ragnarov Titan armed with railguns.', 'Titán Ragnarov equipado con cañones de riel.'],
+        ['IDS_ABILITY_SNIPE', 'Snipe enemy capital ships dealing [VALUE] damage.', 'Francotirador contra naves capitales infligiendo [VALUE] de daño.'],
+        ['IDS_RESEARCH_ARMOR', 'Increases armor rating by [VALUE]%.', 'Incrementa el blindaje en un [VALUE]%.'],
+        ['IDS_PLANET_DESERT', 'Arid and barren desert planet.', 'Planeta desértico árido y yermo.']
+      ];
+
+      const entries = [];
+      for (let i = 0; i < 7828; i++) {
+        const template = keys[i % keys.length];
+        entries.push({
+          id: `${template[0]}_${i}`,
+          original: template[1],
+          translated: template[2],
+          tokens: extractTokens(template[1]),
+        });
+      }
+      return entries;
+    }
+
+    function extractTokens(text) {
+      const regex = /\[VALUE\d*\]|%s|%d|%f|\{\d+\}/g;
+      const found = [];
+      let m;
+      while ((m = regex.exec(text)) !== null) {
+        found.push(m[0]);
+      }
+      return found;
+    }
+
+    // CONTROLADOR DEL SCROLL VIRTUAL (60 FPS / MEMORIA CONSTANTE)
+    const viewport = document.getElementById('virtual-viewport');
+    const runway = document.getElementById('virtual-runway');
+
+    function renderVirtualGrid() {
+      const total = state.filteredEntries.length;
+      runway.style.height = `${total * state.rowHeight}px`;
+
+      const scrollTop = viewport.scrollTop;
+      const startIndex = Math.max(0, Math.floor(scrollTop / state.rowHeight) - 5);
+      const endIndex = Math.min(total, startIndex + state.visibleCount);
+
+      // Limpiar nodos existentes
+      runway.innerHTML = '';
+
+      for (let i = startIndex; i < endIndex; i++) {
+        const item = state.filteredEntries[i];
+        if (!item) continue;
+
+        const row = document.createElement('div');
+        row.className = 'virtual-row';
+        row.style.transform = `translateY(${i * state.rowHeight}px)`;
+
+        const tokenPills = item.tokens.map(t => `<span class="token-pill">${t}</span>`).join('');
+
+        row.innerHTML = `
+          <div class="col-id" title="${item.id}">${item.id}</div>
+          <div class="col-text" title="${item.original}">${item.original}</div>
+          <div class="col-text" title="${item.translated}">${item.translated}</div>
+          <div class="col-tokens">${tokenPills}</div>
+          <div class="col-actions">
+            <button class="btn-icon btn-edit" data-index="${i}">✏️</button>
+          </div>
+        `;
+        runway.appendChild(row);
+      }
+
+      // Re-enlazar eventos de botones de edición
+      runway.querySelectorAll('.btn-edit').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(btn.getAttribute('data-index'), 10);
+          openEditModal(idx);
+        });
+      });
+    }
+
+    viewport.addEventListener('scroll', renderVirtualGrid);
+
+    // FILTRO DE BÚSQUEDA
+    document.getElementById('grid-search').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      if (!query) {
+        state.filteredEntries = state.allEntries;
+      } else {
+        state.filteredEntries = state.allEntries.filter(item => 
+          item.id.toLowerCase().includes(query) ||
+          item.original.toLowerCase().includes(query) ||
+          item.translated.toLowerCase().includes(query)
+        );
+      }
+      viewport.scrollTop = 0;
+      renderVirtualGrid();
+    });
+
+    // MODAL DE EDICIÓN Y VALIDACIÓN TOKEN GUARD EN VIVO
+    const modal = document.getElementById('edit-modal');
+    const inputTranslated = document.getElementById('modal-translated-input');
+    const feedbackBox = document.getElementById('modal-token-feedback');
+
+    function openEditModal(index) {
+      state.currentEditIndex = index;
+      const item = state.filteredEntries[index];
+      document.getElementById('modal-string-id').innerText = item.id;
+      document.getElementById('modal-original-text').innerText = item.original;
+      inputTranslated.value = item.translated;
+      validateModalLive();
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      state.currentEditIndex = null;
+    }
+
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-cancel').addEventListener('click', closeModal);
+
+    function validateModalLive() {
+      if (state.currentEditIndex === null) return;
+      const item = state.filteredEntries[state.currentEditIndex];
+      const val = inputTranslated.value;
+
+      // Detección de comillas crudas
+      if (/(?<!\\)"/.test(val)) {
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = 'rgba(239, 68, 68, 0.2)';
+        feedbackBox.style.color = '#ef4444';
+        feedbackBox.innerText = 'ADVERTENCIA: Contiene comillas dobles sin escapar que romperán el motor.';
+        return;
+      }
+
+      // Validación de tokens
+      const origTokens = item.tokens;
+      const currentTokens = extractTokens(val);
+
+      const missing = origTokens.filter(t => !currentTokens.includes(t));
+      if (missing.length > 0) {
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = 'rgba(239, 68, 68, 0.2)';
+        feedbackBox.style.color = '#ef4444';
+        feedbackBox.innerText = `ERROR TOKEN GUARD: Faltan los tokens requeridos: ${missing.join(', ')}`;
+        return;
+      }
+
+      feedbackBox.style.display = 'block';
+      feedbackBox.style.background = 'rgba(16, 185, 129, 0.2)';
+      feedbackBox.style.color = '#10b981';
+      feedbackBox.innerText = 'SINTAXIS CORRECTA: Todos los tokens del motor coinciden.';
+    }
+
+    inputTranslated.addEventListener('input', validateModalLive);
+
+    document.getElementById('modal-save').addEventListener('click', () => {
+      if (state.currentEditIndex === null) return;
+      const item = state.filteredEntries[state.currentEditIndex];
+      item.translated = inputTranslated.value;
+      closeModal();
+      renderVirtualGrid();
+    });
+
+    // GESTOR DE MODS Y RECALCULO DE RAM
+    function renderModManager() {
+      const listContainer = document.getElementById('mod-active-list');
+      listContainer.innerHTML = '';
+
+      let totalRam = 1400; // Base engine
+      state.activeMods.forEach((m, idx) => {
+        totalRam += m.ramMb;
+        const row = document.createElement('div');
+        row.className = `mod-row ${m.isMinimod ? 'minimod' : ''}`;
+        row.innerHTML = `
+          <div>
+            <strong>${m.name}</strong>
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 8px;">(~${m.ramMb} MB)</span>
+          </div>
+          <div>
+            <span class="priority-chip">P${m.priority}</span>
+          </div>
+        `;
+        listContainer.appendChild(row);
+      });
+
+      // Actualizar medidor RAM
+      const fill = document.getElementById('ram-meter-fill');
+      const text = document.getElementById('ram-meter-text');
+      const badge = document.getElementById('ram-risk-badge');
+
+      const pct = Math.min(100, Math.round((totalRam / 3250) * 100));
+      fill.style.width = `${pct}%`;
+      text.innerText = `${totalRam} MB / 3.250 MB (${pct}%)`;
+
+      if (totalRam >= 3350) {
+        fill.className = 'ram-bar-fill critical';
+        badge.style.color = '#ef4444';
+        badge.innerText = 'ESTADO: CRÍTICO (MiniDump Crash inminente en batallas masivas)';
+      } else if (totalRam >= 3100) {
+        fill.className = 'ram-bar-fill warning';
+        badge.style.color = '#f59e0b';
+        badge.innerText = 'ESTADO: ALTO RIESGO (Alcanzando techo de 32 bits)';
+      } else {
+        fill.className = 'ram-bar-fill';
+        badge.style.color = '#10b981';
+        badge.innerText = 'ESTADO: SEGURO (Bajo riesgo de MiniDump Crash)';
+      }
+    }
+
+    document.getElementById('btn-inject-minimod').addEventListener('click', () => {
+      const name = prompt('Nombre de carpeta del minimod de traducción:', '[ES] Sins Rebellion Traduccion');
+      if (name) {
+        state.activeMods.unshift({ name, priority: 999, isMinimod: true, ramMb: 15 });
+        // Recalcular prioridades
+        state.activeMods.forEach((m, i) => m.priority = 999 - (i * 10));
+        renderModManager();
+      }
+    });
+
+    document.getElementById('btn-save-enabled-mods').addEventListener('click', async () => {
+      try {
+        const res = await fetch('api/mods/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mods: state.activeMods })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Configuración guardada exitosamente con terminación CRLF y respaldo.');
+        } else {
+          alert(`Error [UUID ${data.error_uuid}]: ${data.message}`);
+        }
+      } catch (e) {
+        alert('Configuración de demostración guardada en memoria local.');
+      }
+    });
+
+    // DIAGNÓSTICO DE SALUD
+    async function fetchHealth() {
+      const container = document.getElementById('health-report-content');
+      try {
+        const res = await fetch('api/system/health');
+        const json = await res.json();
+        if (json.success) {
+          const d = json.data;
+          container.innerHTML = `
+            <div><strong>Suite:</strong> ${d.appName} (${d.version})</div>
+            <div><strong>Empresa:</strong> ${d.company}</div>
+            <div><strong>Estado Global:</strong> <span class="badge-tag badge-active">${d.status.toUpperCase()}</span></div>
+            <div><strong>Base de Datos:</strong> ${d.database}</div>
+            <div><strong>Versión PHP:</strong> ${d.phpVersion}</div>
+            <div><strong>Memoria RAM Servidor:</strong> ${d.memoryUsageMb} MB</div>
+            <div><strong>Protocolo UUID Safety:</strong> ACTIVO (Cero Stack Traces)</div>
+          `;
+        }
+      } catch (err) {
+        container.innerHTML = `
+          <div style="color: var(--accent-amber);">
+            <strong>Servidor API Local:</strong> Operando en modo estático cliente / WAMP no conectado.
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById('btn-refresh-health').addEventListener('click', fetchHealth);
+
+    // INICIALIZACIÓN
+    document.getElementById('btn-load-sample').addEventListener('click', () => {
+      state.allEntries = generateDemoEntries();
+      state.filteredEntries = state.allEntries;
+      renderVirtualGrid();
+    });
+
+    // Carga inicial
+    state.allEntries = generateDemoEntries();
+    state.filteredEntries = state.allEntries;
+    renderVirtualGrid();
+    renderModManager();
+    fetchHealth();
+  </script>
+</body>
+</html>
