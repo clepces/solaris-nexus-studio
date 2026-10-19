@@ -23,7 +23,7 @@ echo "[OK] UuidGenerator: " . $uuid1 . PHP_EOL;
 // 2. Validar AppConfig (Fail-Fast)
 $config = AppConfig::load();
 assert($config['app_name'] === 'Solaris Nexus Studio', 'App name mismatch');
-assert($config['version'] === '0.1.0.0-alpha', 'Version mismatch');
+assert($config['version'] === '0.1.1.0-alpha', 'Version mismatch');
 echo "[OK] AppConfig loaded: " . $config['app_name'] . " v" . $config['version'] . PHP_EOL;
 
 // 3. Validar LoggerService & UUID Safety

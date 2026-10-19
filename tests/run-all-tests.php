@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 echo "================================================================" . PHP_EOL;
 echo "  SOLARIS NEXUS STUDIO - SUITE DE TESTING AUTOMATIZADA          " . PHP_EOL;
-echo "  Clepces org. ltd | Versión Objetivo: v0.1.0.0-alpha           " . PHP_EOL;
+echo "  Clepces org. ltd | Versión Objetivo: v0.1.1.0-alpha           " . PHP_EOL;
 echo "================================================================" . PHP_EOL . PHP_EOL;
 
 $testFiles = [
@@ -13,6 +13,7 @@ $testFiles = [
     'Fase 3 - Mod Orchestrator & VFS' => __DIR__ . '/unit/mod-priority.test.php',
     'Fase 4 - RAM Profiler (32-bit)' => __DIR__ . '/unit/ram-profiler.test.php',
     'Fase 5 - API Safety & UUID' => __DIR__ . '/unit/api-safety.test.php',
+    'Fase 8 - Database & Translation Memory' => __DIR__ . '/unit/database-persistence.test.php',
 ];
 
 $passedCount = 0;
@@ -42,7 +43,7 @@ echo sprintf("RESULTADOS: %d Aprobados, %d Fallidos (Total: %d)", $passedCount, 
 echo "----------------------------------------------------------------" . PHP_EOL;
 
 if ($failedCount === 0) {
-    echo "ESTADO DEL ENTREGABLE: CERTIFICADO PARA v0.1.0.0-alpha." . PHP_EOL;
+    echo "ESTADO DEL ENTREGABLE: CERTIFICADO PARA v0.1.1.0-alpha." . PHP_EOL;
     exit(0);
 } else {
     echo "ESTADO DEL ENTREGABLE: NO CERTIFICADO." . PHP_EOL;
