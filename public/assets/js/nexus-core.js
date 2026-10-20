@@ -14,7 +14,7 @@ const NexusCore = (() => {
       { name: 'Enhanced 4X Mod', priority: 979, isMinimod: false, ramMb: 450 }
     ],
     currentEditIndex: null,
-    rowHeight: 52,
+    rowHeight: 40,
     visibleCount: 40,
     currentGalaxy: null,
   };

@@ -16,12 +16,19 @@ const NexusUI = (() => {
   };
 
   const MODULE_METADATA = {
+    'tab-dashboard': {
+      title: 'Dashboard',
+      subtitle: 'All Your Workflows And Permissions Managed',
+      metricNumber: '340',
+      metricLabel: 'Executions',
+      metricBadge: '↑ 204%'
+    },
     'tab-translation': {
       title: 'Estudio de Traducción',
       subtitle: 'Gestión masiva de diccionarios .str, Token Guard en tiempo real e inyección UTF-8 BOM canónica.',
-      metricNumber: '7,828',
-      metricLabel: 'Cadenas del Diccionario',
-      metricBadge: '✓ 100% Validado'
+      metricNumber: '0',
+      metricLabel: 'Cadenas en Memoria',
+      metricBadge: 'Sin archivo'
     },
     'tab-mods': {
       title: 'Gestor VFS & Mods',
@@ -74,14 +81,7 @@ const NexusUI = (() => {
       p.classList.toggle('active', p.id === targetId);
     });
 
-    const meta = MODULE_METADATA[targetId];
-    if (meta) {
-      document.getElementById('view-main-title').innerText = meta.title;
-      document.getElementById('view-main-subtitle').innerText = meta.subtitle;
-      document.getElementById('hero-metric-label').innerText = meta.metricLabel;
-      document.getElementById('hero-metric-number').innerText = meta.metricNumber;
-      document.getElementById('hero-metric-badge').innerText = meta.metricBadge;
-    }
+    updateHeroMetrics(targetId);
 
     const filterRow = document.getElementById('translation-filter-row');
     if (filterRow) {
@@ -95,11 +95,65 @@ const NexusUI = (() => {
     }
   }
 
+  function updateHeroMetrics(targetId) {
+    const meta = MODULE_METADATA[targetId];
+    if (!meta) return;
+
+    document.getElementById('view-main-title').innerText = meta.title;
+    document.getElementById('view-main-subtitle').innerText = meta.subtitle;
+    document.getElementById('hero-metric-label').innerText = meta.metricLabel;
+
+    const numEl = document.getElementById('hero-metric-number');
+    const badgeEl = document.getElementById('hero-metric-badge');
+
+    if (targetId === 'tab-translation') {
+      const count = state.allEntries.length;
+      numEl.innerText = count.toLocaleString();
+      if (count === 0) {
+        badgeEl.className = 'metric-badge-pill neutral';
+        badgeEl.innerText = 'Sin archivo';
+      } else {
+        badgeEl.className = 'metric-badge-pill';
+        badgeEl.innerText = '✓ 100% Validado';
+      }
+      const sideCount = document.getElementById('sidebar-count-strings');
+      if (sideCount) sideCount.innerText = count.toLocaleString();
+    } else {
+      numEl.innerText = meta.metricNumber;
+      badgeEl.className = 'metric-badge-pill';
+      badgeEl.innerText = meta.metricBadge;
+    }
+  }
+
+  function toggleSidebar(forceOpen) {
+    const sidebar = document.querySelector('.reagle-sidebar');
+    if (!sidebar) return;
+    if (forceOpen === true) {
+      sidebar.classList.remove('collapsed');
+    } else if (forceOpen === false) {
+      sidebar.classList.add('collapsed');
+    } else {
+      sidebar.classList.toggle('collapsed');
+    }
+  }
+
+  function loadDemoData() {
+    state.allEntries = generateDemoEntries();
+    state.filteredEntries = state.allEntries;
+    updateHeroMetrics('tab-translation');
+    renderVirtualGrid();
+  }
+
   function renderContextualActions(tabId) {
     const container = document.getElementById('header-actions-container');
     if (!container) return;
 
-    if (tabId === 'tab-translation') {
+    if (tabId === 'tab-dashboard') {
+      container.innerHTML = `
+        <button class="btn-reagle btn-reagle-primary" onclick="NexusUI.switchTab('tab-translation');">📁 Abrir Traducción</button>
+        <button class="btn-reagle" onclick="NexusUI.switchTab('tab-mods');">⚙️ Mods VFS</button>
+      `;
+    } else if (tabId === 'tab-translation') {
       container.innerHTML = `
         <input type="file" id="file-input-str" accept=".str" style="display: none;">
         <button class="btn-reagle" id="btn-trigger-str-file">📁 Cargar .str</button>
@@ -108,12 +162,7 @@ const NexusUI = (() => {
       `;
       document.getElementById('btn-trigger-str-file').addEventListener('click', () => document.getElementById('file-input-str').click());
       document.getElementById('file-input-str').addEventListener('change', handleStrUpload);
-      document.getElementById('btn-demo-str').addEventListener('click', () => {
-        state.allEntries = generateDemoEntries();
-        state.filteredEntries = state.allEntries;
-        document.getElementById('sidebar-count-strings').innerText = state.allEntries.length.toLocaleString();
-        renderVirtualGrid();
-      });
+      document.getElementById('btn-demo-str').addEventListener('click', loadDemoData);
       document.getElementById('btn-export-str-main').addEventListener('click', exportStrFile);
     } else if (tabId === 'tab-mods') {
       container.innerHTML = `
@@ -167,7 +216,18 @@ const NexusUI = (() => {
 
   function renderVirtualGrid() {
     if (!viewport || !runway) return;
+    const emptyState = document.getElementById('virtual-empty-state');
     const total = state.filteredEntries.length;
+
+    if (total === 0 && state.allEntries.length === 0) {
+      if (emptyState) emptyState.style.display = 'flex';
+      runway.style.display = 'none';
+      runway.innerHTML = '';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    runway.style.display = 'block';
     runway.style.height = `${total * state.rowHeight}px`;
 
     const scrollTop = viewport.scrollTop;
@@ -285,7 +345,7 @@ const NexusUI = (() => {
           tokens: extractTokens(e.value)
         }));
         state.filteredEntries = state.allEntries;
-        document.getElementById('sidebar-count-strings').innerText = state.allEntries.length.toLocaleString();
+        updateHeroMetrics('tab-translation');
         renderVirtualGrid();
         alert(`Archivo ${file.name} cargado con ${state.allEntries.length} entradas.`);
       }
@@ -716,19 +776,39 @@ const NexusUI = (() => {
       alert('Memoria de Traducción (TM): 100% Coincidencia SHA-256 aplicada.');
     });
 
-    // Carga inicial
-    state.allEntries = generateDemoEntries();
-    state.filteredEntries = state.allEntries;
+    // Toggle de la barra lateral (Colapso y Expansión Mac-like)
+    const toggleBtn = document.getElementById('btn-toggle-sidebar');
+    if (toggleBtn) toggleBtn.addEventListener('click', () => toggleSidebar());
+
+    const restoreBtn = document.getElementById('btn-restore-sidebar');
+    if (restoreBtn) restoreBtn.addEventListener('click', () => toggleSidebar(true));
+
+    // Botones del Estado Vacío
+    const emptyDemo = document.getElementById('btn-empty-demo');
+    if (emptyDemo) emptyDemo.addEventListener('click', loadDemoData);
+
+    const emptyUpload = document.getElementById('btn-empty-upload');
+    if (emptyUpload) emptyUpload.addEventListener('click', () => {
+      const fi = document.getElementById('file-input-str');
+      if (fi) fi.click();
+    });
+
+    // Carga inicial limpia y transparente: arranca en tab-dashboard
+    state.allEntries = [];
+    state.filteredEntries = [];
+    updateHeroMetrics('tab-dashboard');
     renderVirtualGrid();
     renderModManager();
     fetchHealthStatus();
     requestGalaxy(12);
-    renderContextualActions('tab-translation');
+    renderContextualActions('tab-dashboard');
   }
 
   return {
     init,
-    switchTab
+    switchTab,
+    toggleSidebar,
+    loadDemoData
   };
 })();
 
