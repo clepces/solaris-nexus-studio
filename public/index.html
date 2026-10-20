@@ -10,85 +10,56 @@
 <body>
 
   <!-- ==========================================================================
-       1. DOCK LATERAL FLOTANTE (ESTILO CÁPSULA NEUMÓRFICA DE LA IMAGEN)
+       1. DOCK LATERAL FLOTANTE (ESTILO CÁPSULA REAGLE DE LA FOTO)
        ========================================================================== -->
-  <aside class="neu-outer-dock">
-    <div class="neu-dock-capsule">
-      <div class="neu-dock-inner-dark">
+  <aside class="reagle-dock-column">
+    <div class="dock-top-capsule">
+      <div class="dock-inner-dark-pill">
         <!-- Logo Asterisco / Clepces Core -->
-        <button class="neu-dock-btn" title="Clepces Core" id="dock-btn-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">
-            <line x1="12" y1="2" x2="12" y2="22"></line>
-            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line>
-          </svg>
+        <button class="dock-btn" id="dock-core-btn" title="Clepces Core Engine">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line></svg>
         </button>
 
-        <!-- Home / Dashboard -->
-        <button class="neu-dock-btn active" data-tab="tab-translation" title="Estudio de Traducción">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
+        <!-- 1. Home / Traducción (Activo con fondo cuadrado oscuro) -->
+        <button class="dock-btn active" data-tab="tab-translation" title="Estudio de Traducción">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         </button>
 
-        <!-- Orquestador VFS & Mods -->
-        <button class="neu-dock-btn" data-tab="tab-mods" title="Gestor VFS & Mods">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
+        <!-- 2. Gestor VFS (Globo con cuadrícula) -->
+        <button class="dock-btn" data-tab="tab-mods" title="Gestor VFS & Mods">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
         </button>
 
-        <!-- Diagnóstico & Salud -->
-        <button class="neu-dock-btn" data-tab="tab-system" title="Diagnóstico & Salud">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-          </svg>
+        <!-- 3. Diagnóstico (Chispa de 4 puntas) -->
+        <button class="dock-btn" data-tab="tab-system" title="Diagnóstico & Salud">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
         </button>
 
-        <!-- Inspector de Entidades -->
-        <button class="neu-dock-btn" data-tab="tab-entities" title="Editor de Entidades">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-          </svg>
+        <!-- 4. Memoria TM (Nodo / Share) -->
+        <button class="dock-btn" data-tab="tab-entities" title="Editor de Entidades">
+          <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
         </button>
 
-        <!-- Galaxy Forge -->
-        <button class="neu-dock-btn" data-tab="tab-galaxy" title="Galaxy Forge">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3"></circle>
-            <circle cx="19" cy="5" r="2"></circle>
-            <circle cx="5" cy="19" r="2"></circle>
-            <path d="M10.4 10.4L6.4 17.6"></path>
-            <path d="M13.6 13.6l4-7.2"></path>
-          </svg>
+        <!-- 5. Galaxy Forge (Dual Sliders) -->
+        <button class="dock-btn" data-tab="tab-galaxy" title="Galaxy Forge">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><circle cx="19" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle><path d="M10.4 10.4L6.4 17.6"></path><path d="M13.6 13.6l4-7.2"></path></svg>
         </button>
 
-        <!-- ConvertData CLI -->
-        <button class="neu-dock-btn" data-tab="tab-convert" title="ConvertData CLI">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="16 3 21 3 21 8"></polyline>
-            <line x1="4" y1="20" x2="21" y2="3"></line>
-            <polyline points="21 16 21 21 16 21"></polyline>
-            <line x1="15" y1="15" x2="21" y2="21"></line>
-            <line x1="4" y1="4" x2="9" y2="9"></line>
-          </svg>
+        <!-- 6. ConvertData CLI (3D Box) -->
+        <button class="dock-btn" data-tab="tab-convert" title="ConvertData CLI">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         </button>
       </div>
+
+      <!-- Texto vertical rotado como en la imagen -->
+      <span class="dock-vertical-label">SOLARIS 2026 NAV</span>
     </div>
 
-    <!-- Sub-cápsula inferior de configuración -->
-    <div class="neu-dock-sub">
-      <button class="neu-dock-btn" id="dock-btn-settings" title="Configuración de Entorno">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: #64748b;">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
+    <!-- Cápsula inferior independiente para Configuración -->
+    <div class="dock-bottom-capsule">
+      <span class="dock-bottom-label">NEXUS SETTINGS</span>
+      <button class="dock-settings-btn" onclick="NexusUI.switchTab('tab-system');" title="Configuración de Sistema">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </button>
     </div>
   </aside>
@@ -96,183 +67,237 @@
   <!-- ==========================================================================
        2. VENTANA PRINCIPAL NEUMÓRFICA (MAIN APP WINDOW)
        ========================================================================== -->
-  <div class="neu-window-frame">
+  <div class="reagle-window">
 
-    <!-- SUB-SIDEBAR DE NAVEGACIÓN INTERNA (IDÉNTICA A LA IMAGEN DE REFERENCIA) -->
-    <nav class="neu-sidebar">
-      <!-- Semáforo Mac-like -->
-      <div class="mac-traffic-lights">
-        <div class="traffic-dot traffic-red"></div>
-        <div class="traffic-dot traffic-yellow"></div>
-        <div class="traffic-dot traffic-green"></div>
+    <!-- SUB-SIDEBAR DE NAVEGACIÓN (IDÉNTICO A LA FOTO) -->
+    <nav class="reagle-sidebar">
+      <!-- Semáforo Mac-like superior -->
+      <div class="sidebar-top-bar">
+        <div class="traffic-dots-group">
+          <div class="traffic-dot dot-red"></div>
+          <div class="traffic-dot dot-yellow"></div>
+          <div class="traffic-dot dot-green"></div>
+        </div>
+        <div class="window-view-icon"></div>
       </div>
 
-      <!-- Perfil Corporativo -->
-      <div class="user-profile-badge">
-        <div class="user-avatar">CN</div>
-        <div class="user-meta">
-          <span class="user-name">Clepces org. ltd</span>
-          <span class="user-org">Solaris Nexus v0.3.0.0</span>
+      <!-- Perfil de Usuario con Avatar Circular -->
+      <div class="user-profile-row">
+        <div class="user-avatar-circle">CN</div>
+        <div class="user-info">
+          <div class="user-title-wrap">
+            <span class="user-name-text">Clepces org. ltd</span>
+            <span class="user-dropdown-arrow">▼</span>
+          </div>
+          <span class="user-subtext">solaris.nexus@clepces.com</span>
         </div>
       </div>
 
-      <!-- Módulos del Sistema -->
-      <div class="nav-group-title">Módulos del Sistema</div>
-      <div class="nav-item-list">
-        <button class="nav-pill-btn active tab-btn" data-tab="tab-translation">
-          <div class="nav-pill-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-            <span>Estudio de Traducción</span>
+      <!-- Sección: Projects -->
+      <div class="sidebar-section-title">Projects</div>
+      <div class="sidebar-items-list">
+        <!-- Dashboard / Traducción (Ítem Activo como en la foto) -->
+        <button class="sidebar-nav-item active" data-tab="tab-translation">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+            <span>Dashboard (.str)</span>
           </div>
-          <span class="pill-count-badge" id="sidebar-string-count">7.828</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-strings">7.828</span>
         </button>
 
-        <button class="nav-pill-btn tab-btn" data-tab="tab-mods">
-          <div class="nav-pill-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            <span>Gestor VFS & Mods</span>
+        <button class="sidebar-nav-item" data-tab="tab-mods">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span>Library (VFS Mods)</span>
           </div>
-          <span class="pill-count-badge" id="sidebar-mod-count">3</span>
+          <span class="sidebar-pill-badge">3</span>
         </button>
 
-        <button class="nav-pill-btn tab-btn" data-tab="tab-system">
-          <div class="nav-pill-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            <span>Diagnóstico & Salud</span>
+        <button class="sidebar-nav-item" data-tab="tab-entities">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+            <span>Shared Entities</span>
           </div>
-          <span class="pill-count-badge" style="color: var(--accent-emerald);">OK</span>
+          <span class="sidebar-pill-badge">Kol</span>
+        </button>
+      </div>
+
+      <!-- Sección: Status -->
+      <div class="sidebar-section-title">Status</div>
+      <div class="sidebar-items-list">
+        <button class="sidebar-nav-item" data-tab="tab-system">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>System Health</span>
+          </div>
+          <span class="sidebar-pill-badge">OK</span>
         </button>
 
-        <button class="nav-pill-btn tab-btn" data-tab="tab-entities">
-          <div class="nav-pill-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-            <span>Editor de Entidades</span>
-          </div>
-          <span class="pill-count-badge">Kol</span>
-        </button>
-
-        <button class="nav-pill-btn tab-btn" data-tab="tab-galaxy">
-          <div class="nav-pill-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
+        <button class="sidebar-nav-item" data-tab="tab-galaxy">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"></path></svg>
             <span>Galaxy Forge</span>
           </div>
-          <span class="pill-count-badge">12P</span>
+          <span class="sidebar-pill-badge">12</span>
         </button>
-      </div>
 
-      <!-- Herramientas de Motor -->
-      <div class="nav-group-title">Herramientas de Motor</div>
-      <div class="nav-item-list">
-        <button class="nav-pill-btn tab-btn" data-tab="tab-convert">
-          <div class="nav-pill-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        <button class="sidebar-nav-item" data-tab="tab-convert">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             <span>ConvertData CLI</span>
           </div>
-          <span class="pill-count-badge">TXT/BIN</span>
+          <span class="sidebar-pill-badge">BIN</span>
         </button>
+      </div>
 
-        <button class="nav-pill-btn" id="btn-quick-inject">
-          <div class="nav-pill-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
-            <span>Inyectar Minimod P999</span>
+      <!-- Sección: History -->
+      <div class="sidebar-section-title">History</div>
+      <div class="sidebar-items-list">
+        <div class="sidebar-nav-item" style="cursor: default;">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Recently Edited</span>
           </div>
-        </button>
+        </div>
+
+        <div class="sidebar-nav-item" style="cursor: default;">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+            <span>Archive</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Documentos y Archivos -->
-      <div class="nav-group-title">Explorador de Archivos</div>
-      <div class="neu-search-box">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" id="sidebar-doc-search" placeholder="Buscar archivo del juego...">
+      <!-- Sección: Documents (con botón + y árbol) -->
+      <div class="sidebar-section-title">
+        <span>Documents</span>
+        <span class="section-add-btn" title="Cargar Archivo">+</span>
       </div>
 
-      <div style="font-size: 0.76rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 6px; padding: 4px 6px;">
-        <div style="cursor: pointer;" onclick="document.querySelector('[data-tab=tab-translation]').click();">📄 English.str (Canónico)</div>
-        <div style="cursor: pointer;" onclick="document.querySelector('[data-tab=tab-mods]').click();">⚙️ EnabledMods.txt (VFS)</div>
-        <div style="cursor: pointer;" onclick="document.querySelector('[data-tab=tab-entities]').click();">🛸 KolBattleship.entity</div>
-        <div style="cursor: pointer;" onclick="document.querySelector('[data-tab=tab-galaxy]').click();">🪐 Sector_Solaris_Alpha.galaxy</div>
+      <div class="reagle-search-inset">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search">
+      </div>
+
+      <!-- Árbol Jerárquico de Carpetas (Exacto a la foto) -->
+      <div class="folder-tree">
+        <div class="tree-node">
+          <div class="tree-node-left">
+            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            <span>System Management's</span>
+          </div>
+          <span class="sidebar-pill-badge">12</span>
+        </div>
+
+        <div class="tree-sub-group">
+          <div class="tree-node">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>2026 Update's</span>
+            </div>
+            <span class="sidebar-pill-badge">2</span>
+          </div>
+
+          <div class="tree-sub-group">
+            <div class="tree-node">
+              <div class="tree-node-left">
+                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                <span>String Localizations</span>
+              </div>
+              <span class="sidebar-pill-badge">4</span>
+            </div>
+
+            <div class="tree-node">
+              <div class="tree-node-left">
+                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                <span>Entity Balancing</span>
+              </div>
+              <span class="sidebar-pill-badge">3</span>
+            </div>
+
+            <!-- Ítem seleccionado con fondo sombreado suave de la foto -->
+            <div class="tree-node selected">
+              <div class="tree-node-left">
+                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                <span>Fundamentals</span>
+              </div>
+              <span class="sidebar-pill-badge" style="background:#fff;">4</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tree-node">
+          <div class="tree-node-left">
+            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            <span>Off Grid Servers</span>
+          </div>
+          <span class="sidebar-pill-badge">5</span>
+        </div>
       </div>
     </nav>
 
     <!-- ÁREA DE TRABAJO PRINCIPAL (WORKSPACE) -->
-    <main class="neu-workspace">
+    <main class="reagle-workspace">
 
-      <!-- Cabecera Dinámica del Módulo -->
-      <header class="module-header">
-        <div class="module-title-wrap">
-          <h2 id="view-title">Estudio de Traducción</h2>
-          <p id="view-subtitle">Gestión masiva de diccionarios .str, Token Guard en tiempo real e inyección UTF-8 BOM canónica.</p>
+      <!-- Encabezado del Módulo (como 'Dashboard' en la foto) -->
+      <header class="reagle-header">
+        <div class="header-title-box">
+          <h1 id="view-main-title">Dashboard</h1>
+          <p id="view-main-subtitle">All Your Workflows And Permissions Managed</p>
         </div>
-        <div class="module-actions" id="module-header-actions">
-          <input type="file" id="file-input-str" accept=".str" style="display: none;">
-          <button class="btn-neu" id="btn-trigger-upload-str" title="Cargar archivo real .str desde tu disco">
-            📁 Cargar .str Local
-          </button>
-          <button class="btn-neu" id="btn-load-sample">
-            🔄 Demo (7.828)
-          </button>
-          <button class="btn-neu btn-neu-success" id="btn-export-str">
-            💾 Exportar .str (UTF-8 BOM)
-          </button>
+        <div class="header-actions-group" id="header-actions-container">
+          <!-- Botones contextuales inyectados dinámicamente -->
         </div>
       </header>
 
-      <!-- Fila de Tarjetas Métricas (Inspirada en "Executions 340, +204%" de la foto) -->
-      <section class="metric-cards-grid">
-        <!-- Tarjeta 1: Cadenas -->
-        <div class="neu-metric-card">
-          <span class="metric-label">Cadenas del Diccionario</span>
+      <!-- Fila de Métricas (Inspirada al 100% en 'Executions 340, +204%' de la foto) -->
+      <section class="reagle-metric-card-container">
+        <!-- Tarjeta Principal (Executions 340 / Cadenas) -->
+        <div class="reagle-metric-card">
+          <span class="metric-title-small" id="hero-metric-label">Cadenas en Memoria</span>
           <div class="metric-value-row">
-            <span class="metric-number" id="metric-total-strings">7.828</span>
-            <span class="metric-chip chip-green">✓ 100% Validado</span>
+            <span class="metric-huge-number" id="hero-metric-number">340</span>
+            <span class="metric-badge-pill" id="hero-metric-badge">↑ 204%</span>
           </div>
-          <span class="metric-footer-link" onclick="document.getElementById('grid-search').focus();">Filtrar Cadenas →</span>
+          <a class="metric-report-link" id="hero-metric-link">See Report →</a>
         </div>
 
-        <!-- Tarjeta 2: RAM 32-bit -->
-        <div class="neu-metric-card">
-          <span class="metric-label">Presupuesto RAM (32-bit LAA)</span>
-          <div class="metric-value-row">
-            <span class="metric-number" id="metric-ram-usage">1.865</span>
-            <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);">MB</span>
-            <span class="metric-chip chip-green" id="metric-ram-badge">Seguro</span>
+        <!-- Fila de Mini Métricas Secundarias -->
+        <div class="secondary-metrics-row">
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');">
+            <span class="mini-card-label">Memoria 32-bit</span>
+            <span class="mini-card-value" id="mini-metric-ram">1.865 MB</span>
+            <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Techo Seguro LAA</span>
           </div>
-          <span class="metric-footer-link" onclick="document.querySelector('[data-tab=tab-mods]').click();">Ver Jerarquía VFS →</span>
-        </div>
 
-        <!-- Tarjeta 3: Mods Activos -->
-        <div class="neu-metric-card">
-          <span class="metric-label">Mods Activos en Cascada</span>
-          <div class="metric-value-row">
-            <span class="metric-number" id="metric-active-mods">3</span>
-            <span class="metric-chip chip-cyan">Prioridad 999</span>
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');">
+            <span class="mini-card-label">Mods Activos</span>
+            <span class="mini-card-value">3 Mods</span>
+            <span style="font-size: 0.72rem; color: var(--text-blue); font-weight: 700;">● Minimod P999</span>
           </div>
-          <span class="metric-footer-link" onclick="document.querySelector('[data-tab=tab-mods]').click();">Ajustar Prioridades →</span>
-        </div>
 
-        <!-- Tarjeta 4: Galaxy Topología -->
-        <div class="neu-metric-card">
-          <span class="metric-label">Galaxy Forge Status</span>
-          <div class="metric-value-row">
-            <span class="metric-number" id="metric-galaxy-planets">12</span>
-            <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);">Planetas</span>
-            <span class="metric-chip chip-green">Conexo</span>
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-galaxy');">
+            <span class="mini-card-label">Galaxy Forge</span>
+            <span class="mini-card-value">12 Nodos</span>
+            <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Grafo Conexo</span>
           </div>
-          <span class="metric-footer-link" onclick="document.querySelector('[data-tab=tab-galaxy]').click();">Abrir Visualizador →</span>
         </div>
       </section>
 
-      <!-- Barra de Segmented Tabs / Filtros Rápidos -->
-      <section class="segmented-control-bar">
-        <div class="segmented-pills" id="string-filter-pills">
-          <button class="segment-btn active" data-filter="all">Todas las Cadenas (7.828)</button>
-          <button class="segment-btn" data-filter="tokens">Con Tokens Motor [VALUE]</button>
-          <button class="segment-btn" data-filter="translated">Modificadas en Sesión</button>
+      <!-- Fila de Tabs (Workflows, Permissions, Executions) y Search (Como en la foto) -->
+      <section class="reagle-tabs-row" id="translation-filter-row">
+        <div>
+          <h2 class="section-subheading-title">Executions</h2>
+          <div class="reagle-segmented-tabs" style="margin-top: 8px;">
+            <button class="tab-link-btn active" data-filter="all">Workflows</button>
+            <button class="tab-link-btn" data-filter="tokens">Permissions</button>
+            <button class="tab-link-btn" data-filter="translated">Executions</button>
+          </div>
         </div>
 
-        <div class="neu-search-box" style="width: 320px;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <input type="text" id="grid-search" placeholder="Buscar por ID o texto en español/inglés...">
+        <div class="reagle-search-full">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="grid-search-input" placeholder="Search">
         </div>
       </section>
 
@@ -286,7 +311,7 @@
             <div>Texto Original (EN)</div>
             <div>Traducción Activa (ES)</div>
             <div>Tokens Protegidos</div>
-            <div style="text-align: right;">Acciones</div>
+            <div style="text-align: right;">Acción</div>
           </div>
           <div class="virtual-viewport" id="virtual-viewport">
             <div class="virtual-runway" id="virtual-runway"></div>
@@ -299,46 +324,27 @@
            ====================================================================== -->
       <section id="tab-mods" class="view-panel">
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px;">
-          <div class="neu-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-              <h3 style="font-size: 1rem; font-weight: 700;">Jerarquía de Mods Activos (EnabledMods.txt)</h3>
-              <button class="btn-neu btn-neu-success" id="btn-inject-minimod" style="font-size: 0.8rem; padding: 6px 12px;">
-                + Inyectar Minimod (P999)
-              </button>
-            </div>
-            <div id="mod-active-list" style="display: flex; flex-direction: column; gap: 10px;">
-              <!-- Renderizado dinámico de mods -->
-            </div>
-            <div style="margin-top: 18px; display: flex; justify-content: flex-end; gap: 10px;">
-              <button class="btn-neu" id="btn-scan-mods">Escanear Carpeta Mods</button>
-              <button class="btn-neu btn-neu-primary" id="btn-save-enabled-mods">Guardar Configuración VFS</button>
-            </div>
+          <div class="reagle-card-panel">
+            <h3 style="font-size: 1.05rem; font-weight: 800;">Jerarquía de Mods Activos (EnabledMods.txt)</h3>
+            <div id="mod-active-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
           </div>
 
-          <div class="neu-card" style="display: flex; flex-direction: column; gap: 14px;">
-            <h3 style="font-size: 1rem; font-weight: 700;">Monitor de Memoria RAM 32-bit (LAA)</h3>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">
-              El motor DirectX 9 posee un límite estricto de <strong>3.250 MB</strong>. Superar este techo causa un MiniDump Crash inmediato en batallas con flotas numerosas.
+          <div class="reagle-card-panel">
+            <h3 style="font-size: 1.05rem; font-weight: 800;">Monitor de Memoria RAM 32-bit (LAA)</h3>
+            <p style="font-size: 0.84rem; color: var(--text-muted);">
+              Techo físico virtual de <strong>3.250 MB</strong>. Evita colapsos de memoria por superposición desordenada de mods.
             </p>
-
             <div>
               <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; margin-bottom: 8px;">
-                <span>Consumo Total Estimado:</span>
+                <span>Consumo Total:</span>
                 <span id="ram-meter-text">1.865 MB / 3.250 MB (57%)</span>
               </div>
-              <div class="neu-progress-track">
-                <div class="neu-progress-fill" id="ram-meter-fill" style="width: 57%;"></div>
+              <div class="reagle-progress-track">
+                <div class="reagle-progress-fill" id="ram-meter-fill" style="width: 57%;"></div>
               </div>
             </div>
-
-            <div id="ram-risk-badge" style="font-size: 0.82rem; font-weight: 700; color: #10b981; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 12px;">
+            <div id="ram-risk-badge" style="font-size: 0.84rem; font-weight: 700; color: var(--text-success); padding: 10px; background: rgba(5, 150, 105, 0.1); border-radius: 12px;">
               ESTADO: SEGURO (Bajo riesgo de MiniDump Crash)
-            </div>
-
-            <div style="border-top: 1px solid var(--border-divider); padding-top: 12px; margin-top: auto;">
-              <button class="btn-neu" id="btn-synthesize-session" style="width: 100%; justify-content: center;">
-                ⚡ Sintetizar Minimod de Idioma JIT para esta Sesión
-              </button>
             </div>
           </div>
         </div>
@@ -348,11 +354,8 @@
            VISTA 3: DIAGNÓSTICO & SALUD DEL SISTEMA
            ====================================================================== -->
       <section id="tab-system" class="view-panel">
-        <div class="neu-card" style="max-width: 760px; margin: 0 auto; width: 100%;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 style="font-size: 1.1rem; font-weight: 700;">Diagnóstico de Entorno y Protocolo UUID Safety</h3>
-            <button class="btn-neu" id="btn-refresh-health">Actualizar Diagnóstico</button>
-          </div>
+        <div class="reagle-card-panel" style="max-width: 760px; margin: 0 auto; width: 100%;">
+          <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Diagnóstico de Entorno y Protocolo UUID Safety</h3>
           <div id="health-report-content" style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
             <p>Consultando estado del servidor WAMP...</p>
           </div>
@@ -363,49 +366,36 @@
            VISTA 4: EDITOR E INSPECTOR DE ENTIDADES
            ====================================================================== -->
       <section id="tab-entities" class="view-panel">
-        <div class="neu-card" style="max-width: 860px; margin: 0 auto; width: 100%;">
-          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 12px; margin-bottom: 16px; font-size: 0.84rem; color: #dc2626;">
-            <strong>AVISO MULTIJUGADOR:</strong> Modificar entidades (.entity) altera la suma de verificación de red (Checksum). Las alteraciones son de uso exclusivo en partidas de Un Jugador / Sandbox local.
-          </div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 style="font-size: 1.05rem; font-weight: 700;">Inspector de Entidad de Combate (.entity)</h3>
-            <div style="display: flex; gap: 8px;">
-              <input type="file" id="file-input-entity" accept=".entity" style="display: none;">
-              <button class="btn-neu" id="btn-trigger-upload-entity">Cargar .entity Real</button>
-              <button class="btn-neu" id="btn-load-entity-demo">Cargar Kol Battleship Demo</button>
-            </div>
+        <div class="reagle-card-panel" style="max-width: 860px; margin: 0 auto; width: 100%;">
+          <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.25); border-radius: 12px; padding: 12px; font-size: 0.84rem; color: var(--text-danger);">
+            <strong>AVISO MULTIJUGADOR:</strong> Modificar entidades altera el Checksum de red. Uso exclusivo en Un Jugador.
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div>
               <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Tipo de Entidad:</label>
-              <input type="text" id="ent-type" class="neu-input" value="CapitalShip" style="width: 100%; margin-top: 4px;" readonly>
+              <input type="text" id="ent-type" class="reagle-input" value="CapitalShip" style="width: 100%; margin-top: 4px;" readonly>
             </div>
             <div>
               <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Puntos de Casco (HullPoints):</label>
-              <input type="number" id="ent-hull" class="neu-input" value="3000" style="width: 100%; margin-top: 4px;">
+              <input type="number" id="ent-hull" class="reagle-input" value="3000" style="width: 100%; margin-top: 4px;">
             </div>
             <div>
               <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Puntos de Escudo (ShieldPoints):</label>
-              <input type="number" id="ent-shields" class="neu-input" value="1800" style="width: 100%; margin-top: 4px;">
+              <input type="number" id="ent-shields" class="reagle-input" value="1800" style="width: 100%; margin-top: 4px;">
             </div>
             <div>
               <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Capacidad Antimateria (MaxAntiMatter):</label>
-              <input type="number" id="ent-antimatter" class="neu-input" value="250" style="width: 100%; margin-top: 4px;">
+              <input type="number" id="ent-antimatter" class="reagle-input" value="250" style="width: 100%; margin-top: 4px;">
             </div>
             <div>
               <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Mitigación Máx. Escudo (maxShieldMitigation):</label>
-              <input type="number" step="0.01" id="ent-mitigation" class="neu-input" value="0.65" style="width: 100%; margin-top: 4px;">
+              <input type="number" step="0.01" id="ent-mitigation" class="reagle-input" value="0.65" style="width: 100%; margin-top: 4px;">
             </div>
             <div>
               <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Regeneración Casco (HullPointRestoreRate):</label>
-              <input type="number" step="0.1" id="ent-hull-rate" class="neu-input" value="1.5" style="width: 100%; margin-top: 4px;">
+              <input type="number" step="0.1" id="ent-hull-rate" class="reagle-input" value="1.5" style="width: 100%; margin-top: 4px;">
             </div>
-          </div>
-
-          <div style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 12px;">
-            <button class="btn-neu btn-neu-success" id="btn-save-entity">Guardar Parámetros de Entidad</button>
           </div>
         </div>
       </section>
@@ -414,58 +404,42 @@
            VISTA 5: GALAXY FORGE & TOPOLOGY VIEWER
            ====================================================================== -->
       <section id="tab-galaxy" class="view-panel">
-        <div class="neu-card" style="width: 100%; max-width: 1240px; margin: 0 auto;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-            <h3 style="font-size: 1.05rem; font-weight: 700;">Galaxy Forge - Topología y Visualizador de Sistemas Estelares</h3>
-            <div style="display: flex; gap: 8px;">
-              <input type="file" id="file-input-galaxy" accept=".galaxy" style="display: none;">
-              <button class="btn-neu" id="btn-trigger-upload-galaxy">Cargar .galaxy Real</button>
-              <button class="btn-neu" id="btn-demo-galaxy">Mapa 8 Planetas</button>
-              <button class="btn-neu btn-neu-primary" id="btn-generate-galaxy">Generar Procedural (12 Planetas)</button>
-              <button class="btn-neu btn-neu-success" id="btn-export-galaxy">Exportar .galaxy</button>
-            </div>
-          </div>
-
+        <div class="reagle-card-panel" style="width: 100%;">
           <div style="display: grid; grid-template-columns: 1fr 340px; gap: 20px;">
             <div>
               <div style="border-radius: 18px; overflow: hidden; box-shadow: var(--neu-shadow-inset-deep); background: #060a14; border: 1px solid rgba(255, 255, 255, 0.4);">
                 <canvas id="galaxy-canvas" width="840" height="520" style="display: block; width: 100%; height: auto; cursor: crosshair;"></canvas>
               </div>
 
-              <!-- Leyenda de colores -->
-              <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; font-size: 0.78rem; color: var(--text-secondary); align-items: center; justify-content: center;">
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#facc15; margin-right:4px;"></span>Estrella Central</span>
+              <!-- Leyenda -->
+              <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: 0.78rem; color: var(--text-secondary); justify-content: center;">
+                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#facc15; margin-right:4px;"></span>Estrella</span>
                 <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#22c55e; margin-right:4px;"></span>Terran (Home)</span>
                 <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#eab308; margin-right:4px;"></span>Desert</span>
                 <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#38bdf8; margin-right:4px;"></span>Ice</span>
                 <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ef4444; margin-right:4px;"></span>Volcanic</span>
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#94a3b8; margin-right:4px;"></span>Asteroid</span>
                 <span><span style="display:inline-block; width:14px; height:2px; background:#06b6d4; margin-right:4px; vertical-align:middle;"></span>Línea de Fase</span>
               </div>
             </div>
 
-            <!-- Columna Derecha: Inspector de Sistemas y Topología -->
             <div style="display: flex; flex-direction: column; gap: 14px;">
-              <div class="neu-card" style="padding: 14px; box-shadow: var(--neu-shadow-flat-sm);">
-                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 8px;">Métricas del Escenario</h4>
+              <div class="reagle-card-panel" style="padding: 14px; box-shadow: var(--neu-shadow-card-sm);">
+                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--text-blue); margin-bottom: 6px;">Métricas del Escenario</h4>
                 <div id="galaxy-scenario-name" style="font-weight: 800; font-size: 1rem; margin-bottom: 6px;">Sector_Solaris_Alpha</div>
-                <div style="font-size: 0.82rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 5px;">
-                  <div>Estrellas: <strong id="galaxy-star-count" style="color: var(--text-primary);">1</strong></div>
-                  <div>Planetas Totales: <strong id="galaxy-planet-count" style="color: var(--text-primary);">12</strong></div>
-                  <div>Líneas de Fase: <strong id="galaxy-lane-count" style="color: var(--text-primary);">13</strong></div>
-                  <div>Estado Topológico: <span id="galaxy-topology-status" class="metric-chip chip-green">Conectado (Sin Islas)</span></div>
+                <div style="font-size: 0.82rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px;">
+                  <div>Estrellas: <strong id="galaxy-star-count" style="color: var(--text-main);">1</strong></div>
+                  <div>Planetas: <strong id="galaxy-planet-count" style="color: var(--text-main);">12</strong></div>
+                  <div>Líneas de Fase: <strong id="galaxy-lane-count" style="color: var(--text-main);">13</strong></div>
                 </div>
               </div>
 
-              <div class="neu-card" style="padding: 14px; box-shadow: var(--neu-shadow-flat-sm); flex: 1; overflow-y: auto; max-height: 380px;">
-                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 8px;">Inspector de Planeta</h4>
-                <div id="galaxy-selected-info" style="font-size: 0.82rem; color: var(--text-secondary);">
-                  <em>Haz clic en cualquier planeta del mapa para inspeccionar sus coordenadas orbitales y conexiones.</em>
+              <div class="reagle-card-panel" style="padding: 14px; box-shadow: var(--neu-shadow-card-sm); flex: 1; overflow-y: auto; max-height: 380px;">
+                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--text-blue); margin-bottom: 6px;">Inspector de Planeta</h4>
+                <div id="galaxy-selected-info" style="font-size: 0.82rem; color: var(--text-muted);">
+                  <em>Haz clic en cualquier planeta para inspeccionar sus coordenadas.</em>
                 </div>
-                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--accent-blue); margin-top: 14px; margin-bottom: 8px;">Listado de Nodos</h4>
-                <div id="galaxy-nodes-list" style="display: flex; flex-direction: column; gap: 6px; font-size: 0.78rem;">
-                  <!-- Lista interactiva de planetas -->
-                </div>
+                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--text-blue); margin-top: 12px; margin-bottom: 6px;">Listado de Nodos</h4>
+                <div id="galaxy-nodes-list" style="display: flex; flex-direction: column; gap: 6px; font-size: 0.78rem;"></div>
               </div>
             </div>
           </div>
@@ -476,41 +450,36 @@
            VISTA 6: CONVERTDATA CLI & ENGINE TOOLS
            ====================================================================== -->
       <section id="tab-convert" class="view-panel">
-        <div class="neu-card" style="max-width: 800px; margin: 0 auto; width: 100%;">
-          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;">ConvertData CLI - Conversor Binario ↔ Texto Canónico</h3>
-          <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 16px;">
-            Convierte archivos de juego (.entity, .mesh, .particle, .gui) de formato binario compilado a texto plano editable y viceversa.
+        <div class="reagle-card-panel" style="max-width: 760px; margin: 0 auto; width: 100%;">
+          <h3 style="font-size: 1.15rem; font-weight: 800;">ConvertData CLI - Conversor Binario ↔ Texto</h3>
+          <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 2px;">
+            Ejecuta directamente el compilador nativo ConvertData_Rebellion.exe para recursos .entity, .mesh y .particle.
           </p>
 
-          <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 14px;">
             <div>
               <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Tipo de Recurso:</label>
-              <select id="convert-resource-type" class="neu-input" style="width: 100%; margin-top: 4px;">
-                <option value="entity">Entidad de Combate (.entity)</option>
+              <select id="convert-resource-type" class="reagle-input" style="width: 100%; margin-top: 4px;">
+                <option value="entity">Entidad (.entity)</option>
                 <option value="mesh">Malla 3D (.mesh)</option>
-                <option value="particle">Efecto de Partículas (.particle)</option>
-                <option value="gui">Interfaz Gráfica (.gui)</option>
+                <option value="particle">Partículas (.particle)</option>
               </select>
             </div>
 
             <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Dirección de Conversión:</label>
-              <select id="convert-direction" class="neu-input" style="width: 100%; margin-top: 4px;">
-                <option value="to_text">Binario ➔ Texto Editable (TXT/TXT2)</option>
+              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Dirección:</label>
+              <select id="convert-direction" class="reagle-input" style="width: 100%; margin-top: 4px;">
+                <option value="to_text">Binario ➔ Texto Editable (TXT)</option>
                 <option value="to_binary">Texto Editable ➔ Binario Compilado (BIN)</option>
               </select>
             </div>
 
             <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Ruta Relativa del Archivo:</label>
-              <input type="text" id="convert-file-path" class="neu-input" value="Entity/KolBattleship.entity" style="width: 100%; margin-top: 4px;">
+              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Ruta del Archivo:</label>
+              <input type="text" id="convert-file-path" class="reagle-input" value="Entity/KolBattleship.entity" style="width: 100%; margin-top: 4px;">
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
-              <button class="btn-neu btn-neu-primary" id="btn-run-convert">Ejecutar Conversión CLI</button>
-            </div>
-
-            <div id="convert-result-box" style="display: none; padding: 12px; border-radius: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.84rem;"></div>
+            <div id="convert-result-box" style="display: none; padding: 12px; border-radius: 12px; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.3); font-size: 0.84rem;"></div>
           </div>
         </div>
       </section>
@@ -518,1069 +487,40 @@
     </main>
   </div>
 
-  <!-- ==========================================================================
-       MODAL DE EDICIÓN CON TOKEN GUARD EN TIEMPO REAL
-       ========================================================================== -->
+  <!-- MODAL DE EDICIÓN CON TOKEN GUARD EN TIEMPO REAL -->
   <div class="modal-overlay" id="edit-modal">
     <div class="modal-card">
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h3 id="modal-string-id" style="font-size: 1.15rem; font-weight: 800; color: var(--accent-blue);">IDS_SAMPLE_KEY</h3>
-        <button class="btn-icon-neu" id="modal-close" style="font-size: 1.2rem;">&times;</button>
+        <h3 id="modal-string-id" style="font-size: 1.15rem; font-weight: 800; color: var(--text-blue);">IDS_SAMPLE_KEY</h3>
+        <button class="btn-icon-reagle" id="modal-close" style="font-size: 1.2rem;">&times;</button>
       </div>
 
       <div>
-        <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Texto Original en Inglés (Protegido):</label>
-        <div id="modal-original-text" style="background: #e2e5e9; box-shadow: var(--neu-shadow-inset); padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; margin-top: 4px; color: var(--text-primary);"></div>
+        <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Texto Original en Inglés:</label>
+        <div id="modal-original-text" style="background: var(--neu-slot-bg); box-shadow: var(--neu-shadow-inset); padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; margin-top: 4px; color: var(--text-main);"></div>
       </div>
 
       <div>
         <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Traducción al Español:</label>
-        <textarea id="modal-translated-input" class="neu-input" style="width: 100%; height: 90px; margin-top: 4px; resize: vertical; font-family: var(--font-sans);"></textarea>
+        <textarea id="modal-translated-input" class="reagle-input" style="width: 100%; height: 90px; margin-top: 4px; resize: vertical;"></textarea>
       </div>
 
       <div id="modal-token-feedback" style="font-size: 0.84rem; padding: 10px 14px; border-radius: 12px; display: none;"></div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
-        <button class="btn-neu" id="btn-suggest-tm" style="font-size: 0.8rem;">
+        <button class="btn-reagle" id="btn-suggest-tm" style="font-size: 0.8rem;">
           🧠 Autocompletar con Memoria (TM)
         </button>
         <div style="display: flex; gap: 10px;">
-          <button class="btn-neu" id="modal-cancel">Cancelar</button>
-          <button class="btn-neu btn-neu-success" id="modal-save">Guardar Cambios</button>
+          <button class="btn-reagle" id="modal-cancel">Cancelar</button>
+          <button class="btn-reagle btn-reagle-success" id="modal-save">Guardar Cambios</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SCRIPT LOGIC (CLIENT SPA) -->
-  <script>
-    // ESTADO REACTIVO DEL CLIENTE
-    const state = {
-      allEntries: [],
-      filteredEntries: [],
-      currentFilter: 'all',
-      activeMods: [
-        { name: '[ES] Star Wars Interregnum Traduccion', priority: 999, isMinimod: true, ramMb: 15 },
-        { name: 'Star Wars Interregnum', priority: 989, isMinimod: false, ramMb: 1250 },
-        { name: 'Enhanced 4X Mod', priority: 979, isMinimod: false, ramMb: 450 }
-      ],
-      currentEditIndex: null,
-      rowHeight: 52,
-      visibleCount: 40,
-      currentGalaxy: null,
-    };
-
-    const MODULE_TITLES = {
-      'tab-translation': ['Estudio de Traducción', 'Gestión masiva de diccionarios .str, Token Guard en tiempo real e inyección UTF-8 BOM canónica.'],
-      'tab-mods': ['Gestor VFS & Mods', 'Control de prioridades en EnabledMods.txt y monitor de techo físico virtual de 32 bits (LAA).'],
-      'tab-system': ['Diagnóstico & Salud', 'Verificación de variables fail-fast, conectividad de base de datos relacional y blindaje UUID Safety.'],
-      'tab-entities': ['Editor de Entidades', 'Inspección de atributos de combate con respaldo atómico y aviso de checksum de red.'],
-      'tab-galaxy': ['Galaxy Forge Companion', 'Modelador de topologías estelares, detección de planetas aislados y exportación canónica .galaxy.'],
-      'tab-convert': ['ConvertData CLI', 'Conversor bidireccional entre binario DirectX compilado y texto legible por humanos.']
-    };
-
-    // TAB SWITCHER GLOBAL (SIDEBAR & DOCK SINCRONIZADOS)
-    function switchTab(targetId) {
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        if (b.getAttribute('data-tab') === targetId) {
-          b.classList.add('active');
-        } else {
-          b.classList.remove('active');
-        }
-      });
-
-      document.querySelectorAll('.neu-dock-btn[data-tab]').forEach(b => {
-        if (b.getAttribute('data-tab') === targetId) {
-          b.classList.add('active');
-        } else {
-          b.classList.remove('active');
-        }
-      });
-
-      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
-      const activePanel = document.getElementById(targetId);
-      if (activePanel) activePanel.classList.add('active');
-
-      if (MODULE_TITLES[targetId]) {
-        document.getElementById('view-title').innerText = MODULE_TITLES[targetId][0];
-        document.getElementById('view-subtitle').innerText = MODULE_TITLES[targetId][1];
-      }
-
-      // Ajustar visibilidad de filtros del grid
-      const filterBar = document.querySelector('.segmented-control-bar');
-      if (filterBar) {
-        filterBar.style.display = (targetId === 'tab-translation') ? 'flex' : 'none';
-      }
-
-      // Actualizar botones de cabecera contextuales
-      const actions = document.getElementById('module-header-actions');
-      if (actions) {
-        if (targetId === 'tab-translation') {
-          actions.innerHTML = `
-            <input type="file" id="file-input-str" accept=".str" style="display: none;">
-            <button class="btn-neu" id="btn-trigger-upload-str" title="Cargar archivo real .str">📁 Cargar .str Local</button>
-            <button class="btn-neu" id="btn-load-sample">🔄 Demo (7.828)</button>
-            <button class="btn-neu btn-neu-success" id="btn-export-str">💾 Exportar .str (BOM)</button>
-          `;
-          wireTranslationHeaderEvents();
-        } else if (targetId === 'tab-mods') {
-          actions.innerHTML = `
-            <button class="btn-neu" id="hdr-scan-mods">📁 Escanear Mods</button>
-            <button class="btn-neu btn-neu-success" id="hdr-inject-minimod">+ Inyectar Minimod</button>
-            <button class="btn-neu btn-neu-primary" id="hdr-save-mods">💾 Guardar VFS</button>
-          `;
-          document.getElementById('hdr-scan-mods').addEventListener('click', () => document.getElementById('btn-scan-mods').click());
-          document.getElementById('hdr-inject-minimod').addEventListener('click', injectMinimodAction);
-          document.getElementById('hdr-save-mods').addEventListener('click', () => document.getElementById('btn-save-enabled-mods').click());
-        } else if (targetId === 'tab-entities') {
-          actions.innerHTML = `
-            <button class="btn-neu" id="hdr-upload-entity">📁 Cargar .entity Real</button>
-            <button class="btn-neu" id="hdr-demo-entity">Cargar Kol Demo</button>
-            <button class="btn-neu btn-neu-success" id="hdr-save-entity">💾 Guardar Parámetros</button>
-          `;
-          document.getElementById('hdr-upload-entity').addEventListener('click', () => document.getElementById('btn-trigger-upload-entity').click());
-          document.getElementById('hdr-demo-entity').addEventListener('click', () => document.getElementById('btn-load-entity-demo').click());
-          document.getElementById('hdr-save-entity').addEventListener('click', () => document.getElementById('btn-save-entity').click());
-        } else if (targetId === 'tab-galaxy') {
-          actions.innerHTML = `
-            <button class="btn-neu" id="hdr-upload-galaxy">📁 Cargar .galaxy Real</button>
-            <button class="btn-neu" id="hdr-demo-galaxy">Mapa 8 Planetas</button>
-            <button class="btn-neu btn-neu-primary" id="hdr-gen-galaxy">Generar 12P</button>
-            <button class="btn-neu btn-neu-success" id="hdr-export-galaxy">💾 Exportar .galaxy</button>
-          `;
-          document.getElementById('hdr-upload-galaxy').addEventListener('click', () => document.getElementById('btn-trigger-upload-galaxy').click());
-          document.getElementById('hdr-demo-galaxy').addEventListener('click', () => document.getElementById('btn-demo-galaxy').click());
-          document.getElementById('hdr-gen-galaxy').addEventListener('click', () => document.getElementById('btn-generate-galaxy').click());
-          document.getElementById('hdr-export-galaxy').addEventListener('click', () => document.getElementById('btn-export-galaxy').click());
-        } else if (targetId === 'tab-system') {
-          actions.innerHTML = `
-            <button class="btn-neu btn-neu-primary" id="hdr-refresh-health">🔄 Actualizar Diagnóstico</button>
-          `;
-          document.getElementById('hdr-refresh-health').addEventListener('click', fetchHealth);
-        } else if (targetId === 'tab-convert') {
-          actions.innerHTML = `
-            <button class="btn-neu btn-neu-primary" id="hdr-run-convert">⚡ Ejecutar Conversión</button>
-          `;
-          document.getElementById('hdr-run-convert').addEventListener('click', () => document.getElementById('btn-run-convert').click());
-        }
-      }
-
-      if (targetId === 'tab-galaxy' && state.currentGalaxy) {
-        requestAnimationFrame(() => drawGalaxy(state.currentGalaxy));
-      }
-    }
-
-    function wireTranslationHeaderEvents() {
-      const triggerStr = document.getElementById('btn-trigger-upload-str');
-      const fileInputStr = document.getElementById('file-input-str');
-      if (triggerStr && fileInputStr) {
-        triggerStr.addEventListener('click', () => fileInputStr.click());
-        fileInputStr.addEventListener('change', handleStrFileUpload);
-      }
-      const btnSample = document.getElementById('btn-load-sample');
-      if (btnSample) {
-        btnSample.addEventListener('click', () => {
-          state.allEntries = generateDemoEntries();
-          state.filteredEntries = state.allEntries;
-          document.getElementById('sidebar-string-count').innerText = state.allEntries.length;
-          document.getElementById('metric-total-strings').innerText = state.allEntries.length.toLocaleString();
-          renderVirtualGrid();
-        });
-      }
-      const btnExport = document.getElementById('btn-export-str');
-      if (btnExport) {
-        btnExport.addEventListener('click', handleStrExport);
-      }
-    }
-
-    document.querySelectorAll('.tab-btn, .neu-dock-btn[data-tab]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetId = btn.getAttribute('data-tab');
-        if (targetId) switchTab(targetId);
-      });
-    });
-
-    // GENERAR DATASET DE DEMOSTRACIÓN (7.828 ENTRADAS PARA EL GRID VIRTUAL)
-    function generateDemoEntries() {
-      const keys = [
-        ['IDS_MAIN_MENU_TITLE', 'Sins of a Solar Empire: Rebellion', 'Sins of a Solar Empire: Rebellion'],
-        ['IDS_FLEET_STATUS', 'Fleet %s holding position with [VALUE] ships.', 'Flota %s manteniendo posición con [VALUE] naves.'],
-        ['IDS_CAPITAL_SHIP_NAME', 'Kol Class Battleship', 'Acorazado Clase Kol'],
-        ['IDS_TITAN_RAGNAROV', 'Ragnarov Titan armed with railguns.', 'Titán Ragnarov equipado con cañones de riel.'],
-        ['IDS_ABILITY_SNIPE', 'Snipe enemy capital ships dealing [VALUE] damage.', 'Francotirador contra naves capitales infligiendo [VALUE] de daño.'],
-        ['IDS_RESEARCH_ARMOR', 'Increases armor rating by [VALUE]%.', 'Incrementa el blindaje en un [VALUE]%.'],
-        ['IDS_PLANET_DESERT', 'Arid and barren desert planet.', 'Planeta desértico árido y yermo.']
-      ];
-
-      const entries = [];
-      for (let i = 0; i < 7828; i++) {
-        const template = keys[i % keys.length];
-        entries.push({
-          id: `${template[0]}_${i}`,
-          original: template[1],
-          translated: template[2],
-          tokens: extractTokens(template[1]),
-        });
-      }
-      return entries;
-    }
-
-    function extractTokens(text) {
-      const regex = /\[VALUE\d*\]|%s|%d|%f|\{\d+\}/g;
-      const found = [];
-      let m;
-      while ((m = regex.exec(text)) !== null) {
-        found.push(m[0]);
-      }
-      return found;
-    }
-
-    // CONTROLADOR DEL SCROLL VIRTUAL (60 FPS)
-    const viewport = document.getElementById('virtual-viewport');
-    const runway = document.getElementById('virtual-runway');
-
-    function renderVirtualGrid() {
-      const total = state.filteredEntries.length;
-      runway.style.height = `${total * state.rowHeight}px`;
-
-      const scrollTop = viewport.scrollTop;
-      const startIndex = Math.max(0, Math.floor(scrollTop / state.rowHeight) - 5);
-      const endIndex = Math.min(total, startIndex + state.visibleCount);
-
-      runway.innerHTML = '';
-
-      for (let i = startIndex; i < endIndex; i++) {
-        const item = state.filteredEntries[i];
-        if (!item) continue;
-
-        const row = document.createElement('div');
-        row.className = 'virtual-row';
-        row.style.transform = `translateY(${i * state.rowHeight}px)`;
-
-        const tokenPills = item.tokens.map(t => `<span class="token-pill">${t}</span>`).join('');
-
-        row.innerHTML = `
-          <div class="col-id" title="${item.id}">${item.id}</div>
-          <div class="col-text" title="${item.original}">${item.original}</div>
-          <div class="col-text" title="${item.translated}">${item.translated}</div>
-          <div class="col-tokens">${tokenPills}</div>
-          <div class="col-actions">
-            <button class="btn-icon-neu btn-edit" data-index="${i}" title="Editar traducción">✏️</button>
-          </div>
-        `;
-        runway.appendChild(row);
-      }
-
-      runway.querySelectorAll('.btn-edit').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const idx = parseInt(btn.getAttribute('data-index'), 10);
-          openEditModal(idx);
-        });
-      });
-    }
-
-    viewport.addEventListener('scroll', renderVirtualGrid);
-
-    // FILTRO DE BÚSQUEDA Y SEGMENTED TABS
-    function applyFilters() {
-      const query = document.getElementById('grid-search').value.toLowerCase().trim();
-      let entries = state.allEntries;
-
-      if (state.currentFilter === 'tokens') {
-        entries = entries.filter(e => e.tokens.length > 0);
-      }
-
-      if (query) {
-        entries = entries.filter(item => 
-          item.id.toLowerCase().includes(query) ||
-          item.original.toLowerCase().includes(query) ||
-          item.translated.toLowerCase().includes(query)
-        );
-      }
-
-      state.filteredEntries = entries;
-      document.getElementById('metric-total-strings').innerText = state.filteredEntries.length.toLocaleString();
-      viewport.scrollTop = 0;
-      renderVirtualGrid();
-    }
-
-    document.getElementById('grid-search').addEventListener('input', applyFilters);
-
-    document.querySelectorAll('#string-filter-pills .segment-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#string-filter-pills .segment-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.currentFilter = btn.getAttribute('data-filter');
-        applyFilters();
-      });
-    });
-
-    // CARGA REAL DE ARCHIVOS .STR CON FILEREADER
-    function handleStrFileUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const text = event.target.result;
-        try {
-          const res = await fetch('api/strings/parse', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ raw_content: text })
-          });
-          const json = await res.json();
-          if (json.success && json.data && json.data.entries) {
-            state.allEntries = json.data.entries.map(e => ({
-              id: e.id,
-              original: e.value,
-              translated: e.value,
-              tokens: extractTokens(e.value)
-            }));
-            state.filteredEntries = state.allEntries;
-            document.getElementById('sidebar-string-count').innerText = state.allEntries.length;
-            document.getElementById('metric-total-strings').innerText = state.allEntries.length.toLocaleString();
-            renderVirtualGrid();
-            alert(`Archivo .str cargado con éxito: ${state.allEntries.length} cadenas ingresadas.`);
-            return;
-          }
-        } catch (err) {}
-
-        // Fallback léxico cliente
-        const lines = text.split(/\r?\n/);
-        const parsed = [];
-        let curId = null;
-        for (const line of lines) {
-          const idM = line.match(/^\s*ID\s+"(.*)"$/);
-          if (idM) curId = idM[1];
-          const valM = line.match(/^\s*Value\s+"(.*)"$/);
-          if (valM && curId) {
-            parsed.push({
-              id: curId,
-              original: valM[1],
-              translated: valM[1],
-              tokens: extractTokens(valM[1])
-            });
-            curId = null;
-          }
-        }
-        if (parsed.length > 0) {
-          state.allEntries = parsed;
-          state.filteredEntries = state.allEntries;
-          document.getElementById('sidebar-string-count').innerText = state.allEntries.length;
-          document.getElementById('metric-total-strings').innerText = state.allEntries.length.toLocaleString();
-          renderVirtualGrid();
-          alert(`Archivo .str analizado exitosamente en cliente: ${parsed.length} cadenas.`);
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    async function handleStrExport() {
-      try {
-        const payload = {
-          entries: state.allEntries.slice(0, 1000).map(e => ({ id: e.id, value: e.translated }))
-        };
-        const res = await fetch('api/strings/export', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const json = await res.json();
-        if (json.success && json.data && json.data.content) {
-          downloadBlob(json.data.content, 'Spanish.str', 'text/plain;charset=utf-8');
-          return;
-        }
-      } catch (e) {}
-
-      // Fallback local con BOM UTF-8 y CRLF
-      const exportSlice = state.allEntries.slice(0, 500);
-      let fallbackStr = `\uFEFFTXT\r\nNumStrings ${exportSlice.length}\r\n`;
-      exportSlice.forEach(entry => {
-        const escaped = entry.translated.replace(/"/g, '\\"');
-        fallbackStr += `StringInfo\r\n{\r\n\tID "${entry.id}"\r\n\tValue "${escaped}"\r\n}\r\n`;
-      });
-      downloadBlob(fallbackStr, 'Spanish.str', 'text/plain;charset=utf-8');
-    }
-
-    // MODAL DE EDICIÓN Y VALIDACIÓN TOKEN GUARD EN VIVO
-    const modal = document.getElementById('edit-modal');
-    const inputTranslated = document.getElementById('modal-translated-input');
-    const feedbackBox = document.getElementById('modal-token-feedback');
-
-    function openEditModal(index) {
-      state.currentEditIndex = index;
-      const item = state.filteredEntries[index];
-      document.getElementById('modal-string-id').innerText = item.id;
-      document.getElementById('modal-original-text').innerText = item.original;
-      inputTranslated.value = item.translated;
-      validateModalLive();
-      modal.classList.add('active');
-    }
-
-    function closeModal() {
-      modal.classList.remove('active');
-      state.currentEditIndex = null;
-    }
-
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    document.getElementById('modal-cancel').addEventListener('click', closeModal);
-
-    function validateModalLive() {
-      if (state.currentEditIndex === null) return;
-      const item = state.filteredEntries[state.currentEditIndex];
-      const val = inputTranslated.value;
-
-      if (/(?<!\\)"/.test(val)) {
-        feedbackBox.style.display = 'block';
-        feedbackBox.style.background = 'rgba(239, 68, 68, 0.15)';
-        feedbackBox.style.color = '#ef4444';
-        feedbackBox.innerText = 'ADVERTENCIA: Contiene comillas dobles sin escapar que romperán el motor.';
-        return;
-      }
-
-      const origTokens = item.tokens;
-      const currentTokens = extractTokens(val);
-
-      const missing = origTokens.filter(t => !currentTokens.includes(t));
-      if (missing.length > 0) {
-        feedbackBox.style.display = 'block';
-        feedbackBox.style.background = 'rgba(239, 68, 68, 0.15)';
-        feedbackBox.style.color = '#ef4444';
-        feedbackBox.innerText = `ERROR TOKEN GUARD: Faltan los tokens requeridos: ${missing.join(', ')}`;
-        return;
-      }
-
-      feedbackBox.style.display = 'block';
-      feedbackBox.style.background = 'rgba(16, 185, 129, 0.15)';
-      feedbackBox.style.color = '#059669';
-      feedbackBox.innerText = 'SINTAXIS CORRECTA: Todos los tokens del motor coinciden.';
-    }
-
-    inputTranslated.addEventListener('input', validateModalLive);
-
-    document.getElementById('modal-save').addEventListener('click', () => {
-      if (state.currentEditIndex === null) return;
-      const item = state.filteredEntries[state.currentEditIndex];
-      item.translated = inputTranslated.value;
-      closeModal();
-      renderVirtualGrid();
-    });
-
-    document.getElementById('btn-suggest-tm').addEventListener('click', () => {
-      alert('Memoria de Traducción (TM): Cadena propagada con 100% de coincidencia SHA-256.');
-    });
-
-    // EXPORTADOR .STR CON FIRMA UTF-8 BOM Y CRLF
-    function downloadBlob(content, filename, type) {
-      const blob = new Blob([content], { type });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    wireTranslationHeaderEvents();
-
-    // GESTOR DE MODS Y RECALCULO DE RAM
-    function renderModManager() {
-      const listContainer = document.getElementById('mod-active-list');
-      listContainer.innerHTML = '';
-
-      let totalRam = 1400; // Base engine
-      state.activeMods.forEach((m, idx) => {
-        totalRam += m.ramMb;
-        const row = document.createElement('div');
-        row.style.display = 'flex';
-        row.style.justifyContent = 'space-between';
-        row.style.alignItems = 'center';
-        row.style.padding = '10px 14px';
-        row.style.borderRadius = '12px';
-        row.style.background = m.isMinimod ? 'rgba(56, 189, 248, 0.08)' : 'var(--neu-bg)';
-        row.style.boxShadow = 'var(--neu-shadow-flat-sm)';
-        row.style.border = m.isMinimod ? '1px solid rgba(56, 189, 248, 0.4)' : '1px solid rgba(255, 255, 255, 0.6)';
-
-        row.innerHTML = `
-          <div>
-            <strong>${m.name}</strong>
-            <span style="font-size: 0.76rem; color: var(--text-secondary); margin-left: 8px;">(~${m.ramMb} MB)</span>
-            ${m.isMinimod ? '<span class="metric-chip chip-cyan" style="margin-left: 6px;">Minimod VFS</span>' : ''}
-          </div>
-          <div>
-            <span class="pill-count-badge" style="background:#fff; color:var(--accent-blue);">P${m.priority}</span>
-          </div>
-        `;
-        listContainer.appendChild(row);
-      });
-
-      const fill = document.getElementById('ram-meter-fill');
-      const text = document.getElementById('ram-meter-text');
-      const badge = document.getElementById('ram-risk-badge');
-      const metricUsage = document.getElementById('metric-ram-usage');
-
-      metricUsage.innerText = totalRam.toLocaleString();
-      const pct = Math.min(100, Math.round((totalRam / 3250) * 100));
-      fill.style.width = `${pct}%`;
-      text.innerText = `${totalRam.toLocaleString()} MB / 3.250 MB (${pct}%)`;
-
-      if (totalRam >= 3350) {
-        fill.className = 'neu-progress-fill critical';
-        badge.style.color = '#ef4444';
-        badge.style.background = 'rgba(239, 68, 68, 0.15)';
-        badge.innerText = 'ESTADO: CRÍTICO (MiniDump Crash inminente en batallas)';
-      } else if (totalRam >= 3100) {
-        fill.className = 'neu-progress-fill warning';
-        badge.style.color = '#f59e0b';
-        badge.style.background = 'rgba(245, 158, 11, 0.15)';
-        badge.innerText = 'ESTADO: ALTO RIESGO (Alcanzando techo de 32 bits)';
-      } else {
-        fill.className = 'neu-progress-fill';
-        badge.style.color = '#10b981';
-        badge.style.background = 'rgba(16, 185, 129, 0.15)';
-        badge.innerText = 'ESTADO: SEGURO (Bajo riesgo de colapso de memoria)';
-      }
-    }
-
-    function injectMinimodAction() {
-      const name = prompt('Nombre del minimod de traducción para inyectar con Prioridad 999:', '[ES] Sins Rebellion Traduccion');
-      if (name) {
-        state.activeMods.unshift({ name, priority: 999, isMinimod: true, ramMb: 15 });
-        state.activeMods.forEach((m, i) => m.priority = 999 - (i * 10));
-        renderModManager();
-        document.getElementById('sidebar-mod-count').innerText = state.activeMods.length;
-        document.getElementById('metric-active-mods').innerText = state.activeMods.length;
-      }
-    }
-
-    document.getElementById('btn-inject-minimod').addEventListener('click', injectMinimodAction);
-    document.getElementById('btn-quick-inject').addEventListener('click', injectMinimodAction);
-
-    document.getElementById('btn-scan-mods').addEventListener('click', async () => {
-      try {
-        const res = await fetch('api/mods/scan');
-        const json = await res.json();
-        if (json.success && json.data) {
-          alert(`Escaneo completado: ${json.data.modsCount} mods disponibles detectados en directorio.`);
-        }
-      } catch (e) {
-        alert('Directorio de mods escaneado en entorno local.');
-      }
-    });
-
-    document.getElementById('btn-save-enabled-mods').addEventListener('click', async () => {
-      try {
-        const res = await fetch('api/mods/save', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mods: state.activeMods })
-        });
-        const data = await res.json();
-        if (data.success) {
-          alert('Configuración guardada en EnabledMods.txt con terminación CRLF y respaldo.');
-        } else {
-          alert(`Aviso [UUID ${data.error_uuid}]: ${data.message}`);
-        }
-      } catch (e) {
-        alert('Configuración de demostración guardada en sesión local.');
-      }
-    });
-
-    document.getElementById('btn-synthesize-session').addEventListener('click', async () => {
-      try {
-        const res = await fetch('api/mods/synthesize-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mods: state.activeMods })
-        });
-        const json = await res.json();
-        if (json.success) {
-          alert('Minimod JIT sintetizado exitosamente con manifiesto meta.json y hash SHA-256.');
-        }
-      } catch (e) {
-        alert('Minimod JIT sintetizado y preparado para arranque en sesión.');
-      }
-    });
-
-    // DIAGNÓSTICO DE SALUD Y UUID SAFETY
-    async function fetchHealth() {
-      const container = document.getElementById('health-report-content');
-      try {
-        const res = await fetch('api/system/health');
-        const json = await res.json();
-        if (json.success) {
-          const d = json.data;
-          container.innerHTML = `
-            <div style="padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 10px; color: #059669; font-weight: 700;">
-              ✓ SERVIDOR WAMP ACTIVO: Conexión establecida con Apache y PHP ${d.phpVersion}.
-            </div>
-            <div><strong>Suite Corporativa:</strong> ${d.appName} (${d.version})</div>
-            <div><strong>Organización:</strong> ${d.company}</div>
-            <div><strong>Estado Global:</strong> <span class="metric-chip chip-green">${d.status.toUpperCase()}</span></div>
-            <div><strong>Base de Datos Relacional:</strong> ${d.database}</div>
-            <div><strong>Memoria RAM Servidor:</strong> ${d.memoryUsageMb} MB</div>
-            <div><strong>Protocolo UUID Safety:</strong> ACTIVO (Cero Stack Traces en respuestas HTTP)</div>
-          `;
-        }
-      } catch (err) {
-        container.innerHTML = `
-          <div style="color: #d97706; padding: 10px; background: rgba(245, 158, 11, 0.1); border-radius: 10px;">
-            <strong>Modo Local Cliente:</strong> Operando con motor virtual offline.
-          </div>
-        `;
-      }
-    }
-
-    document.getElementById('btn-refresh-health').addEventListener('click', fetchHealth);
-
-    // INSPECTOR DE ENTIDADES Y PARÁMETROS DE COMBATE
-    document.getElementById('btn-load-entity-demo').addEventListener('click', () => {
-      document.getElementById('ent-type').value = 'CapitalShip';
-      document.getElementById('ent-hull').value = '3500';
-      document.getElementById('ent-shields').value = '2100';
-      document.getElementById('ent-antimatter').value = '300';
-      document.getElementById('ent-mitigation').value = '0.70';
-      document.getElementById('ent-hull-rate').value = '2.0';
-      alert('Entidad canónica Kol Battleship cargada en el inspector.');
-    });
-
-    document.getElementById('btn-trigger-upload-entity').addEventListener('click', () => {
-      document.getElementById('file-input-entity').click();
-    });
-
-    document.getElementById('file-input-entity').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const text = event.target.result;
-        try {
-          const res = await fetch('api/entities/inspect', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ raw_content: text })
-          });
-          const json = await res.json();
-          if (json.success && json.data) {
-            const attr = json.data.attributes || {};
-            if (attr.HullPoints) document.getElementById('ent-hull').value = attr.HullPoints;
-            if (attr.ShieldPoints) document.getElementById('ent-shields').value = attr.ShieldPoints;
-            if (attr.MaxAntiMatter) document.getElementById('ent-antimatter').value = attr.MaxAntiMatter;
-            if (attr.maxShieldMitigation) document.getElementById('ent-mitigation').value = attr.maxShieldMitigation;
-            if (attr.HullPointRestoreRate) document.getElementById('ent-hull-rate').value = attr.HullPointRestoreRate;
-            alert(`Entidad ${file.name} inspeccionada con éxito.`);
-          }
-        } catch (err) {
-          alert(`Archivo ${file.name} cargado en el inspector.`);
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    document.getElementById('btn-save-entity').addEventListener('click', async () => {
-      const params = {
-        HullPoints: parseFloat(document.getElementById('ent-hull').value),
-        ShieldPoints: parseFloat(document.getElementById('ent-shields').value),
-        MaxAntiMatter: parseFloat(document.getElementById('ent-antimatter').value),
-        maxShieldMitigation: parseFloat(document.getElementById('ent-mitigation').value),
-        HullPointRestoreRate: parseFloat(document.getElementById('ent-hull-rate').value),
-      };
-
-      try {
-        const res = await fetch('api/entities/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            file_path: 'Entity/KolBattleship.entity',
-            parameters: params
-          })
-        });
-        const data = await res.json();
-        if (data.success) {
-          alert('Parámetros guardados con respaldo seguro en storage/backups/.\n\nAVISO MULTIJUGADOR: Checksum de red alterado.');
-        } else {
-          alert(`Parámetros simulados guardados. AVISO: Checksum de red alterado para multijugador.`);
-        }
-      } catch (e) {
-        alert('Parámetros guardados en sesión local. AVISO: Checksum de red alterado para multijugador.');
-      }
-    });
-
-    // ==========================================================================
-    // MÓDULO GALAXY FORGE & TOPOLOGY RENDERER
-    // ==========================================================================
-    const PLANET_COLORS = {
-      'Terran': '#22c55e',
-      'Desert': '#eab308',
-      'Ice': '#38bdf8',
-      'Volcanic': '#ef4444',
-      'Asteroid': '#94a3b8',
-      'GasGiant': '#a855f7'
-    };
-
-    const canvas = document.getElementById('galaxy-canvas');
-    const ctx = canvas.getContext('2d');
-    let lastRenderedGalaxy = null;
-
-    function renderGalaxyTopology(galaxy) {
-      if (!galaxy) return;
-      lastRenderedGalaxy = galaxy;
-      state.currentGalaxy = galaxy;
-
-      document.getElementById('galaxy-scenario-name').innerText = galaxy.scenarioName || 'Escenario Galáctico';
-      document.getElementById('galaxy-star-count').innerText = galaxy.stars ? galaxy.stars.length : 1;
-      document.getElementById('galaxy-planet-count').innerText = galaxy.planets ? galaxy.planets.length : 0;
-      document.getElementById('galaxy-lane-count').innerText = galaxy.phaseLanes ? galaxy.phaseLanes.length : 0;
-      document.getElementById('metric-galaxy-planets').innerText = galaxy.planets ? galaxy.planets.length : 0;
-
-      const listEl = document.getElementById('galaxy-nodes-list');
-      listEl.innerHTML = '';
-      (galaxy.planets || []).forEach(p => {
-        const item = document.createElement('div');
-        item.style.padding = '6px 8px';
-        item.style.borderRadius = '8px';
-        item.style.background = '#e2e5e9';
-        item.style.boxShadow = 'var(--neu-shadow-inset)';
-        item.style.cursor = 'pointer';
-        item.style.display = 'flex';
-        item.style.justifyContent = 'space-between';
-        item.style.alignItems = 'center';
-        item.innerHTML = `
-          <div>
-            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${PLANET_COLORS[p.type] || '#38bdf8'}; margin-right:6px;"></span>
-            <strong>${p.name}</strong>
-            ${p.isHomePlanet ? '<span style="color:#10b981; margin-left:4px;">★</span>' : ''}
-          </div>
-          <span style="color:var(--text-secondary); font-size:0.7rem;">(${Math.round(p.x)}, ${Math.round(p.y)})</span>
-        `;
-        item.addEventListener('click', () => selectPlanet(p));
-        listEl.appendChild(item);
-      });
-
-      drawGalaxy(galaxy);
-    }
-
-    function selectPlanet(planet) {
-      const infoEl = document.getElementById('galaxy-selected-info');
-      infoEl.innerHTML = `
-        <div style="background: rgba(49, 130, 206, 0.08); border-left: 3px solid var(--accent-blue); padding: 8px; border-radius: 6px;">
-          <div><strong>Planeta:</strong> ${planet.name}</div>
-          <div><strong>Tipo Bioma:</strong> <span style="color:${PLANET_COLORS[planet.type] || '#333'}">${planet.type}</span></div>
-          <div><strong>Coordenadas:</strong> X: ${planet.x.toFixed(1)}, Y: ${planet.y.toFixed(1)}</div>
-          <div><strong>Planeta Natal (Home):</strong> ${planet.isHomePlanet ? 'SÍ (Spawn Inicial)' : 'NO (Sector Neutral)'}</div>
-        </div>
-      `;
-    }
-
-    function drawGalaxy(galaxy) {
-      if (!ctx || !galaxy) return;
-
-      const width = canvas.width;
-      const height = canvas.height;
-      ctx.clearRect(0, 0, width, height);
-
-      const bgGrad = ctx.createRadialGradient(width / 2, height / 2, 10, width / 2, height / 2, width / 2);
-      bgGrad.addColorStop(0, '#0a1020');
-      bgGrad.addColorStop(1, '#03060c');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < width; x += 40) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
-      }
-      for (let y = 0; y < height; y += 40) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
-      }
-
-      let maxDist = 60000;
-      (galaxy.planets || []).forEach(p => {
-        const d = Math.sqrt(p.x * p.x + p.y * p.y);
-        if (d > maxDist) maxDist = d;
-      });
-
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const scale = (Math.min(width, height) / 2 - 45) / (maxDist || 1);
-
-      const planetCoordMap = {};
-      (galaxy.planets || []).forEach(p => {
-        planetCoordMap[p.name] = {
-          cx: centerX + (p.x * scale),
-          cy: centerY + (p.y * scale),
-          raw: p
-        };
-      });
-
-      // Líneas de Fase con plasma cyan
-      ctx.save();
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.7)';
-      ctx.lineWidth = 1.6;
-      ctx.shadowColor = '#06b6d4';
-      ctx.shadowBlur = 9;
-      (galaxy.phaseLanes || []).forEach(lane => {
-        const p1 = planetCoordMap[lane.source];
-        const p2 = planetCoordMap[lane.target];
-        if (p1 && p2) {
-          ctx.beginPath();
-          ctx.moveTo(p1.cx, p1.cy);
-          ctx.lineTo(p2.cx, p2.cy);
-          ctx.stroke();
-        }
-      });
-      ctx.restore();
-
-      // Estrella Central
-      (galaxy.stars || []).forEach(star => {
-        const sx = centerX + (star.x * scale);
-        const sy = centerY + (star.y * scale);
-        ctx.save();
-        const starGrad = ctx.createRadialGradient(sx, sy, 2, sx, sy, 18);
-        starGrad.addColorStop(0, '#fff');
-        starGrad.addColorStop(0.3, '#facc15');
-        starGrad.addColorStop(1, 'rgba(234, 179, 8, 0)');
-        ctx.fillStyle = starGrad;
-        ctx.beginPath();
-        ctx.arc(sx, sy, 18, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      // Planetas
-      Object.values(planetCoordMap).forEach(mapped => {
-        const p = mapped.raw;
-        const color = PLANET_COLORS[p.type] || '#38bdf8';
-
-        ctx.save();
-        if (p.isHomePlanet) {
-          ctx.strokeStyle = '#22c55e';
-          ctx.lineWidth = 1.6;
-          ctx.setLineDash([3, 3]);
-          ctx.beginPath();
-          ctx.arc(mapped.cx, mapped.cy, 12, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
-
-        ctx.fillStyle = color;
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.arc(mapped.cx, mapped.cy, 6, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-
-        ctx.fillStyle = '#cbd5e1';
-        ctx.font = '9px Consolas, monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText(p.name, mapped.cx, mapped.cy + 16);
-      });
-    }
-
-    canvas.addEventListener('click', (e) => {
-      if (!lastRenderedGalaxy || !lastRenderedGalaxy.planets) return;
-      const rect = canvas.getBoundingClientRect();
-      const clickX = (e.clientX - rect.left) * (canvas.width / rect.width);
-      const clickY = (e.clientY - rect.top) * (canvas.height / rect.height);
-
-      let maxDist = 60000;
-      lastRenderedGalaxy.planets.forEach(p => {
-        const d = Math.sqrt(p.x * p.x + p.y * p.y);
-        if (d > maxDist) maxDist = d;
-      });
-
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const scale = (Math.min(canvas.width, canvas.height) / 2 - 45) / (maxDist || 1);
-
-      let closestPlanet = null;
-      let minDistance = 16;
-
-      lastRenderedGalaxy.planets.forEach(p => {
-        const px = centerX + (p.x * scale);
-        const py = centerY + (p.y * scale);
-        const dist = Math.hypot(clickX - px, clickY - py);
-        if (dist < minDistance) {
-          minDistance = dist;
-          closestPlanet = p;
-        }
-      });
-
-      if (closestPlanet) {
-        selectPlanet(closestPlanet);
-      }
-    });
-
-    async function requestGalaxyGeneration(name, planetCount) {
-      try {
-        const res = await fetch('api/galaxy/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ scenario_name: name, planet_count: planetCount })
-        });
-        const data = await res.json();
-        if (data.success && data.data && data.data.galaxy) {
-          renderGalaxyTopology(data.data.galaxy);
-          return;
-        }
-      } catch (err) {}
-
-      // Fallback local
-      const types = ['Terran', 'Desert', 'Ice', 'Volcanic', 'Asteroid'];
-      const planets = [];
-      const phaseLanes = [];
-      const radius = 55000;
-      const step = (Math.PI * 2) / planetCount;
-
-      for (let i = 0; i < planetCount; i++) {
-        const angle = i * step;
-        const type = types[i % types.length];
-        const pName = `Sector_${String(i + 1).padStart(2, '0')}_${type}`;
-        planets.push({
-          name: pName,
-          type,
-          x: Math.round(Math.cos(angle) * radius),
-          y: Math.round(Math.sin(angle) * radius),
-          isHomePlanet: (i === 0 || i === Math.floor(planetCount / 2))
-        });
-      }
-
-      for (let i = 0; i < planetCount; i++) {
-        phaseLanes.push({
-          source: planets[i].name,
-          target: planets[(i + 1) % planetCount].name
-        });
-      }
-      phaseLanes.push({
-        source: planets[0].name,
-        target: planets[Math.floor(planetCount / 2)].name
-      });
-
-      renderGalaxyTopology({
-        scenarioName: name,
-        stars: [{ name: 'Solaris Core', type: 'Yellow', x: 0, y: 0 }],
-        planets,
-        phaseLanes,
-        totalPlanets: planets.length,
-        totalLanes: phaseLanes.length
-      });
-    }
-
-    document.getElementById('btn-generate-galaxy').addEventListener('click', () => {
-      requestGalaxyGeneration('Solaris_Ring_12P', 12);
-    });
-
-    document.getElementById('btn-demo-galaxy').addEventListener('click', () => {
-      requestGalaxyGeneration('Solaris_Twin_Conflict', 8);
-    });
-
-    document.getElementById('btn-trigger-upload-galaxy').addEventListener('click', () => {
-      document.getElementById('file-input-galaxy').click();
-    });
-
-    document.getElementById('file-input-galaxy').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const text = event.target.result;
-        try {
-          const res = await fetch('api/galaxy/parse', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ raw_content: text })
-          });
-          const json = await res.json();
-          if (json.success && json.data) {
-            renderGalaxyTopology(json.data);
-            alert(`Escenario galáctico ${file.name} cargado con ${json.data.planets.length} planetas.`);
-          }
-        } catch (err) {
-          alert('Escenario cargado en modo local.');
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    document.getElementById('btn-export-galaxy').addEventListener('click', () => {
-      if (!lastRenderedGalaxy) {
-        alert('Genera o carga un escenario galáctico primero.');
-        return;
-      }
-
-      let content = "TXT\r\ngalaxyScenarioDef\r\n";
-      content += `\tstar\r\n\t\tname "${lastRenderedGalaxy.stars[0].name}"\r\n\t\ttype "Yellow"\r\n\t\tposition [ 0.0 , 0.0 ]\r\n`;
-
-      (lastRenderedGalaxy.planets || []).forEach(p => {
-        content += `\tplanet\r\n\t\tname "${p.name}"\r\n\t\ttype "${p.type}"\r\n\t\tposition [ ${p.x.toFixed(1)} , ${p.y.toFixed(1)} ]\r\n\t\tisHomePlanet ${p.isHomePlanet ? 'TRUE' : 'FALSE'}\r\n`;
-      });
-
-      (lastRenderedGalaxy.phaseLanes || []).forEach(lane => {
-        content += `\tjumpLane\r\n\t\tsourcePlanet "${lane.source}"\r\n\t\ttargetPlanet "${lane.target}"\r\n`;
-      });
-
-      downloadBlob(content, `${lastRenderedGalaxy.scenarioName || 'GalaxyScenario'}.galaxy`, 'text/plain;charset=utf-8');
-    });
-
-    // ==========================================================================
-    // MÓDULO CONVERTDATA CLI
-    // ==========================================================================
-    document.getElementById('btn-run-convert').addEventListener('click', async () => {
-      const type = document.getElementById('convert-resource-type').value;
-      const direction = document.getElementById('convert-direction').value;
-      const filePath = document.getElementById('convert-file-path').value;
-      const resultBox = document.getElementById('convert-result-box');
-
-      resultBox.style.display = 'block';
-      resultBox.innerHTML = '<em>Ejecutando pipeline de conversión ConvertData_Rebellion.exe...</em>';
-
-      try {
-        const res = await fetch('api/engine/convert', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            resource_type: type,
-            direction: direction,
-            file_path: filePath
-          })
-        });
-        const json = await res.json();
-        if (json.success && json.data) {
-          resultBox.innerHTML = `
-            <div style="color: #059669; font-weight: 700;">✓ CONVERSIÓN COMPLETADA: ${json.data.mode || json.data.executionMode}</div>
-            <div style="margin-top: 4px;"><strong>Ruta de Salida:</strong> ${json.data.outputPath}</div>
-            <div><strong>Hash SHA-256:</strong> ${json.data.checksum}</div>
-          `;
-        } else {
-          resultBox.innerHTML = `<span style="color: #dc2626;">Error: ${json.message || 'Error en conversión'}</span>`;
-        }
-      } catch (e) {
-        resultBox.innerHTML = `
-          <div style="color: #059669; font-weight: 700;">✓ CONVERSIÓN SIMULADA COMPLETADA (EMULATED_FALLBACK)</div>
-          <div style="margin-top: 4px;">Cabecera normalizada y formato verificado exitosamente.</div>
-        `;
-      }
-    });
-
-    // INICIALIZACIÓN
-    document.getElementById('btn-load-sample').addEventListener('click', () => {
-      state.allEntries = generateDemoEntries();
-      state.filteredEntries = state.allEntries;
-      document.getElementById('sidebar-string-count').innerText = state.allEntries.length;
-      document.getElementById('metric-total-strings').innerText = state.allEntries.length.toLocaleString();
-      renderVirtualGrid();
-    });
-
-    state.allEntries = generateDemoEntries();
-    state.filteredEntries = state.allEntries;
-    renderVirtualGrid();
-    renderModManager();
-    fetchHealth();
-    requestGalaxyGeneration('Sector_Solaris_Alpha', 12);
-  </script>
+  <!-- SCRIPTS MODULARES -->
+  <script src="assets/js/nexus-core.js"></script>
+  <script src="assets/js/nexus-ui.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SOLARIS NEXUS STUDIO - NEUMORPHIC VIRTUAL GRID STYLES
+   SOLARIS NEXUS STUDIO - REAGLE NEUMORPHIC VIRTUAL GRID STYLES
    Clepces org. ltd | Versión: v0.3.0.0-alpha
    ========================================================================== */
 
@@ -7,23 +7,23 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  background: var(--neu-bg);
-  box-shadow: inset 4px 4px 9px #c8ccd3, inset -4px -4px 9px #ffffff;
+  background: var(--neu-card-bg);
+  box-shadow: inset 3px 3px 7px #b8bdc7, inset -3px -3px 7px #ffffff;
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  min-height: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  min-height: 440px;
 }
 
 .grid-header {
   display: grid;
-  grid-template-columns: 240px 1.2fr 1.2fr 130px 80px;
-  background: #e2e5e9;
+  grid-template-columns: 240px 1.2fr 1.2fr 130px 70px;
+  background: #cfd4db;
   padding: 12px 18px;
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--text-secondary);
-  border-bottom: 1px solid rgba(160, 174, 192, 0.3);
+  border-bottom: 1px solid rgba(160, 168, 180, 0.35);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -36,18 +36,18 @@
 }
 
 .virtual-viewport::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 
 .virtual-viewport::-webkit-scrollbar-track {
-  background: #e2e5e9;
+  background: #cfd4db;
   border-radius: 4px;
 }
 
 .virtual-viewport::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #b4bac4;
   border-radius: 4px;
-  box-shadow: inset 1px 1px 2px #b0b7c3;
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.6);
 }
 
 .virtual-runway {
@@ -62,22 +62,22 @@
   width: 100%;
   height: 52px;
   display: grid;
-  grid-template-columns: 240px 1.2fr 1.2fr 130px 80px;
+  grid-template-columns: 240px 1.2fr 1.2fr 130px 70px;
   align-items: center;
   padding: 0 18px;
-  border-bottom: 1px solid rgba(160, 174, 192, 0.18);
+  border-bottom: 1px solid rgba(160, 168, 180, 0.18);
   font-size: 0.84rem;
-  color: var(--text-primary);
+  color: var(--text-main);
   transition: background-color 0.15s ease;
 }
 
 .virtual-row:hover {
-  background-color: rgba(255, 255, 255, 0.65);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .col-id {
   font-family: var(--font-mono);
-  color: var(--accent-blue);
+  color: var(--text-blue);
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -90,12 +90,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 12px;
-  color: var(--text-primary);
-}
-
-.col-text.empty {
-  color: var(--text-muted);
-  font-style: italic;
+  color: var(--text-main);
+  font-weight: 500;
 }
 
 .col-tokens {
@@ -105,10 +101,10 @@
 }
 
 .token-pill {
-  background: #ebedf0;
-  box-shadow: 2px 2px 4px #caced4, -2px -2px 4px #ffffff;
-  color: #c05621;
-  font-size: 0.7rem;
+  background: #dbe0e6;
+  box-shadow: 2px 2px 4px #b8bdc7, -2px -2px 4px #ffffff;
+  color: #b45309;
+  font-size: 0.68rem;
   padding: 2px 6px;
   border-radius: 6px;
   font-family: var(--font-mono);
@@ -121,28 +117,29 @@
   justify-content: flex-end;
 }
 
-.btn-icon-neu {
+.btn-icon-reagle {
   width: 32px;
   height: 32px;
-  border-radius: 9px;
-  background: var(--neu-bg);
-  box-shadow: 3px 3px 6px #caced4, -3px -3px 6px #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  background: var(--neu-card-bg);
+  box-shadow: 3px 3px 6px #bcc1cb, -3px -3px 6px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.15s ease;
   color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
-.btn-icon-neu:hover {
-  color: var(--accent-blue);
-  box-shadow: 4px 4px 8px #c2c6ce, -4px -4px 8px #ffffff;
+.btn-icon-reagle:hover {
+  color: var(--text-blue);
+  box-shadow: 4px 4px 8px #b4b9c3, -4px -4px 8px #ffffff;
   transform: translateY(-1px);
 }
 
-.btn-icon-neu:active {
-  box-shadow: inset 2px 2px 4px #caced4, inset -2px -2px 4px #ffffff;
+.btn-icon-reagle:active {
+  box-shadow: inset 2px 2px 4px #b8bdc7, inset -2px -2px 4px #ffffff;
   transform: translateY(1px);
 }
