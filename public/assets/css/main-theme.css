@@ -1,307 +1,628 @@
+/* ==========================================================================
+   SOLARIS NEXUS STUDIO - NEUMORPHISM DESIGN SYSTEM (SOFT UI ENTERPRISE)
+   Clepces org. ltd | Versión: v0.3.0.0-alpha
+   ========================================================================== */
+
 :root {
-  --bg-primary: #0a0f1d;
-  --bg-secondary: #0f172a;
-  --bg-card: #1e293b;
-  --bg-input: #0b1329;
-  --border-color: #334155;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --accent-cyan: #38bdf8;
-  --accent-blue: #2563eb;
-  --accent-green: #10b981;
-  --accent-amber: #f59e0b;
-  --accent-red: #ef4444;
-  --font-mono: 'Consolas', 'Courier New', monospace;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Paleta Neumórfica Base */
+  --neu-bg: #ebedf0;
+  --neu-bg-subtle: #e2e5e9;
+  --neu-bg-card: #ebedf0;
+  --neu-bg-dark: #1e2024;
+  --neu-bg-dark-dock: #181a1d;
+
+  /* Sombras Neumórficas Principales */
+  --neu-shadow-flat: 8px 8px 16px #c8ccd3, -8px -8px 16px #ffffff;
+  --neu-shadow-flat-sm: 4px 4px 10px #c8ccd3, -4px -4px 10px #ffffff;
+  --neu-shadow-flat-lg: 14px 14px 28px #c5c9d1, -14px -14px 28px #ffffff;
+  --neu-shadow-window: 24px 24px 48px #bdc2cb, -24px -24px 48px #ffffff;
+  --neu-shadow-inset: inset 3px 3px 6px #caced4, inset -3px -3px 6px #ffffff;
+  --neu-shadow-inset-deep: inset 4px 4px 8px #c2c6ce, inset -4px -4px 8px #ffffff;
+  --neu-shadow-active-pill: inset 2px 2px 5px #caced4, inset -2px -2px 5px #ffffff, 0 1px 2px rgba(255, 255, 255, 0.8);
+
+  /* Acentos y Tipografía */
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --text-muted: #a0aec0;
+  --text-light: #f7fafc;
+  
+  --accent-blue: #3182ce;
+  --accent-cyan: #0bc5ea;
+  --accent-green: #38a169;
+  --accent-emerald: #10b981;
+  --accent-amber: #dd6b20;
+  --accent-red: #e53e3e;
+
+  --border-subtle: rgba(255, 255, 255, 0.6);
+  --border-divider: rgba(160, 174, 192, 0.2);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-main);
+  background-color: var(--neu-bg);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  padding: 16px;
+  gap: 16px;
+}
+
+/* ==========================================================================
+   1. DOCK LATERAL FLOTANTE (ESTILO CÁPSULA NEUMÓRFICA DE LA IMAGEN)
+   ========================================================================== */
+.neu-outer-dock {
+  width: 58px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.neu-dock-capsule {
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-flat);
+  border-radius: 32px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-subtle);
+  width: 100%;
+}
+
+.neu-dock-inner-dark {
+  background: var(--neu-bg-dark);
+  border-radius: 26px;
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.neu-dock-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.neu-dock-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+}
+
+.neu-dock-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.neu-dock-btn.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.neu-dock-sub {
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-flat);
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   2. VENTANA PRINCIPAL NEUMÓRFICA (MAIN APP WINDOW)
+   ========================================================================== */
+.neu-window-frame {
+  flex: 1;
+  height: 100%;
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-window);
+  border-radius: 28px;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  position: relative;
+}
+
+/* ==========================================================================
+   3. SUB-SIDEBAR DE NAVEGACIÓN INTERNA
+   ========================================================================== */
+.neu-sidebar {
+  width: 290px;
+  height: 100%;
+  background: var(--neu-bg);
+  border-right: 1px solid var(--border-divider);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 18px;
+  gap: 16px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* Semáforo Mac-like */
+.mac-traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.traffic-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.traffic-red { background: #ff5f56; }
+.traffic-yellow { background: #ffbd2e; }
+.traffic-green { background: #27c93f; }
+
+/* Perfil Usuario / Corporativo */
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--neu-bg);
+  border-radius: 14px;
+  box-shadow: var(--neu-shadow-flat-sm);
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #1e293b;
+  font-size: 0.85rem;
+  box-shadow: var(--neu-shadow-inset);
+}
+
+.user-meta {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-header {
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-color);
-  padding: 12px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand h1 {
-  font-size: 1.25rem;
+.user-name {
+  font-size: 0.85rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--accent-cyan);
+  color: var(--text-primary);
+  white-space: nowrap;
 }
 
-.version-badge {
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--accent-cyan);
-  border: 1px solid var(--accent-cyan);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
+.user-org {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Grupos de Navegación */
+.nav-group-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+
+.nav-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.nav-pill-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+}
+
+.nav-pill-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.nav-pill-left svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+.nav-pill-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Pastilla Activa Neumórfica (Estilo de la imagen de referencia) */
+.nav-pill-btn.active {
+  background: #ebedf0;
+  box-shadow: 4px 4px 10px #caced4, -4px -4px 10px #ffffff, inset 1px 1px 2px rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.pill-count-badge {
+  font-size: 0.7rem;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--neu-bg-subtle);
+  box-shadow: inset 1px 1px 3px #caced4, inset -1px -1px 3px #ffffff;
+  color: var(--text-secondary);
+  font-weight: 600;
   font-family: var(--font-mono);
 }
 
-.nav-tabs {
+.nav-pill-btn.active .pill-count-badge {
+  background: #ffffff;
+  color: var(--accent-blue);
+  box-shadow: var(--neu-shadow-flat-sm);
+}
+
+/* Buscador lateral */
+.neu-search-box {
+  background: #e2e5e9;
+  box-shadow: var(--neu-shadow-inset);
+  border-radius: 12px;
+  padding: 7px 10px;
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.tab-btn {
+.neu-search-box input {
   background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.neu-search-box input::placeholder {
   color: var(--text-muted);
-  border: 1px solid transparent;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   4. ÁREA DE TRABAJO PRINCIPAL (WORKSPACE)
+   ========================================================================== */
+.neu-workspace {
+  flex: 1;
+  height: 100%;
   display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 24px 30px;
+  gap: 20px;
+  background: var(--neu-bg);
+}
+
+/* Cabecera del Módulo */
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.module-title-wrap h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.module-title-wrap p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.module-actions {
+  display: flex;
+  gap: 10px;
   align-items: center;
-  gap: 6px;
 }
 
-.tab-btn:hover {
-  color: var(--text-main);
-  background: var(--bg-card);
+/* ==========================================================================
+   5. BOTONES Y CONTROLES NEUMÓRFICOS
+   ========================================================================== */
+.btn-neu {
+  background: var(--neu-bg);
+  box-shadow: 5px 5px 12px #c8ccd3, -5px -5px 12px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.15s ease;
 }
 
-.tab-btn.active {
-  color: var(--accent-cyan);
-  background: var(--bg-card);
-  border-color: var(--accent-cyan);
+.btn-neu:hover {
+  box-shadow: 6px 6px 14px #c2c6ce, -6px -6px 14px #ffffff;
+  transform: translateY(-1px);
 }
 
-.badge-tag {
-  font-size: 0.65rem;
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-transform: uppercase;
+.btn-neu:active {
+  box-shadow: inset 3px 3px 6px #caced4, inset -3px -3px 6px #ffffff;
+  transform: translateY(1px);
+}
+
+.btn-neu-primary {
+  color: var(--accent-blue);
   font-weight: 700;
 }
 
-.badge-active {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--accent-green);
-  border: 1px solid var(--accent-green);
+.btn-neu-success {
+  color: var(--accent-emerald);
+  font-weight: 700;
 }
 
-.badge-dev {
-  background: rgba(245, 158, 11, 0.2);
-  color: var(--accent-amber);
-  border: 1px solid var(--accent-amber);
+.btn-neu-danger {
+  color: var(--accent-red);
 }
 
-main {
-  flex: 1;
+/* ==========================================================================
+   6. TARJETAS DE MÉTRICAS (COMO "EXECUTIONS 340" DE LA FOTO)
+   ========================================================================== */
+.metric-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.neu-metric-card {
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-flat);
+  border-radius: 18px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  padding: 16px 24px;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
   overflow: hidden;
 }
 
+.metric-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.metric-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.metric-number {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1;
+}
+
+.metric-chip {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chip-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+}
+
+.chip-amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #d97706;
+}
+
+.chip-cyan {
+  background: rgba(6, 182, 212, 0.15);
+  color: #0891b2;
+}
+
+.metric-footer-link {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   7. SEGMENTED TABS (COMO "WORKFLOWS, PERMISSIONS" DE LA FOTO)
+   ========================================================================== */
+.segmented-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-divider);
+  padding-bottom: 12px;
+  gap: 16px;
+}
+
+.segmented-pills {
+  display: flex;
+  background: #e2e5e9;
+  box-shadow: var(--neu-shadow-inset);
+  padding: 4px;
+  border-radius: 14px;
+  gap: 4px;
+}
+
+.segment-btn {
+  background: transparent;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.segment-btn:hover {
+  color: var(--text-primary);
+}
+
+.segment-btn.active {
+  background: #ebedf0;
+  box-shadow: 2px 2px 6px #c8ccd3, -2px -2px 6px #ffffff;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   8. PANELES DE CONTENIDO / VISTAS
+   ========================================================================== */
 .view-panel {
   display: none;
-  flex: 1;
   flex-direction: column;
-  overflow: hidden;
+  gap: 16px;
+  flex: 1;
 }
 
 .view-panel.active {
   display: flex;
 }
 
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  gap: 16px;
-}
-
-.search-box {
-  flex: 1;
-  max-width: 480px;
+.neu-card {
+  background: var(--neu-bg);
+  box-shadow: var(--neu-shadow-flat);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
   position: relative;
 }
 
-.search-box input {
-  width: 100%;
-  background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  outline: none;
-}
-
-.search-box input:focus {
-  border-color: var(--accent-cyan);
-}
-
-.btn {
-  background: var(--accent-blue);
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: opacity 0.2s;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
-.btn-success {
-  background: var(--accent-green);
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-}
-
-.btn-outline:hover {
-  background: var(--bg-card);
-}
-
-/* Mod Manager Matrix */
-.mod-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  flex: 1;
-  overflow: hidden;
-}
-
-.panel-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.panel-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--accent-cyan);
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mod-list {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.mod-row {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+/* Inputs de texto neumórficos */
+.neu-input {
+  background: #e2e5e9;
+  box-shadow: var(--neu-shadow-inset);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
   padding: 10px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: border-color 0.2s;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: box-shadow 0.2s ease;
 }
 
-.mod-row:hover {
-  border-color: var(--accent-cyan);
+.neu-input:focus {
+  box-shadow: inset 4px 4px 8px #c2c6ce, inset -4px -4px 8px #ffffff, 0 0 0 2px var(--accent-blue);
 }
 
-.mod-row.minimod {
-  border-left: 4px solid var(--accent-green);
-}
-
-.priority-chip {
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--accent-cyan);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-/* RAM Meter Widget */
-.ram-meter-box {
-  background: var(--bg-card);
-  border-radius: 6px;
-  padding: 16px;
-  margin-top: 16px;
-  border: 1px solid var(--border-color);
-}
-
-.ram-bar-container {
-  height: 14px;
-  background: var(--bg-input);
-  border-radius: 7px;
+/* Barra de RAM Neumórfica */
+.neu-progress-track {
+  background: #e2e5e9;
+  box-shadow: var(--neu-shadow-inset);
+  border-radius: 20px;
+  height: 16px;
   overflow: hidden;
-  margin: 10px 0;
-  border: 1px solid var(--border-color);
+  position: relative;
+  width: 100%;
 }
 
-.ram-bar-fill {
+.neu-progress-fill {
   height: 100%;
-  width: 43%;
-  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
-  transition: width 0.3s ease, background 0.3s ease;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  border-radius: 20px;
+  transition: width 0.4s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.ram-bar-fill.warning {
-  background: var(--accent-amber);
+.neu-progress-fill.warning {
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
 }
 
-.ram-bar-fill.critical {
-  background: var(--accent-red);
+.neu-progress-fill.critical {
+  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
 }
 
-/* Modal */
+/* ==========================================================================
+   9. MODAL NEUMÓRFICO DE EDICIÓN
+   ========================================================================== */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
   display: none;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 32, 36, 0.4);
+  backdrop-filter: blur(8px);
   z-index: 1000;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-overlay.active {
@@ -309,53 +630,14 @@ main {
 }
 
 .modal-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
+  background: var(--neu-bg);
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.25), -15px -15px 40px #ffffff;
+  border-radius: 24px;
   width: 90%;
   max-width: 640px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-body {
-  padding: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.modal-footer {
-  padding: 16px 20px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
-textarea.text-editor {
-  width: 100%;
-  background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 12px;
-  border-radius: 6px;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  resize: vertical;
-  min-height: 100px;
-}
-
-textarea.text-editor:focus {
-  border-color: var(--accent-cyan);
-  outline: none;
 }

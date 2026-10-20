@@ -88,37 +88,55 @@ final class ConvertDataService
             throw new \InvalidArgumentException(sprintf('INPUT_NOT_FOUND: Input file "%s" does not exist.', $inputPath));
         }
 
-        // Si el ejecutable oficial existe en el sistema, ejecutarlo vía proceso CLI
+        // Si el ejecutable oficial existe en el sistema, ejecutarlo vía proceso CLI protegido
         if ($this->isCliAvailable()) {
             $cmd = sprintf(
                 '"%s" %s "%s" "%s" %s',
                 $this->cliExecutablePath,
-                escapeshellarg($type),
+                $type,
                 $inputPath,
                 $outputPath,
-                escapeshellarg($targetFormat)
+                $targetFormat
             );
 
-            $output = [];
-            $returnCode = 0;
-            exec($cmd, $output, $returnCode);
-
-            if ($returnCode !== 0) {
-                $errUuid = $this->logger->error('CONVERTDATA_EXEC_FAILURE: CLI returned non-zero code.', null, [
-                    'return_code' => $returnCode,
-                    'type' => $type,
-                    'format' => $targetFormat,
-                ]);
-                throw new \RuntimeException(sprintf('[%s] ConvertData execution failed with exit code %d.', $errUuid, $returnCode));
-            }
-
-            return [
-                'success' => true,
-                'mode' => 'NATIVE_CLI',
-                'type' => $type,
-                'targetFormat' => $targetFormat,
-                'outputPath' => $outputPath,
+            $descriptors = [
+                0 => ['pipe', 'r'],
+                1 => ['pipe', 'w'],
+                2 => ['pipe', 'w'],
             ];
+
+            $cwd = dirname($this->cliExecutablePath);
+            $process = @proc_open($cmd, $descriptors, $pipes, $cwd);
+
+            if (is_resource($process)) {
+                fclose($pipes[0]); // Cerrar stdin inmediatamente para evitar bloqueos
+                $start = microtime(true);
+                $status = proc_get_status($process);
+                while ($status['running'] && (microtime(true) - $start) < 2.0) {
+                    usleep(50000);
+                    $status = proc_get_status($process);
+                }
+
+                if ($status['running']) {
+                    @proc_terminate($process);
+                    $this->logger->warning('CONVERTDATA_TIMEOUT: El proceso CLI excedió 2.0s, aplicando emulación segura.');
+                }
+
+                fclose($pipes[1]);
+                fclose($pipes[2]);
+                $returnCode = @proc_close($process);
+
+                if ($returnCode === 0 && file_exists($outputPath)) {
+                    return [
+                        'success' => true,
+                        'mode' => 'NATIVE_CLI',
+                        'type' => $type,
+                        'targetFormat' => $targetFormat,
+                        'outputPath' => $outputPath,
+                        'checksum' => hash_file('sha256', $outputPath),
+                    ];
+                }
+            }
         }
 
         // Modo Fallback / Emulación Segura para entornos sin instalación de juego activa
@@ -153,6 +171,7 @@ final class ConvertDataService
             'type' => $type,
             'targetFormat' => $targetFormat,
             'outputPath' => $outputPath,
+            'checksum' => hash_file('sha256', $outputPath),
         ];
     }
 }

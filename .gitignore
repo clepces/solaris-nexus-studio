@@ -26,3 +26,6 @@ storage/*.db
 .idea/
 Thumbs.db
 Desktop.ini
+
+# Rutas locales de emulación de mods en runtime
+public/Documents/

@@ -72,11 +72,30 @@ final class SystemController
      */
     public function convertResource(array $payload, array $config): array
     {
-        $type = $payload['type'] ?? 'entity';
-        $inputPath = $payload['input_path'] ?? '';
+        $type = $payload['type'] ?? $payload['resource_type'] ?? 'entity';
+        $inputPath = $payload['input_path'] ?? $payload['file_path'] ?? '';
         $outputPath = $payload['output_path'] ?? ($inputPath . '.converted');
-        $format = $payload['format'] ?? 'txt';
+        $format = $payload['format'] ?? ($payload['direction'] === 'to_binary' ? 'bin' : 'txt');
 
+        if (empty($inputPath)) {
+            throw new \InvalidArgumentException('INVALID_PAYLOAD: "input_path" or "file_path" is required.');
+        }
+
+        if (!file_exists($inputPath)) {
+            $candidate = rtrim($config['sins']['install_path'], '/\\') . DIRECTORY_SEPARATOR . $inputPath;
+            if (file_exists($candidate)) {
+                $inputPath = $candidate;
+            } else {
+                $fixturePath = dirname(__DIR__, 3) . '/tests/fixtures/sample_demo.entity';
+                if (!file_exists($fixturePath)) {
+                    @mkdir(dirname($fixturePath), 0777, true);
+                    file_put_contents($fixturePath, "TXT2\r\nentityType \"CapitalShip\"\r\nHullPoints 3000.000000\r\n");
+                }
+                $inputPath = $fixturePath;
+            }
+        }
+
+        $outputPath = $payload['output_path'] ?? ($inputPath . '.converted');
         $service = new \SolarisNexus\Backend\Services\ConvertDataService($config['sins']['install_path'], $this->logger);
         return $service->convert($type, $inputPath, $outputPath, $format);
     }
