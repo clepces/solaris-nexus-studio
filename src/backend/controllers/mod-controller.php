@@ -140,4 +140,52 @@ final class ModController
 
         return $synthesizer->synthesizeSession($mods, $modsPath, $config['paths']['backups']);
     }
+
+    /**
+     * Detecta rutas estándar de mods en Steam, GOG, Stardock o VFS custom.
+     */
+    public function detectPlatforms(): array
+    {
+        $userProfile = $_SERVER['USERPROFILE'] ?? (getenv('USERPROFILE') ?: '');
+        $candidates = [
+            [
+                'platform' => 'Steam / Oficial',
+                'path' => $userProfile . '/Documents/My Games/Ironclad Games/Sins of a Solar Empire Rebellion/Mods-Rebellion v1.85',
+                'description' => 'Directorio estándar de documentos para Sins Rebellion v1.85 (Steam/Retail)'
+            ],
+            [
+                'platform' => 'GOG Galaxy / DRM-Free',
+                'path' => $userProfile . '/Documents/My Games/Ironclad Games/Sins of a Solar Empire Rebellion/Mods',
+                'description' => 'Directorio unificado de mods de edición independiente'
+            ],
+            [
+                'platform' => 'Stardock Central',
+                'path' => 'C:/ProgramData/Ironclad Games/Sins of a Solar Empire Rebellion/Mods',
+                'description' => 'Repositorio global de perfiles compartidos multijugador'
+            ],
+            [
+                'platform' => 'Steam App Local',
+                'path' => 'C:/Program Files (x86)/Steam/steamapps/common/Sins of a Solar Empire Rebellion/Mods',
+                'description' => 'Directorio raíz de instalación en biblioteca de Steam'
+            ]
+        ];
+
+        $results = [];
+        foreach ($candidates as $c) {
+            $norm = str_replace('\\', '/', $c['path']);
+            $exists = is_dir($norm);
+            $results[] = [
+                'platform' => $c['platform'],
+                'path' => $norm,
+                'description' => $c['description'],
+                'exists' => $exists,
+                'active' => $exists
+            ];
+        }
+
+        return [
+            'platforms' => $results,
+            'defaultActive' => $results[0]['path']
+        ];
+    }
 }

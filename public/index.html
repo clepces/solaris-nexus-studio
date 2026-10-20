@@ -6,6 +6,9 @@
   <title>Solaris Nexus Studio - Clepces org. ltd</title>
   <link rel="stylesheet" href="assets/css/main-theme.css">
   <link rel="stylesheet" href="assets/css/datatable-virtual.css">
+  <link rel="stylesheet" href="assets/css/modules/mods-manager.css">
+  <link rel="stylesheet" href="assets/css/modules/entity-editor.css">
+  <link rel="stylesheet" href="assets/css/modules/galaxy-forge.css">
 </head>
 <body>
 
@@ -35,22 +38,17 @@
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
         </button>
 
-        <!-- 3. Diagnóstico (Chispa de 4 puntas) -->
-        <button class="dock-btn" data-tab="tab-system" title="Diagnóstico & Salud">
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        </button>
-
-        <!-- 4. Memoria TM (Nodo / Share) -->
+        <!-- 4. Editor de Entidades (Naves / Flota) -->
         <button class="dock-btn" data-tab="tab-entities" title="Editor de Entidades">
-          <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
         </button>
 
-        <!-- 5. Galaxy Forge (Dual Sliders) -->
+        <!-- 5. Galaxy Forge (Dual Sliders / Red Estelar) -->
         <button class="dock-btn" data-tab="tab-galaxy" title="Galaxy Forge">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><circle cx="19" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle><path d="M10.4 10.4L6.4 17.6"></path><path d="M13.6 13.6l4-7.2"></path></svg>
         </button>
 
-        <!-- 6. ConvertData CLI (3D Box) -->
+        <!-- 6. ConvertData CLI (3D Box Compilador) -->
         <button class="dock-btn" data-tab="tab-convert" title="ConvertData CLI">
           <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         </button>
@@ -424,28 +422,88 @@
            VISTA 2: GESTOR DE MODS Y ORQUESTADOR VFS
            ====================================================================== -->
       <section id="tab-mods" class="view-panel">
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px;">
-          <div class="reagle-card-panel">
-            <h3 style="font-size: 1.05rem; font-weight: 800;">Jerarquía de Mods Activos (EnabledMods.txt)</h3>
-            <div id="mod-active-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        <!-- Subpestañas del Módulo de Mods -->
+        <div class="mod-subtab-bar">
+          <button class="mod-subtab-btn active" data-subtab="subtab-mods-catalog">📂 Catálogo & Jerarquía VFS</button>
+          <button class="mod-subtab-btn" data-subtab="subtab-mods-injector">⚡ Inyector de Minimod & Monitor RAM</button>
+        </div>
+
+        <!-- Subpestaña 1: Catálogo y Jerarquía -->
+        <div class="mod-subtab-pane active" id="subtab-mods-catalog">
+          <!-- Tarjeta de Detección Multiplataforma -->
+          <div class="reagle-card-panel" style="padding: 14px 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: 800;">Detección Automática de Rutas de Mods (Steam / GOG / Stardock)</h3>
+                <p style="font-size: 0.74rem; color: var(--text-muted);">
+                  Escanea el sistema operativo para ubicar la carpeta canónica de instalación de mods de Sins Rebellion.
+                </p>
+              </div>
+              <button class="btn-reagle" id="btn-scan-platforms">🔍 Re-escanear Rutas</button>
+            </div>
+            <div id="platform-detection-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"></div>
           </div>
 
-          <div class="reagle-card-panel">
-            <h3 style="font-size: 1.05rem; font-weight: 800;">Monitor de Memoria RAM 32-bit (LAA)</h3>
-            <p style="font-size: 0.84rem; color: var(--text-muted);">
-              Techo físico virtual de <strong>3.250 MB</strong>. Evita colapsos de memoria por superposición desordenada de mods.
-            </p>
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; margin-bottom: 8px;">
-                <span>Consumo Total:</span>
-                <span id="ram-meter-text">1.865 MB / 3.250 MB (57%)</span>
+          <!-- Jerarquía de Mods Activos -->
+          <div class="reagle-card-panel" style="padding: 14px 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: 800;">Jerarquía de Prioridades en EnabledMods.txt</h3>
+                <p style="font-size: 0.74rem; color: var(--text-muted);">
+                  Reordena la cascada de sobrescritura de archivos. Prioridad 999 se carga en la cima del VFS.
+                </p>
               </div>
-              <div class="reagle-progress-track">
-                <div class="reagle-progress-fill" id="ram-meter-fill" style="width: 57%;"></div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-reagle" onclick="ModManagerModule.scanMods();">📁 Escanear</button>
+                <button class="btn-reagle btn-reagle-primary" onclick="ModManagerModule.saveVfsHierarchy();">💾 Guardar VFS</button>
               </div>
             </div>
-            <div id="ram-risk-badge" style="font-size: 0.84rem; font-weight: 700; color: var(--text-success); padding: 10px; background: rgba(5, 150, 105, 0.1); border-radius: 12px;">
-              ESTADO: SEGURO (Bajo riesgo de MiniDump Crash)
+            <div id="mod-active-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto;"></div>
+          </div>
+        </div>
+
+        <!-- Subpestaña 2: Inyector y Monitor LAA -->
+        <div class="mod-subtab-pane" id="subtab-mods-injector">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <!-- Inyector de Minimod -->
+            <div class="reagle-card-panel" style="padding: 16px;">
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-blue);">Inyector Dinámico de Minimods</h3>
+              <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Genera e inyecta un paquete minimod de localización en la cima de la jerarquía sin modificar el mod principal.
+              </p>
+              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
+                <div>
+                  <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Nombre del Minimod:</label>
+                  <input type="text" id="input-minimod-name" class="reagle-input" placeholder="Ej: StarWars_Spanish_Patch" style="width: 100%; margin-top: 3px;">
+                </div>
+                <div>
+                  <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Prioridad Asignada:</label>
+                  <input type="text" class="reagle-input" value="999 (Sobrescribe todo)" readonly style="width: 100%; margin-top: 3px;">
+                </div>
+                <button class="btn-reagle btn-reagle-success" id="btn-inject-minimod-action" style="margin-top: 6px;">
+                  ⚡ Inyectar Minimod en EnabledMods.txt
+                </button>
+              </div>
+            </div>
+
+            <!-- Monitor de Memoria LAA -->
+            <div class="reagle-card-panel" style="padding: 16px;">
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main);">Monitor Físico de Memoria RAM (LAA 32-bit)</h3>
+              <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Límite de direccionamiento virtual de <strong>3.250 MB</strong> por arquitectura de 32 bits de Ironclad Engine.
+              </p>
+              <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 800;">
+                  <span>Consumo Acumulado:</span>
+                  <span id="ram-meter-text">1.865 MB / 3.250 MB (57%)</span>
+                </div>
+                <div class="reagle-progress-track">
+                  <div class="reagle-progress-fill" id="ram-meter-fill" style="width: 57%;"></div>
+                </div>
+                <div id="ram-risk-badge" style="font-size: 0.76rem; font-weight: 700; color: var(--text-success); padding: 8px 12px; background: rgba(5, 150, 105, 0.1); border-radius: 10px; margin-top: 6px;">
+                  ESTADO: SEGURO (Bajo riesgo de MiniDump Crash)
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -455,11 +513,17 @@
            VISTA 3: DIAGNÓSTICO & SALUD DEL SISTEMA
            ====================================================================== -->
       <section id="tab-system" class="view-panel">
-        <div class="reagle-card-panel" style="max-width: 760px; margin: 0 auto; width: 100%;">
-          <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 8px;">Diagnóstico de Entorno y Protocolo UUID Safety</h3>
-          <div id="health-report-content" style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
-            <p>Consultando estado del servidor WAMP...</p>
+        <div class="reagle-card-panel" style="width: 100%; padding: 18px 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 1.10rem; font-weight: 800;">Diagnóstico de Entorno y Protocolo UUID Safety</h3>
+              <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                Auditoría fail-fast del servidor WAMP, módulos Apache, PHP 8.2 y blindaje de errores en producción.
+              </p>
+            </div>
+            <button class="btn-reagle btn-reagle-primary" onclick="SystemHealthModule.runAudit();">🔄 Actualizar Salud</button>
           </div>
+          <div id="health-report-content"></div>
         </div>
       </section>
 
@@ -467,35 +531,63 @@
            VISTA 4: EDITOR E INSPECTOR DE ENTIDADES
            ====================================================================== -->
       <section id="tab-entities" class="view-panel">
-        <div class="reagle-card-panel" style="max-width: 860px; margin: 0 auto; width: 100%;">
-          <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.25); border-radius: 12px; padding: 12px; font-size: 0.84rem; color: var(--text-danger);">
-            <strong>AVISO MULTIJUGADOR:</strong> Modificar entidades altera el Checksum de red. Uso exclusivo en Un Jugador.
+        <div class="entity-layout-grid">
+          <!-- Columna Izquierda: Catálogo Multientidad -->
+          <div class="reagle-card-panel" style="padding: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <h3 style="font-size: 0.88rem; font-weight: 800;">Flota Espacial</h3>
+              <span class="metric-badge-pill" style="font-size: 0.65rem;">Sins Rebellion</span>
+            </div>
+            <div class="reagle-search-inset" style="margin-bottom: 8px;">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="entity-search-input" placeholder="Buscar nave o facción...">
+            </div>
+            <div class="entity-catalog-column" id="entity-catalog-list"></div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Tipo de Entidad:</label>
-              <input type="text" id="ent-type" class="reagle-input" value="CapitalShip" style="width: 100%; margin-top: 4px;" readonly>
+          <!-- Columna Derecha: Formulario de Inspección y Edición -->
+          <div class="reagle-card-panel entity-form-container" id="entity-editor-form-panel" style="padding: 16px;">
+            <!-- Overlay de Entidad en Desarrollo -->
+            <div class="entity-dev-overlay" id="entity-dev-overlay">
+              <span class="metric-badge-pill neutral" style="font-size: 0.8rem; padding: 4px 12px;">⚙️ EN DESARROLLO (V0.4 ROADMAP)</span>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); max-width: 380px;">
+                Esta nave capital se encuentra registrada en el árbol de dependencias, pero sus algoritmos de combate están en escala de grises para pruebas en la siguiente versión.
+              </p>
             </div>
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Puntos de Casco (HullPoints):</label>
-              <input type="number" id="ent-hull" class="reagle-input" value="3000" style="width: 100%; margin-top: 4px;">
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 8px; gap: 8px;">
+              <div style="min-width: 0; overflow: hidden;">
+                <h3 id="selected-entity-title" style="font-size: 1.05rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Acorazado Kol</h3>
+                <div id="selected-entity-role" style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">TEC Loyalists · Nave Insignia</div>
+                <div id="selected-entity-filepath" style="font-size: 0.68rem; color: var(--text-secondary); font-family: var(--font-mono); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">GameInfo/CAPITALSHIP_TECHBATTLESHIP.entity</div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
+                <span class="metric-badge-pill" id="selected-entity-badge">BETA ACTIVA</span>
+                <button class="btn-reagle btn-reagle-success" id="btn-save-entity-action">💾 Guardar</button>
+              </div>
             </div>
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Puntos de Escudo (ShieldPoints):</label>
-              <input type="number" id="ent-shields" class="reagle-input" value="1800" style="width: 100%; margin-top: 4px;">
+
+            <div style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.2); border-radius: 10px; padding: 8px 12px; font-size: 0.74rem; color: var(--text-danger);">
+              <strong>AVISO MULTIJUGADOR:</strong> Modificar los atributos altera el Checksum de red SHA-256. Uso exclusivo en pruebas sandbox.
             </div>
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Capacidad Antimateria (MaxAntiMatter):</label>
-              <input type="number" id="ent-antimatter" class="reagle-input" value="250" style="width: 100%; margin-top: 4px;">
-            </div>
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Mitigación Máx. Escudo (maxShieldMitigation):</label>
-              <input type="number" step="0.01" id="ent-mitigation" class="reagle-input" value="0.65" style="width: 100%; margin-top: 4px;">
-            </div>
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Regeneración Casco (HullPointRestoreRate):</label>
-              <input type="number" step="0.1" id="ent-hull-rate" class="reagle-input" value="1.5" style="width: 100%; margin-top: 4px;">
+
+            <div class="entity-param-grid" style="margin-top: 4px;">
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Puntos de Escudo (ShieldPoints):</label>
+                <input type="number" id="entity-input-shield" class="reagle-input" style="width: 100%; margin-top: 3px;">
+              </div>
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Puntos de Casco (HullPoints):</label>
+                <input type="number" id="entity-input-hull" class="reagle-input" style="width: 100%; margin-top: 3px;">
+              </div>
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Capacidad Antimateria (AntiMatter):</label>
+                <input type="number" id="entity-input-antimatter" class="reagle-input" style="width: 100%; margin-top: 3px;">
+              </div>
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Blindaje Táctico (ArmorPoints):</label>
+                <input type="number" step="0.5" id="entity-input-armor" class="reagle-input" style="width: 100%; margin-top: 3px;">
+              </div>
             </div>
           </div>
         </div>
@@ -505,43 +597,51 @@
            VISTA 5: GALAXY FORGE & TOPOLOGY VIEWER
            ====================================================================== -->
       <section id="tab-galaxy" class="view-panel">
-        <div class="reagle-card-panel" style="width: 100%;">
-          <div style="display: grid; grid-template-columns: 1fr 340px; gap: 20px;">
-            <div>
-              <div style="border-radius: 18px; overflow: hidden; box-shadow: var(--neu-shadow-inset-deep); background: #060a14; border: 1px solid rgba(255, 255, 255, 0.4);">
-                <canvas id="galaxy-canvas" width="840" height="520" style="display: block; width: 100%; height: auto; cursor: crosshair;"></canvas>
-              </div>
-
-              <!-- Leyenda -->
-              <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: 0.78rem; color: var(--text-secondary); justify-content: center;">
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#facc15; margin-right:4px;"></span>Estrella</span>
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#22c55e; margin-right:4px;"></span>Terran (Home)</span>
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#eab308; margin-right:4px;"></span>Desert</span>
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#38bdf8; margin-right:4px;"></span>Ice</span>
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ef4444; margin-right:4px;"></span>Volcanic</span>
-                <span><span style="display:inline-block; width:14px; height:2px; background:#06b6d4; margin-right:4px; vertical-align:middle;"></span>Línea de Fase</span>
+        <div class="galaxy-workspace-layout">
+          <!-- Lienzo Táctico -->
+          <div class="reagle-card-panel" style="padding: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h3 style="font-size: 0.95rem; font-weight: 800;">Lienzo Táctico de Topología Estelar</h3>
+              <div style="display: flex; gap: 6px;">
+                <button class="btn-reagle" onclick="GalaxyForgeModule.generate(8);">8P</button>
+                <button class="btn-reagle btn-reagle-primary" onclick="GalaxyForgeModule.generate(12);">12P</button>
+                <button class="btn-reagle" onclick="GalaxyForgeModule.generate(16);">16P</button>
               </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 14px;">
-              <div class="reagle-card-panel" style="padding: 14px; box-shadow: var(--neu-shadow-card-sm);">
-                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--text-blue); margin-bottom: 6px;">Métricas del Escenario</h4>
-                <div id="galaxy-scenario-name" style="font-weight: 800; font-size: 1rem; margin-bottom: 6px;">Sector_Solaris_Alpha</div>
-                <div style="font-size: 0.82rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px;">
-                  <div>Estrellas: <strong id="galaxy-star-count" style="color: var(--text-main);">1</strong></div>
-                  <div>Planetas: <strong id="galaxy-planet-count" style="color: var(--text-main);">12</strong></div>
-                  <div>Líneas de Fase: <strong id="galaxy-lane-count" style="color: var(--text-main);">13</strong></div>
-                </div>
-              </div>
+            <div class="galaxy-canvas-container">
+              <canvas id="galaxy-canvas" width="680" height="420"></canvas>
+            </div>
 
-              <div class="reagle-card-panel" style="padding: 14px; box-shadow: var(--neu-shadow-card-sm); flex: 1; overflow-y: auto; max-height: 380px;">
-                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--text-blue); margin-bottom: 6px;">Inspector de Planeta</h4>
-                <div id="galaxy-selected-info" style="font-size: 0.82rem; color: var(--text-muted);">
-                  <em>Haz clic en cualquier planeta para inspeccionar sus coordenadas.</em>
-                </div>
-                <h4 style="font-size: 0.86rem; font-weight: 700; color: var(--text-blue); margin-top: 12px; margin-bottom: 6px;">Listado de Nodos</h4>
-                <div id="galaxy-nodes-list" style="display: flex; flex-direction: column; gap: 6px; font-size: 0.78rem;"></div>
+            <!-- Leyenda Táctica -->
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; font-size: 0.74rem; color: var(--text-secondary); justify-content: center;">
+              <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#f59e0b; margin-right:4px;"></span>Estrella</span>
+              <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#22c55e; margin-right:4px;"></span>Terran</span>
+              <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#eab308; margin-right:4px;"></span>Desert</span>
+              <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#38bdf8; margin-right:4px;"></span>Ice</span>
+              <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#ef4444; margin-right:4px;"></span>Volcanic</span>
+              <span><span style="display:inline-block; width:12px; height:2px; background:rgba(56, 189, 248, 0.7); margin-right:4px; vertical-align:middle;"></span>Línea de Fase</span>
+            </div>
+          </div>
+
+          <!-- Inspector y Nodos -->
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="reagle-card-panel" style="padding: 12px;">
+              <div style="font-weight: 800; font-size: 0.90rem; color: var(--text-blue);" id="galaxy-scenario-name">Solaris_Ring_12P</div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 6px; font-size: 0.76rem; color: var(--text-secondary);">
+                <div>Estrellas: <strong id="galaxy-star-count" style="color: var(--text-main);">1</strong></div>
+                <div>Planetas: <strong id="galaxy-planet-count" style="color: var(--text-main);">12</strong></div>
+                <div>Líneas: <strong id="galaxy-lane-count" style="color: var(--text-main);">13</strong></div>
               </div>
+            </div>
+
+            <div class="reagle-card-panel" style="padding: 12px; flex: 1;">
+              <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px;">Inspector de Planeta Seleccionado</div>
+              <div id="galaxy-selected-info" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">
+                <em>Haz clic en un planeta del listado o lienzo para inspeccionarlo.</em>
+              </div>
+              <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 4px;">Listado de Nodos</div>
+              <div class="galaxy-nodes-scroll" id="galaxy-nodes-list"></div>
             </div>
           </div>
         </div>
@@ -551,33 +651,46 @@
            VISTA 6: CONVERTDATA CLI & ENGINE TOOLS
            ====================================================================== -->
       <section id="tab-convert" class="view-panel">
-        <div class="reagle-card-panel" style="max-width: 760px; margin: 0 auto; width: 100%;">
-          <h3 style="font-size: 1.15rem; font-weight: 800;">ConvertData CLI - Conversor Binario ↔ Texto</h3>
-          <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 2px;">
-            Ejecuta directamente el compilador nativo ConvertData_Rebellion.exe para recursos .entity, .mesh y .particle.
+        <div class="reagle-card-panel" style="max-width: 680px; margin: 0 auto; width: 100%; padding: 18px 24px;">
+          <h3 style="font-size: 1.10rem; font-weight: 800;">ConvertData CLI - Conversor Binario DirectX ↔ Texto</h3>
+          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+            Pipeline de compilación directa mediante subproceso nativo ConvertData_Rebellion.exe con cálculo de checksum SHA-256.
           </p>
 
-          <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 14px;">
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Tipo de Recurso:</label>
-              <select id="convert-resource-type" class="reagle-input" style="width: 100%; margin-top: 4px;">
-                <option value="entity">Entidad (.entity)</option>
-                <option value="mesh">Malla 3D (.mesh)</option>
-                <option value="particle">Partículas (.particle)</option>
-              </select>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Tipo de Recurso:</label>
+                <select id="convert-resource-type" class="reagle-input" style="width: 100%; margin-top: 3px;">
+                  <option value="entity">Entidad (.entity)</option>
+                  <option value="mesh">Malla 3D (.mesh)</option>
+                  <option value="particle">Efecto Partícula (.particle)</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Dirección:</label>
+                <select id="convert-direction" class="reagle-input" style="width: 100%; margin-top: 3px;">
+                  <option value="bin_to_txt">Binario DirectX ➔ Texto Editable (TXT)</option>
+                  <option value="txt_to_bin">Texto Editable ➔ Binario DirectX (BIN)</option>
+                </select>
+              </div>
             </div>
 
             <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Dirección:</label>
-              <select id="convert-direction" class="reagle-input" style="width: 100%; margin-top: 4px;">
-                <option value="to_text">Binario ➔ Texto Editable (TXT)</option>
-                <option value="to_binary">Texto Editable ➔ Binario Compilado (BIN)</option>
-              </select>
+              <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Ruta del Archivo Objetivo:</label>
+              <input type="text" id="convert-file-path" class="reagle-input" value="tests/fixtures/sample_demo.entity" style="width: 100%; margin-top: 3px; font-family: var(--font-mono);">
             </div>
 
-            <div>
-              <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Ruta del Archivo:</label>
-              <input type="text" id="convert-file-path" class="reagle-input" value="Entity/KolBattleship.entity" style="width: 100%; margin-top: 4px;">
+            <button class="btn-reagle btn-reagle-primary" id="btn-run-cli-main" style="align-self: flex-start; margin-top: 4px;">
+              ⚡ Ejecutar Conversión Nativa
+            </button>
+
+            <!-- Caja de Salida / Terminal -->
+            <div id="convert-result-box" style="display: none; background: var(--neu-slot-bg); box-shadow: var(--neu-shadow-inset); border-radius: 12px; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.45); margin-top: 6px;"></div>
+          </div>
+        </div>
+      </section>
             </div>
 
             <div id="convert-result-box" style="display: none; padding: 12px; border-radius: 12px; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.3); font-size: 0.84rem;"></div>
@@ -622,6 +735,13 @@
 
   <!-- SCRIPTS MODULARES -->
   <script src="assets/js/nexus-core.js"></script>
+  <script src="assets/js/modules/view-navigator.js"></script>
+  <script src="assets/js/modules/translation-studio.js"></script>
+  <script src="assets/js/modules/mod-manager.js"></script>
+  <script src="assets/js/modules/entity-editor.js"></script>
+  <script src="assets/js/modules/galaxy-forge.js"></script>
+  <script src="assets/js/modules/convert-cli.js"></script>
+  <script src="assets/js/modules/system-health.js"></script>
   <script src="assets/js/nexus-ui.js"></script>
 </body>
 </html>

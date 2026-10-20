@@ -83,6 +83,9 @@ try {
     } elseif (str_ends_with($uri, '/api/strings/export') && $method === 'POST') {
         $controller = new StringController(null, null, $logger);
         $response = $controller->export($payload);
+    } elseif (str_ends_with($uri, '/api/mods/detect-platforms') && $method === 'GET') {
+        $controller = new ModController(null, null, $logger);
+        $response = $controller->detectPlatforms();
     } elseif (str_ends_with($uri, '/api/mods/scan') && $method === 'GET') {
         $controller = new ModController(null, null, $logger);
         $response = $controller->scan($config);
@@ -97,6 +100,9 @@ try {
     } elseif (str_ends_with($uri, '/api/mods/synthesize-session') && $method === 'POST') {
         $controller = new ModController(null, null, $logger);
         $response = $controller->synthesizeSession($payload, $config);
+    } elseif (str_ends_with($uri, '/api/entities/catalog') && $method === 'GET') {
+        $controller = new EntityController(null, $logger);
+        $response = $controller->getCatalog();
     } elseif (str_ends_with($uri, '/api/system/deploy-native') && $method === 'POST') {
         $controller = new SystemController(null, $logger);
         $response = $controller->deployNative($payload, $config);

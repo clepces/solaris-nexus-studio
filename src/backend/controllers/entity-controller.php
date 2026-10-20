@@ -71,4 +71,80 @@ final class EntityController
             'updatedParameters' => $parameters,
         ];
     }
+
+    /**
+     * Devuelve el catálogo multientidad de Sins Rebellion con estados Beta / En Desarrollo.
+     */
+    public function getCatalog(): array
+    {
+        return [
+            'entities' => [
+                [
+                    'id' => 'CAPITALSHIP_TECHBATTLESHIP',
+                    'name' => 'Acorazado Kol (TEC)',
+                    'faction' => 'TEC Loyalists / Rebels',
+                    'role' => 'Nave Insignia de Combate Pesado',
+                    'status' => 'BETA',
+                    'isAvailable' => true,
+                    'shieldPoints' => 1250.0,
+                    'hullPoints' => 3000.0,
+                    'antiMatter' => 250.0,
+                    'armorPoints' => 8.0,
+                    'filePath' => 'GameInfo/CAPITALSHIP_TECHBATTLESHIP.entity'
+                ],
+                [
+                    'id' => 'CAPITALSHIP_TECHSUPPORT',
+                    'name' => 'Crucero de Batalla Dunov (TEC)',
+                    'faction' => 'TEC Loyalists / Rebels',
+                    'role' => 'Nave de Soporte Táctico y Drenaje de Escudos',
+                    'status' => 'BETA',
+                    'isAvailable' => true,
+                    'shieldPoints' => 1100.0,
+                    'hullPoints' => 2600.0,
+                    'antiMatter' => 380.0,
+                    'armorPoints' => 7.5,
+                    'filePath' => 'GameInfo/CAPITALSHIP_TECHSUPPORT.entity'
+                ],
+                [
+                    'id' => 'CAPITALSHIP_TECHSIEGE',
+                    'name' => 'Dreadnought Marza (TEC)',
+                    'faction' => 'TEC Loyalists',
+                    'role' => 'Nave de Asedio Planetario y Bombardeo',
+                    'status' => 'DEV',
+                    'isAvailable' => false,
+                    'shieldPoints' => 950.0,
+                    'hullPoints' => 2400.0,
+                    'antiMatter' => 220.0,
+                    'armorPoints' => 6.0,
+                    'filePath' => 'GameInfo/CAPITALSHIP_TECHSIEGE.entity'
+                ],
+                [
+                    'id' => 'CAPITALSHIP_PSIBATTLESHIP',
+                    'name' => 'Acorazado Radiance (Advent)',
+                    'faction' => 'Advent Unity',
+                    'role' => 'Nave de Proyección Psiónica y Purificación',
+                    'status' => 'DEV',
+                    'isAvailable' => false,
+                    'shieldPoints' => 1800.0,
+                    'hullPoints' => 2100.0,
+                    'antiMatter' => 320.0,
+                    'armorPoints' => 5.0,
+                    'filePath' => 'GameInfo/CAPITALSHIP_PSIBATTLESHIP.entity'
+                ],
+                [
+                    'id' => 'CAPITALSHIP_PHASECARRIER',
+                    'name' => 'Portanaves Skirantra (Vasari)',
+                    'faction' => 'Vasari Empire',
+                    'role' => 'Nave Nodo de Hangar Nanotecnológico',
+                    'status' => 'DEV',
+                    'isAvailable' => false,
+                    'shieldPoints' => 1400.0,
+                    'hullPoints' => 2800.0,
+                    'antiMatter' => 290.0,
+                    'armorPoints' => 7.0,
+                    'filePath' => 'GameInfo/CAPITALSHIP_PHASECARRIER.entity'
+                ]
+            ]
+        ];
+    }
 }
