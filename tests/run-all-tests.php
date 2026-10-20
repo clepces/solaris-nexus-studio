@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 echo "================================================================" . PHP_EOL;
 echo "  SOLARIS NEXUS STUDIO - SUITE DE TESTING AUTOMATIZADA          " . PHP_EOL;
-echo "  Clepces org. ltd | Versión Objetivo: v0.2.0.0-alpha           " . PHP_EOL;
+echo "  Clepces org. ltd | Versión Objetivo: v0.3.0.0-alpha           " . PHP_EOL;
 echo "================================================================" . PHP_EOL . PHP_EOL;
 
 $testFiles = [
@@ -17,6 +17,7 @@ $testFiles = [
     'Fase 9 - JIT Language Synthesizer' => __DIR__ . '/unit/language-synthesizer.test.php',
     'Fase 10 - ConvertData CLI & Engine' => __DIR__ . '/unit/convert-data.test.php',
     'Fase 11 - Game Entity Inspector' => __DIR__ . '/unit/entity-inspector.test.php',
+    'Fase 12 - Galaxy Forge & Topology' => __DIR__ . '/unit/galaxy-forge.test.php',
 ];
 
 $passedCount = 0;
@@ -46,7 +47,7 @@ echo sprintf("RESULTADOS: %d Aprobados, %d Fallidos (Total: %d)", $passedCount, 
 echo "----------------------------------------------------------------" . PHP_EOL;
 
 if ($failedCount === 0) {
-    echo "ESTADO DEL ENTREGABLE: CERTIFICADO PARA v0.2.0.0-alpha." . PHP_EOL;
+    echo "ESTADO DEL ENTREGABLE: CERTIFICADO PARA v0.3.0.0-alpha." . PHP_EOL;
     exit(0);
 } else {
     echo "ESTADO DEL ENTREGABLE: NO CERTIFICADO." . PHP_EOL;

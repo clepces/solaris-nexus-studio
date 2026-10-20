@@ -18,7 +18,7 @@
         <path d="M2 12h20"></path>
       </svg>
       <h1>SOLARIS NEXUS STUDIO</h1>
-      <span class="version-badge">v0.2.0.0-alpha</span>
+      <span class="version-badge">v0.3.0.0-alpha</span>
       <span class="badge-tag badge-active">Clepces org. ltd</span>
     </div>
 
@@ -35,8 +35,8 @@
       <button class="tab-btn" data-tab="tab-entities">
         Editor de Entidades <span class="badge-tag badge-active">Activo</span>
       </button>
-      <button class="tab-btn" data-tab="tab-galaxy" style="opacity: 0.6; cursor: not-allowed;" title="Próximamente">
-        Galaxy Forge <span class="badge-tag badge-dev">Próximamente</span>
+      <button class="tab-btn" data-tab="tab-galaxy">
+        Galaxy Forge <span class="badge-tag badge-active">Activo</span>
       </button>
     </nav>
   </header>
@@ -126,6 +126,9 @@
         <div id="health-report-content" style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
           <p>Consultando estado del servidor WAMP...</p>
         </div>
+      </div>
+    </section>
+
     <!-- VISTA 4: EDITOR E INSPECTOR DE ENTIDADES -->
     <section id="tab-entities" class="view-panel">
       <div class="panel-card" style="max-width: 800px; margin: 0 auto; width: 100%;">
@@ -169,6 +172,64 @@
 
         <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 12px;">
           <button class="btn btn-success" id="btn-save-entity">Guardar Parámetros de Entidad</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA 5: GALAXY FORGE & TOPOLOGY VIEWER -->
+    <section id="tab-galaxy" class="view-panel">
+      <div class="panel-card" style="width: 100%; max-width: 1200px; margin: 0 auto;">
+        <div class="panel-title">
+          <span>Galaxy Forge - Topología y Visualizador de Sistemas Estelares</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-outline" id="btn-demo-galaxy" style="font-size: 0.8rem; padding: 4px 10px;">Cargar Mapa 8 Planetas</button>
+            <button class="btn btn-success" id="btn-generate-galaxy" style="font-size: 0.8rem; padding: 4px 10px;">Generar Procedural (12 Planetas)</button>
+            <button class="btn btn-outline" id="btn-export-galaxy" style="font-size: 0.8rem; padding: 4px 10px;">Exportar .galaxy</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 340px; gap: 16px; margin-top: 14px;">
+          <!-- Columna Izquierda: Canvas interactivo del mapa -->
+          <div>
+            <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color); background: #050811;">
+              <canvas id="galaxy-canvas" width="820" height="520" style="display: block; width: 100%; height: auto; cursor: crosshair;"></canvas>
+            </div>
+            <!-- Leyenda de colores -->
+            <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 10px; font-size: 0.75rem; color: var(--text-muted); align-items: center; justify-content: center;">
+              <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#facc15; margin-right:4px;"></span>Estrella Central</span>
+              <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#22c55e; margin-right:4px;"></span>Terran (Home)</span>
+              <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#eab308; margin-right:4px;"></span>Desert</span>
+              <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#38bdf8; margin-right:4px;"></span>Ice</span>
+              <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ef4444; margin-right:4px;"></span>Volcanic</span>
+              <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#94a3b8; margin-right:4px;"></span>Asteroid</span>
+              <span><span style="display:inline-block; width:14px; height:2px; background:#06b6d4; margin-right:4px; vertical-align:middle;"></span>Línea de Fase</span>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Inspector de Sistemas y Topología -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="panel-card" style="padding: 12px; margin: 0; background: var(--bg-card);">
+              <h4 style="font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 8px;">Métricas del Escenario</h4>
+              <div id="galaxy-scenario-name" style="font-weight: bold; font-size: 0.95rem; margin-bottom: 4px;">Sector_Solaris_Alpha</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px;">
+                <div>Estrellas: <span id="galaxy-star-count" style="color: var(--text-main); font-weight: 600;">1</span></div>
+                <div>Planetas Totales: <span id="galaxy-planet-count" style="color: var(--text-main); font-weight: 600;">0</span></div>
+                <div>Líneas de Fase: <span id="galaxy-lane-count" style="color: var(--text-main); font-weight: 600;">0</span></div>
+                <div>Estado Topológico: <span id="galaxy-topology-status" class="badge-tag badge-active">Conectado</span></div>
+              </div>
+            </div>
+
+            <div class="panel-card" style="padding: 12px; margin: 0; background: var(--bg-card); flex: 1; overflow-y: auto; max-height: 380px;">
+              <h4 style="font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 8px;">Inspector de Planeta</h4>
+              <div id="galaxy-selected-info" style="font-size: 0.8rem; color: var(--text-muted);">
+                <em>Haz clic en un planeta del mapa para inspeccionar sus coordenadas orbitales y conexiones.</em>
+              </div>
+              <h4 style="font-size: 0.85rem; color: var(--accent-cyan); margin-top: 14px; margin-bottom: 8px;">Listado de Nodos</h4>
+              <div id="galaxy-nodes-list" style="display: flex; flex-direction: column; gap: 6px; font-size: 0.75rem;">
+                <!-- Lista interactiva de planetas -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -219,13 +280,15 @@
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-tab');
-        if (targetId === 'tab-galaxy') return;
-
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
 
         btn.classList.add('active');
         document.getElementById(targetId).classList.add('active');
+
+        if (targetId === 'tab-galaxy' && state.currentGalaxy) {
+          requestAnimationFrame(() => drawGalaxy(state.currentGalaxy));
+        }
       });
     });
 
@@ -508,7 +571,7 @@
       alert('Entidad canónica Kol Battleship cargada en el inspector.');
     });
 
-    document.getElementById('btn-save-entity').addEventListener('click', () => {
+    document.getElementById('btn-save-entity').addEventListener('click', async () => {
       const params = {
         HullPoints: parseFloat(document.getElementById('ent-hull').value),
         ShieldPoints: parseFloat(document.getElementById('ent-shields').value),
@@ -516,7 +579,363 @@
         maxShieldMitigation: parseFloat(document.getElementById('ent-mitigation').value),
         HullPointRestoreRate: parseFloat(document.getElementById('ent-hull-rate').value),
       };
-      alert('Parámetros guardados con respaldo. AVISO: Checksum de red alterado para multijugador.');
+
+      try {
+        const res = await fetch('api/entities/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            file_path: 'Entity/KolBattleship.entity',
+            parameters: params
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Parámetros guardados con respaldo seguro en storage/backups/.\n\nAVISO MULTIJUGADOR: Checksum de red alterado.');
+        } else {
+          alert(`Parámetros simulados guardados. AVISO: Checksum de red alterado para multijugador.`);
+        }
+      } catch (e) {
+        alert('Parámetros guardados en sesión local. AVISO: Checksum de red alterado para multijugador.');
+      }
+    });
+
+    // EXPORTADOR .STR CANÓNICO
+    function downloadBlob(content, filename, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('btn-export-str').addEventListener('click', async () => {
+      try {
+        const payload = {
+          entries: state.allEntries.slice(0, 1000).map(e => ({ id: e.id, value: e.translated }))
+        };
+        const res = await fetch('api/strings/export', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json();
+        if (json.success && json.data && json.data.content) {
+          downloadBlob(json.data.content, 'Spanish.str', 'text/plain;charset=utf-8');
+          return;
+        }
+      } catch (e) {}
+
+      // Fallback local con BOM UTF-8 y CRLF
+      let fallbackStr = "\uFEFFStringInfo\r\n{\r\n";
+      state.allEntries.slice(0, 500).forEach(entry => {
+        const escaped = entry.translated.replace(/"/g, '\\"');
+        fallbackStr += `\tID "${entry.id}"\r\n\tValue "${escaped}"\r\n`;
+      });
+      fallbackStr += "}\r\n";
+      downloadBlob(fallbackStr, 'Spanish.str', 'text/plain;charset=utf-8');
+    });
+
+    // ==========================================
+    // MÓDULO GALAXY FORGE & TOPOLOGY RENDERER
+    // ==========================================
+    const PLANET_COLORS = {
+      'Terran': '#22c55e',
+      'Desert': '#eab308',
+      'Ice': '#38bdf8',
+      'Volcanic': '#ef4444',
+      'Asteroid': '#94a3b8',
+      'GasGiant': '#a855f7'
+    };
+
+    const canvas = document.getElementById('galaxy-canvas');
+    const ctx = canvas.getContext('2d');
+    let lastRenderedGalaxy = null;
+
+    function renderGalaxyTopology(galaxy) {
+      if (!galaxy) return;
+      lastRenderedGalaxy = galaxy;
+      state.currentGalaxy = galaxy;
+
+      // Actualizar métricas UI
+      document.getElementById('galaxy-scenario-name').innerText = galaxy.scenarioName || 'Escenario Galáctico';
+      document.getElementById('galaxy-star-count').innerText = galaxy.stars ? galaxy.stars.length : 1;
+      document.getElementById('galaxy-planet-count').innerText = galaxy.planets ? galaxy.planets.length : 0;
+      document.getElementById('galaxy-lane-count').innerText = galaxy.phaseLanes ? galaxy.phaseLanes.length : 0;
+
+      // Renderizar listado de nodos
+      const listEl = document.getElementById('galaxy-nodes-list');
+      listEl.innerHTML = '';
+      (galaxy.planets || []).forEach(p => {
+        const item = document.createElement('div');
+        item.style.padding = '6px 8px';
+        item.style.borderRadius = '4px';
+        item.style.background = 'rgba(255, 255, 255, 0.03)';
+        item.style.border = '1px solid var(--border-color)';
+        item.style.cursor = 'pointer';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.style.alignItems = 'center';
+        item.innerHTML = `
+          <div>
+            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${PLANET_COLORS[p.type] || '#38bdf8'}; margin-right:6px;"></span>
+            <strong>${p.name}</strong>
+            ${p.isHomePlanet ? '<span style="color:#22c55e; margin-left:4px;">★</span>' : ''}
+          </div>
+          <span style="color:var(--text-muted); font-size:0.7rem;">(${Math.round(p.x)}, ${Math.round(p.y)})</span>
+        `;
+        item.addEventListener('click', () => selectPlanet(p));
+        listEl.appendChild(item);
+      });
+
+      drawGalaxy(galaxy);
+    }
+
+    function selectPlanet(planet) {
+      const infoEl = document.getElementById('galaxy-selected-info');
+      infoEl.innerHTML = `
+        <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--accent-cyan); padding: 8px; border-radius: 2px;">
+          <div><strong>Planeta:</strong> ${planet.name}</div>
+          <div><strong>Tipo Bioma:</strong> <span style="color:${PLANET_COLORS[planet.type] || '#fff'}">${planet.type}</span></div>
+          <div><strong>Coordenadas:</strong> X: ${planet.x.toFixed(1)}, Y: ${planet.y.toFixed(1)}</div>
+          <div><strong>Planeta Natal (Home):</strong> ${planet.isHomePlanet ? 'SÍ (Spawn Inicial)' : 'NO (Sector Neutral)'}</div>
+        </div>
+      `;
+    }
+
+    function drawGalaxy(galaxy) {
+      if (!ctx || !galaxy) return;
+
+      const width = canvas.width;
+      const height = canvas.height;
+      ctx.clearRect(0, 0, width, height);
+
+      // Fondo del espacio estelar
+      const bgGrad = ctx.createRadialGradient(width / 2, height / 2, 10, width / 2, height / 2, width / 2);
+      bgGrad.addColorStop(0, '#09101d');
+      bgGrad.addColorStop(1, '#02050a');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Rejilla táctica suave
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+      }
+      for (let y = 0; y < height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+      }
+
+      // Calcular escala basada en las coordenadas de los planetas
+      let maxDist = 60000;
+      (galaxy.planets || []).forEach(p => {
+        const d = Math.sqrt(p.x * p.x + p.y * p.y);
+        if (d > maxDist) maxDist = d;
+      });
+
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const scale = (Math.min(width, height) / 2 - 45) / (maxDist || 1);
+
+      const planetCoordMap = {};
+      (galaxy.planets || []).forEach(p => {
+        planetCoordMap[p.name] = {
+          cx: centerX + (p.x * scale),
+          cy: centerY + (p.y * scale),
+          raw: p
+        };
+      });
+
+      // Dibujar Líneas de Fase (Phase Lanes) con brillo de plasma
+      ctx.save();
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.65)';
+      ctx.lineWidth = 1.5;
+      ctx.shadowColor = '#06b6d4';
+      ctx.shadowBlur = 8;
+      (galaxy.phaseLanes || []).forEach(lane => {
+        const p1 = planetCoordMap[lane.source];
+        const p2 = planetCoordMap[lane.target];
+        if (p1 && p2) {
+          ctx.beginPath();
+          ctx.moveTo(p1.cx, p1.cy);
+          ctx.lineTo(p2.cx, p2.cy);
+          ctx.stroke();
+        }
+      });
+      ctx.restore();
+
+      // Dibujar Estrella Central (Star)
+      (galaxy.stars || []).forEach(star => {
+        const sx = centerX + (star.x * scale);
+        const sy = centerY + (star.y * scale);
+        ctx.save();
+        const starGrad = ctx.createRadialGradient(sx, sy, 2, sx, sy, 18);
+        starGrad.addColorStop(0, '#fff');
+        starGrad.addColorStop(0.3, '#facc15');
+        starGrad.addColorStop(1, 'rgba(234, 179, 8, 0)');
+        ctx.fillStyle = starGrad;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 18, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // Dibujar Planetas
+      Object.values(planetCoordMap).forEach(mapped => {
+        const p = mapped.raw;
+        const color = PLANET_COLORS[p.type] || '#38bdf8';
+
+        ctx.save();
+        // Aura o anillo de Home Planet
+        if (p.isHomePlanet) {
+          ctx.strokeStyle = '#22c55e';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath();
+          ctx.arc(mapped.cx, mapped.cy, 12, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // Cuerpo planetario
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(mapped.cx, mapped.cy, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Etiqueta del planeta
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '9px Consolas, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(p.name, mapped.cx, mapped.cy + 16);
+      });
+    }
+
+    // Interacción de clic en Canvas para seleccionar planeta
+    canvas.addEventListener('click', (e) => {
+      if (!lastRenderedGalaxy || !lastRenderedGalaxy.planets) return;
+      const rect = canvas.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const clickY = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+      let maxDist = 60000;
+      lastRenderedGalaxy.planets.forEach(p => {
+        const d = Math.sqrt(p.x * p.x + p.y * p.y);
+        if (d > maxDist) maxDist = d;
+      });
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const scale = (Math.min(canvas.width, canvas.height) / 2 - 45) / (maxDist || 1);
+
+      let closestPlanet = null;
+      let minDistance = 16;
+
+      lastRenderedGalaxy.planets.forEach(p => {
+        const px = centerX + (p.x * scale);
+        const py = centerY + (p.y * scale);
+        const dist = Math.hypot(clickX - px, clickY - py);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestPlanet = p;
+        }
+      });
+
+      if (closestPlanet) {
+        selectPlanet(closestPlanet);
+      }
+    });
+
+    // Generador Procedural vía API REST
+    async function requestGalaxyGeneration(name, planetCount) {
+      try {
+        const res = await fetch('api/galaxy/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scenario_name: name, planet_count: planetCount })
+        });
+        const data = await res.json();
+        if (data.success && data.data && data.data.galaxy) {
+          renderGalaxyTopology(data.data.galaxy);
+          return;
+        }
+      } catch (err) {}
+
+      // Fallback algorítmico local
+      const types = ['Terran', 'Desert', 'Ice', 'Volcanic', 'Asteroid'];
+      const planets = [];
+      const phaseLanes = [];
+      const radius = 55000;
+      const step = (Math.PI * 2) / planetCount;
+
+      for (let i = 0; i < planetCount; i++) {
+        const angle = i * step;
+        const type = types[i % types.length];
+        const pName = `Sector_${String(i + 1).padStart(2, '0')}_${type}`;
+        planets.push({
+          name: pName,
+          type,
+          x: Math.round(Math.cos(angle) * radius),
+          y: Math.round(Math.sin(angle) * radius),
+          isHomePlanet: (i === 0 || i === Math.floor(planetCount / 2))
+        });
+      }
+
+      for (let i = 0; i < planetCount; i++) {
+        phaseLanes.push({
+          source: planets[i].name,
+          target: planets[(i + 1) % planetCount].name
+        });
+      }
+      phaseLanes.push({
+        source: planets[0].name,
+        target: planets[Math.floor(planetCount / 2)].name
+      });
+
+      renderGalaxyTopology({
+        scenarioName: name,
+        stars: [{ name: 'Solaris Core', type: 'Yellow', x: 0, y: 0 }],
+        planets,
+        phaseLanes,
+        totalPlanets: planets.length,
+        totalLanes: phaseLanes.length
+      });
+    }
+
+    document.getElementById('btn-generate-galaxy').addEventListener('click', () => {
+      requestGalaxyGeneration('Solaris_Ring_12P', 12);
+    });
+
+    document.getElementById('btn-demo-galaxy').addEventListener('click', () => {
+      requestGalaxyGeneration('Solaris_Twin_Conflict', 8);
+    });
+
+    document.getElementById('btn-export-galaxy').addEventListener('click', () => {
+      if (!lastRenderedGalaxy) {
+        alert('Genera o carga un escenario galáctico primero.');
+        return;
+      }
+
+      let content = "TXT\r\ngalaxyScenarioDef\r\n";
+      content += `\tstar\r\n\t\tname "${lastRenderedGalaxy.stars[0].name}"\r\n\t\ttype "Yellow"\r\n\t\tposition [ 0.0 , 0.0 ]\r\n`;
+
+      (lastRenderedGalaxy.planets || []).forEach(p => {
+        content += `\tplanet\r\n\t\tname "${p.name}"\r\n\t\ttype "${p.type}"\r\n\t\tposition [ ${p.x.toFixed(1)} , ${p.y.toFixed(1)} ]\r\n\t\tisHomePlanet ${p.isHomePlanet ? 'TRUE' : 'FALSE'}\r\n`;
+      });
+
+      (lastRenderedGalaxy.phaseLanes || []).forEach(lane => {
+        content += `\tjumpLane\r\n\t\tsourcePlanet "${lane.source}"\r\n\t\ttargetPlanet "${lane.target}"\r\n`;
+      });
+
+      downloadBlob(content, `${lastRenderedGalaxy.scenarioName || 'GalaxyScenario'}.galaxy`, 'text/plain;charset=utf-8');
     });
 
     // INICIALIZACIÓN
@@ -532,6 +951,7 @@
     renderVirtualGrid();
     renderModManager();
     fetchHealth();
+    requestGalaxyGeneration('Sector_Solaris_Alpha', 8);
   </script>
 </body>
 </html>

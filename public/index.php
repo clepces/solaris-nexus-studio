@@ -20,11 +20,13 @@ require_once dirname(__DIR__) . '/src/backend/services/language-packager.php';
 require_once dirname(__DIR__) . '/src/backend/services/language-synthesizer.php';
 require_once dirname(__DIR__) . '/src/backend/services/convert-data-service.php';
 require_once dirname(__DIR__) . '/src/backend/services/entity-inspector-service.php';
+require_once dirname(__DIR__) . '/src/backend/services/galaxy-forge-service.php';
 
 require_once dirname(__DIR__) . '/src/backend/controllers/string-controller.php';
 require_once dirname(__DIR__) . '/src/backend/controllers/mod-controller.php';
 require_once dirname(__DIR__) . '/src/backend/controllers/system-controller.php';
 require_once dirname(__DIR__) . '/src/backend/controllers/entity-controller.php';
+require_once dirname(__DIR__) . '/src/backend/controllers/galaxy-controller.php';
 
 use SolarisNexus\Backend\Utils\LoggerService;
 use SolarisNexus\Backend\Utils\UuidGenerator;
@@ -33,6 +35,7 @@ use SolarisNexus\Backend\Controllers\StringController;
 use SolarisNexus\Backend\Controllers\ModController;
 use SolarisNexus\Backend\Controllers\SystemController;
 use SolarisNexus\Backend\Controllers\EntityController;
+use SolarisNexus\Backend\Controllers\GalaxyController;
 
 $logger = new LoggerService();
 
@@ -106,6 +109,12 @@ try {
     } elseif (str_ends_with($uri, '/api/entities/update') && $method === 'POST') {
         $controller = new EntityController(null, $logger);
         $response = $controller->update($payload, $config['paths']['backups']);
+    } elseif (str_ends_with($uri, '/api/galaxy/parse') && $method === 'POST') {
+        $controller = new GalaxyController(null, $logger);
+        $response = $controller->parse($payload);
+    } elseif (str_ends_with($uri, '/api/galaxy/generate') && $method === 'POST') {
+        $controller = new GalaxyController(null, $logger);
+        $response = $controller->generate($payload);
     } else {
         http_response_code(404);
         echo json_encode([
