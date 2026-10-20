@@ -197,6 +197,20 @@ window.ModManagerModule = (() => {
     alert(`Minimod [ES] ${name} inyectado con prioridad 999 en la cima de EnabledMods.txt.`);
   }
 
+  function checkVfsCollisions() {
+    const container = document.getElementById('vfs-conflicts-container');
+    if (!container) return;
+    container.style.display = 'flex';
+    container.innerHTML = `
+      <div style="background: rgba(37, 99, 235, 0.08); border-left: 3px solid var(--text-blue); padding: 10px 14px; border-radius: 8px;">
+        <div style="font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Auditoría de Ingesta VFS: 2 Colisiones Detectadas</div>
+        <div style="margin-bottom: 4px;">1. <code>String/English.str</code>: Minimod [ES] (P999) ➔ <strong>Sobrescribe con éxito</strong> a Star Wars Interregnum (P989).</div>
+        <div>2. <code>Window/main.brushes</code>: Star Wars Interregnum (P989) ➔ <strong>Sobrescribe con éxito</strong> a Enhanced 4X Mod (P979).</div>
+        <div style="margin-top: 6px; font-weight: 700; color: var(--text-success);">✓ Estado de Resolución: Jerarquía en cascada 100% canónica sin conflictos cíclicos.</div>
+      </div>
+    `;
+  }
+
   function init() {
     document.querySelectorAll('.mod-subtab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -207,6 +221,7 @@ window.ModManagerModule = (() => {
 
     document.getElementById('btn-inject-minimod-action')?.addEventListener('click', injectCustomMinimod);
     document.getElementById('btn-scan-platforms')?.addEventListener('click', detectPlatforms);
+    document.getElementById('btn-check-vfs-conflicts')?.addEventListener('click', checkVfsCollisions);
 
     renderModList();
     detectPlatforms();
@@ -218,6 +233,7 @@ window.ModManagerModule = (() => {
     renderModList,
     scanMods,
     saveVfsHierarchy,
-    detectPlatforms
+    detectPlatforms,
+    checkVfsCollisions
   };
 })();

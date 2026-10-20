@@ -202,6 +202,39 @@ window.ViewNavigator = (() => {
 
     const restoreBtn = document.getElementById('btn-restore-sidebar');
     if (restoreBtn) restoreBtn.addEventListener('click', () => toggleSidebar(true));
+
+    // Pestañas segmentadas interactivas del Dashboard (Workflows / Permissions / Executions)
+    document.querySelectorAll('.tab-link-btn[data-dash-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-link-btn[data-dash-tab]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tabName = btn.getAttribute('data-dash-tab');
+        document.querySelectorAll('.dash-pane').forEach(pane => {
+          pane.style.display = pane.id === `pane-dash-${tabName}` ? 'block' : 'none';
+        });
+      });
+    });
+
+    // Navegación interactiva desde el árbol de Documentos del Sidebar
+    document.querySelectorAll('.folder-tree .tree-node').forEach(node => {
+      node.addEventListener('click', () => {
+        document.querySelectorAll('.folder-tree .tree-node').forEach(n => n.classList.remove('selected'));
+        node.classList.add('selected');
+        const route = node.getAttribute('data-route');
+        if (route) switchTab(route);
+      });
+    });
+
+    // Filtro en tiempo real para la matriz de Workflows del Dashboard
+    const dashSearch = document.getElementById('dashboard-search-input');
+    if (dashSearch) {
+      dashSearch.addEventListener('input', () => {
+        const q = dashSearch.value.toLowerCase().trim();
+        document.querySelectorAll('#pane-dash-workflows .workflow-task-item').forEach(item => {
+          item.style.display = item.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
+        });
+      });
+    }
   }
 
   return {

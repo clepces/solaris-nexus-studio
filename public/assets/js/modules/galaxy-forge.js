@@ -95,7 +95,49 @@ window.GalaxyForgeModule = (() => {
       });
     }
 
+    validateGraphConnectivity(galaxy);
     drawGalaxy(galaxy);
+  }
+
+  function validateGraphConnectivity(galaxy) {
+    if (!galaxy.planets || galaxy.planets.length === 0) return;
+    const adj = {};
+    galaxy.planets.forEach(p => { adj[p.name] = []; });
+    (galaxy.phaseLanes || []).forEach(l => {
+      if (adj[l.source] && adj[l.target]) {
+        adj[l.source].push(l.target);
+        adj[l.target].push(l.source);
+      }
+    });
+
+    const visited = new Set();
+    const startNode = galaxy.planets[0].name;
+    const queue = [startNode];
+    visited.add(startNode);
+
+    while (queue.length > 0) {
+      const cur = queue.shift();
+      (adj[cur] || []).forEach(nxt => {
+        if (!visited.has(nxt)) {
+          visited.add(nxt);
+          queue.push(nxt);
+        }
+      });
+    }
+
+    const unreached = galaxy.planets.filter(p => !visited.has(p.name));
+    const badge = document.getElementById('galaxy-connectivity-badge');
+    if (badge) {
+      if (unreached.length === 0) {
+        badge.className = 'metric-badge-pill';
+        badge.style.color = 'var(--text-success)';
+        badge.innerText = '● Grafo 100% Conexo (BFS OK)';
+      } else {
+        badge.className = 'metric-badge-pill neutral';
+        badge.style.color = '#dc2626';
+        badge.innerText = `⚠️ ${unreached.length} Planetas Aislados`;
+      }
+    }
   }
 
   function drawGalaxy(galaxy) {

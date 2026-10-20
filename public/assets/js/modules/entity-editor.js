@@ -101,6 +101,8 @@ window.EntityEditorModule = (() => {
     if (antimatterInput) antimatterInput.value = entity.antiMatter;
     if (armorInput) armorInput.value = entity.armorPoints;
 
+    updateLiveCombatStats();
+
     if (entity.status === 'DEV') {
       if (formPanel) formPanel.classList.add('in-development');
       if (devOverlay) devOverlay.style.display = 'flex';
@@ -108,6 +110,26 @@ window.EntityEditorModule = (() => {
       if (formPanel) formPanel.classList.remove('in-development');
       if (devOverlay) devOverlay.style.display = 'none';
     }
+  }
+
+  function updateLiveCombatStats() {
+    const shield = parseFloat(document.getElementById('entity-input-shield')?.value || '0');
+    const hull = parseFloat(document.getElementById('entity-input-hull')?.value || '0');
+    const armor = parseFloat(document.getElementById('entity-input-armor')?.value || '0');
+
+    // Mitigación canónica Sins Rebellion: (Armor * 0.05) / (1 + Armor * 0.05)
+    const mitigation = armor > 0 ? ((armor * 0.05) / (1 + armor * 0.05)) * 100 : 0;
+    // Effective Hit Points (EHP)
+    const ehp = Math.round(hull * (1 + armor * 0.05) + shield);
+    const ratio = hull > 0 ? (shield / hull).toFixed(2) : '0.00';
+
+    const ehpEl = document.getElementById('hud-calc-ehp');
+    const mitEl = document.getElementById('hud-calc-mitigation');
+    const ratEl = document.getElementById('hud-calc-ratio');
+
+    if (ehpEl) ehpEl.innerText = `${ehp.toLocaleString()} HP`;
+    if (mitEl) mitEl.innerText = `+${mitigation.toFixed(1)}%`;
+    if (ratEl) ratEl.innerText = ratio;
   }
 
   async function saveCurrentEntity() {
@@ -135,6 +157,10 @@ window.EntityEditorModule = (() => {
   function init() {
     const searchInput = document.getElementById('entity-search-input');
     if (searchInput) searchInput.addEventListener('input', renderCatalogList);
+
+    ['entity-input-shield', 'entity-input-hull', 'entity-input-armor'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', updateLiveCombatStats);
+    });
 
     document.getElementById('btn-save-entity-action')?.addEventListener('click', saveCurrentEntity);
 
