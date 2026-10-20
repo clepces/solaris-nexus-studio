@@ -35,6 +35,15 @@ window.TranslationStudioModule = (() => {
     const startIndex = Math.max(0, Math.floor(scrollTop / state.rowHeight) - 5);
     const endIndex = Math.min(total, startIndex + state.visibleCount);
 
+    const hudText = document.getElementById('hud-status-text');
+    if (hudText) {
+      if (total === 0) {
+        hudText.innerText = 'Cadenas 0 - 0 de 0';
+      } else {
+        hudText.innerText = `Mostrando filas ${(startIndex + 1).toLocaleString()} - ${endIndex.toLocaleString()} de ${total.toLocaleString()} cadenas`;
+      }
+    }
+
     runway.innerHTML = '';
 
     for (let i = startIndex; i < endIndex; i++) {
@@ -58,13 +67,6 @@ window.TranslationStudioModule = (() => {
       `;
       runway.appendChild(row);
     }
-
-    runway.querySelectorAll('.btn-edit').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.getAttribute('data-index'), 10);
-        openEditModal(idx);
-      });
-    });
   }
 
   function applyFilters() {
@@ -205,6 +207,17 @@ window.TranslationStudioModule = (() => {
     if (searchInput) searchInput.addEventListener('input', applyFilters);
 
     if (viewport) viewport.addEventListener('scroll', renderVirtualGrid);
+
+    // Event Delegation centralizado para evitar memory leaks durante el scroll
+    if (runway) {
+      runway.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-edit');
+        if (btn) {
+          const idx = parseInt(btn.getAttribute('data-index'), 10);
+          openEditModal(idx);
+        }
+      });
+    }
 
     // Modal listeners
     document.getElementById('modal-close')?.addEventListener('click', closeModal);

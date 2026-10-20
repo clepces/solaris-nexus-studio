@@ -159,38 +159,31 @@ body {
   user-select: none;
 }
 
-/* Cápsula inferior independiente para Configuración */
+/* Cápsula inferior independiente para Configuración (Fiel a la foto de referencia) */
 .dock-bottom-capsule {
   background: var(--dock-capsule-bg);
   box-shadow: var(--neu-shadow-dock);
-  border-radius: 20px;
-  padding: 8px 4px 6px 4px;
+  border-radius: 22px;
+  padding: 8px 4px 8px 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   border: none;
-  height: 110px;
+  height: 118px;
   flex-shrink: 0;
 }
 
 .dock-bottom-label {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 0.52rem;
-  letter-spacing: 0.12em;
+  font-size: 0.54rem;
+  letter-spacing: 0.14em;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--dock-text-vertical);
   margin-top: 6px;
-  margin-bottom: 12px;
-  user-select: none;
-}
-  letter-spacing: 0.10em;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--dock-text-vertical);
-  margin-top: 8px;
+  margin-bottom: 8px;
   user-select: none;
 }
 
@@ -200,25 +193,25 @@ body {
   border-radius: 12px;
   background: var(--dock-dark-pill);
   border: none;
-  color: var(--dock-icon-color);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.3);
-  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25), 0 3px 6px rgba(0, 0, 0, 0.45);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dock-settings-btn:hover {
-  color: #fff;
-  transform: rotate(30deg);
+  color: #60a5fa;
+  transform: rotate(35deg) scale(1.05);
 }
 
 .dock-settings-btn svg {
-  width: 17px;
-  height: 17px;
+  width: 19px;
+  height: 19px;
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: 1.8;
   fill: none;
 }
 
@@ -690,31 +683,35 @@ body {
    ========================================================================== */
 .reagle-metric-card-container {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: stretch;
   width: 100%;
   max-width: 100%;
+  flex-shrink: 0;
 }
 
 .reagle-metric-card {
   background: var(--neu-card-bg);
-  box-shadow: var(--neu-shadow-card);
-  border-radius: 16px;
-  padding: 12px 18px;
+  box-shadow: 8px 8px 18px #bcc1cb, -8px -8px 18px #ffffff;
+  border-radius: 20px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   position: relative;
-  width: 240px;
-  min-width: 210px;
+  width: 250px;
+  min-width: 220px;
   flex-shrink: 0;
 }
 
 .metric-title-small {
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .metric-value-row {
@@ -724,23 +721,23 @@ body {
 }
 
 .metric-huge-number {
-  font-size: 2.1rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: var(--text-main);
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
 }
 
 .metric-badge-pill {
-  font-size: 0.70rem;
+  font-size: 0.72rem;
   font-weight: 700;
   background: var(--badge-green-bg);
   color: var(--badge-green-text);
-  padding: 2px 8px;
-  border-radius: 10px;
+  padding: 3px 8px;
+  border-radius: 12px;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
   white-space: nowrap;
 }
@@ -751,9 +748,9 @@ body {
 }
 
 .metric-report-link {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-main);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-blue);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -764,29 +761,37 @@ body {
 }
 
 .metric-report-link:hover {
-  transform: translateX(2px);
+  transform: translateX(3px);
+  text-decoration: underline;
 }
 
 /* Mini métricas secundarias en fila */
 .secondary-metrics-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex: 1;
   min-width: 0;
 }
 
 .mini-neu-card {
   background: var(--neu-card-bg);
-  box-shadow: var(--neu-shadow-card-sm);
-  border-radius: 14px;
-  padding: 10px 14px;
+  box-shadow: 6px 6px 14px #bcc1cb, -6px -6px 14px #ffffff;
+  border-radius: 18px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  justify-content: space-between;
+  gap: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
   cursor: pointer;
   flex: 1;
   min-width: 0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mini-neu-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 18px #bcc1cb, -8px -8px 18px #ffffff;
 }
 
 .mini-card-label {
@@ -801,9 +806,10 @@ body {
 }
 
 .mini-card-value {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-main);
+  letter-spacing: -0.02em;
   white-space: nowrap;
 }
 
@@ -900,14 +906,14 @@ body {
 }
 
 /* ==========================================================================
-   7. BOTONES NEUMÓRFICOS EXTRUIDOS
+   7. BOTONES NEUMÓRFICOS EXTRUIDOS (ESTILO REAGLE MINIMALISTA)
    ========================================================================== */
 .btn-reagle {
   background: var(--neu-card-bg);
-  box-shadow: 3px 3px 8px #bcc1cb, -3px -3px 8px #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: 6px 12px;
+  box-shadow: 4px 4px 10px #bcc1cb, -4px -4px 10px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 14px;
+  padding: 7px 14px;
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--text-main);
@@ -915,17 +921,32 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
 }
 
+.btn-reagle svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--text-secondary);
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+  transition: stroke 0.15s ease;
+}
+
 .btn-reagle:hover {
-  box-shadow: 4px 4px 10px #b5bac4, -4px -4px 10px #ffffff;
+  box-shadow: 6px 6px 14px #b5bac4, -6px -6px 14px #ffffff;
   transform: translateY(-1px);
+  color: #111827;
+}
+
+.btn-reagle:hover svg {
+  stroke: var(--text-main);
 }
 
 .btn-reagle:active {
-  box-shadow: inset 2px 2px 4px #b7bcc5, inset -2px -2px 4px #ffffff;
+  box-shadow: inset 2px 2px 5px #b7bcc5, inset -2px -2px 5px #ffffff;
   transform: translateY(1px);
 }
 
@@ -934,9 +955,17 @@ body {
   font-weight: 700;
 }
 
+.btn-reagle-primary svg {
+  stroke: var(--text-blue);
+}
+
 .btn-reagle-success {
   color: var(--text-success);
   font-weight: 700;
+}
+
+.btn-reagle-success svg {
+  stroke: var(--text-success);
 }
 
 /* ==========================================================================
@@ -1018,15 +1047,28 @@ body {
   display: flex;
 }
 
+#tab-translation.view-panel {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#tab-translation.view-panel.active {
+  display: flex;
+}
+
 .reagle-card-panel {
   background: var(--neu-card-bg);
   box-shadow: var(--neu-shadow-card);
-  border-radius: 22px;
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .workflow-task-item {

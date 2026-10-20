@@ -7,28 +7,32 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 0;
+  max-height: 100%;
   background: var(--neu-card-bg);
   box-shadow: inset 3px 3px 7px #b8bdc7, inset -3px -3px 7px #ffffff;
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  min-height: 200px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
   min-width: 0;
   width: 100%;
+  position: relative;
 }
 
 .grid-header {
   display: grid;
-  grid-template-columns: minmax(110px, 1.2fr) minmax(110px, 1.4fr) minmax(110px, 1.4fr) 85px 44px;
+  grid-template-columns: minmax(130px, 1.2fr) minmax(140px, 1.5fr) minmax(140px, 1.5fr) 90px 48px;
   background: #cfd4db;
-  padding: 8px 14px;
+  padding: 9px 16px;
   font-weight: 700;
-  font-size: 0.70rem;
+  font-size: 0.72rem;
   color: var(--text-secondary);
   border-bottom: 1px solid rgba(160, 168, 180, 0.35);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   min-width: 0;
+  flex-shrink: 0;
+  z-index: 5;
 }
 
 .grid-header > div {
@@ -40,11 +44,37 @@
 
 .virtual-viewport {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
   will-change: transform;
   min-width: 0;
+}
+
+.grid-footer-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #cfd4db;
+  border-top: 1px solid rgba(160, 168, 180, 0.35);
+  padding: 6px 16px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.grid-footer-hud .hud-badge {
+  background: #dbe0e6;
+  padding: 2px 8px;
+  border-radius: 8px;
+  box-shadow: inset 1px 1px 2px #b7bcc5, inset -1px -1px 2px #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.70rem;
+  color: var(--text-main);
+  font-weight: 700;
 }
 
 .virtual-viewport::-webkit-scrollbar {
@@ -75,9 +105,10 @@
   width: 100%;
   height: 40px;
   display: grid;
-  grid-template-columns: minmax(110px, 1.2fr) minmax(110px, 1.4fr) minmax(110px, 1.4fr) 85px 44px;
+  grid-template-columns: minmax(130px, 1.2fr) minmax(140px, 1.5fr) minmax(140px, 1.5fr) 90px 48px;
   align-items: center;
-  padding: 0 14px;
+  padding: 0 16px;
+  box-sizing: border-box;
   border-bottom: 1px solid rgba(160, 168, 180, 0.18);
   font-size: 0.78rem;
   color: var(--text-main);
