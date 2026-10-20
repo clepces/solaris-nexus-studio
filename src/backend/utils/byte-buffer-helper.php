@@ -6,6 +6,7 @@ namespace SolarisNexus\Backend\Utils;
 final class ByteBufferHelper
 {
     public const BOM_BYTES = "\xEF\xBB\xBF";
+    public const UTF8_BOM = self::BOM_BYTES;
     public const CRLF = "\r\n";
 
     /**

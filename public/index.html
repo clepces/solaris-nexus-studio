@@ -630,13 +630,13 @@
         }
       } catch (e) {}
 
-      // Fallback local con BOM UTF-8 y CRLF
-      let fallbackStr = "\uFEFFStringInfo\r\n{\r\n";
-      state.allEntries.slice(0, 500).forEach(entry => {
+      // Fallback local con BOM UTF-8, CRLF y cabecera canónica TXT / NumStrings
+      const exportSlice = state.allEntries.slice(0, 500);
+      let fallbackStr = `\uFEFFTXT\r\nNumStrings ${exportSlice.length}\r\n`;
+      exportSlice.forEach(entry => {
         const escaped = entry.translated.replace(/"/g, '\\"');
-        fallbackStr += `\tID "${entry.id}"\r\n\tValue "${escaped}"\r\n`;
+        fallbackStr += `StringInfo\r\n{\r\n\tID "${entry.id}"\r\n\tValue "${escaped}"\r\n}\r\n`;
       });
-      fallbackStr += "}\r\n";
       downloadBlob(fallbackStr, 'Spanish.str', 'text/plain;charset=utf-8');
     });
 

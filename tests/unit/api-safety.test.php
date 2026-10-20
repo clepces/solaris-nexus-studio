@@ -62,7 +62,8 @@ $exportResult = $stringController->export([
     ]
 ]);
 assert($exportResult['numStrings'] === 2, 'Exportó 2 cadenas');
-assert(str_starts_with($exportResult['content'], "TXT\r\nNumStrings 2\r\n"), 'Cabecera canónica');
+assert(str_starts_with($exportResult['content'], \SolarisNexus\Backend\Utils\ByteBufferHelper::BOM_BYTES), 'Firma UTF-8 BOM canónica presente');
+assert(str_starts_with(\SolarisNexus\Backend\Utils\ByteBufferHelper::stripBom($exportResult['content']), "TXT\r\nNumStrings 2\r\n"), 'Cabecera canónica');
 echo "[OK] StringController: Exportación de cadenas canónicas validada." . PHP_EOL;
 
 echo "=== TODOS LOS TESTS DE LA FASE 5 PASARON EXITOSAMENTE ===" . PHP_EOL;

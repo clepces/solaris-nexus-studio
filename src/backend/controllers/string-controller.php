@@ -6,6 +6,7 @@ namespace SolarisNexus\Backend\Controllers;
 use SolarisNexus\Backend\Services\StrParserService;
 use SolarisNexus\Backend\Services\LinterService;
 use SolarisNexus\Backend\Services\TokenGuardService;
+use SolarisNexus\Backend\Utils\ByteBufferHelper;
 use SolarisNexus\Backend\Utils\LoggerService;
 
 final class StringController
@@ -69,7 +70,7 @@ final class StringController
             throw new \InvalidArgumentException('INVALID_PAYLOAD: "entries" array is required.');
         }
 
-        $serialized = $this->parser->serialize($entries);
+        $serialized = ByteBufferHelper::UTF8_BOM . $this->parser->serialize($entries);
 
         return [
             'numStrings' => count($entries),
