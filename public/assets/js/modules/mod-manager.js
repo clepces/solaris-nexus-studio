@@ -130,6 +130,10 @@ window.ModManagerModule = (() => {
     if (ramText) ramText.innerText = `${totalRam.toLocaleString()} MB / ${LAA_CEILING_MB.toLocaleString()} MB (${pct}%)`;
     if (miniRam) miniRam.innerText = `${totalRam.toLocaleString()} MB`;
 
+    if (window.ViewNavigator) {
+      window.ViewNavigator.updateHeroMetrics(document.querySelector('.view-panel.active')?.id || 'tab-mods');
+    }
+
     if (ramFill) {
       ramFill.style.width = `${pct}%`;
       ramFill.className = 'reagle-progress-fill';
@@ -169,6 +173,9 @@ window.ModManagerModule = (() => {
     };
     const res = await apiPost('mods/save', payload);
     if (res.success) {
+      if (window.ViewNavigator) {
+        window.ViewNavigator.logExecution('VFS', `Guardada jerarquía (${state.activeMods.length} mods en EnabledMods.txt)`, 'Respaldo .bak OK');
+      }
       alert('Jerarquía VFS guardada exitosamente en EnabledMods.txt con copia de seguridad atómica.');
     } else {
       alert('Aviso: Jerarquía VFS sincronizada localmente en sesión.');
@@ -192,6 +199,9 @@ window.ModManagerModule = (() => {
 
     recalculatePriorities();
     renderModList();
+    if (window.ViewNavigator) {
+      window.ViewNavigator.logExecution('VFS', `Inyectado minimod [ES] ${name} (Prioridad 999)`, 'En Cascada');
+    }
     if (nameInput) nameInput.value = '';
     switchSubTab('subtab-mods-catalog');
     alert(`Minimod [ES] ${name} inyectado con prioridad 999 en la cima de EnabledMods.txt.`);

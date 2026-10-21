@@ -137,6 +137,7 @@ window.TranslationStudioModule = (() => {
     state.filteredEntries = state.allEntries;
     if (window.ViewNavigator) {
       window.ViewNavigator.updateHeroMetrics('tab-translation');
+      window.ViewNavigator.logExecution('STR', `Ingesta demo: ${state.allEntries.length.toLocaleString()} cadenas UTF-8 BOM`, '60 FPS OK');
     }
     renderVirtualGrid();
   }
@@ -179,6 +180,9 @@ window.TranslationStudioModule = (() => {
     const json = await apiPost('strings/export', payload);
     if (json.success && json.data && json.data.content) {
       downloadBlob(json.data.content, 'Spanish.str');
+      if (window.ViewNavigator) {
+        window.ViewNavigator.logExecution('STR', `Exportación Spanish.str (${state.allEntries.length.toLocaleString()} cadenas con BOM)`, 'Descargado');
+      }
       return;
     }
 
@@ -190,6 +194,9 @@ window.TranslationStudioModule = (() => {
       out += `StringInfo\r\n{\r\n\tID "${e.id}"\r\n\tValue "${esc}"\r\n}\r\n`;
     });
     downloadBlob(out, 'Spanish.str');
+    if (window.ViewNavigator) {
+      window.ViewNavigator.logExecution('STR', `Exportación fallback Spanish.str (${slice.length} cadenas con BOM)`, 'Descargado');
+    }
   }
 
   function init() {

@@ -1,0 +1,33 @@
+  <!-- ==========================================================================
+       MODAL DE EDICIÓN CON TOKEN GUARD EN TIEMPO REAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 id="modal-string-id" style="font-size: 1.15rem; font-weight: 800; color: var(--text-blue);">IDS_SAMPLE_KEY</h3>
+        <button class="btn-icon-reagle" id="modal-close" style="font-size: 1.2rem;">&times;</button>
+      </div>
+
+      <div>
+        <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Texto Original en Inglés:</label>
+        <div id="modal-original-text" style="background: var(--neu-slot-bg); box-shadow: var(--neu-shadow-inset); padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; margin-top: 4px; color: var(--text-main);"></div>
+      </div>
+
+      <div>
+        <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Traducción al Español:</label>
+        <textarea id="modal-translated-input" class="reagle-input" style="width: 100%; height: 90px; margin-top: 4px; resize: vertical;"></textarea>
+      </div>
+
+      <div id="modal-token-feedback" style="font-size: 0.84rem; padding: 10px 14px; border-radius: 12px; display: none;"></div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+        <button class="btn-reagle" id="btn-suggest-tm" style="font-size: 0.8rem;">
+          🧠 Autocompletar con Memoria (TM)
+        </button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-reagle" id="modal-cancel">Cancelar</button>
+          <button class="btn-reagle btn-reagle-success" id="modal-save">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>

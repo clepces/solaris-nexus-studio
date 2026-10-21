@@ -1,0 +1,98 @@
+      <!-- ======================================================================
+           VISTA 2: GESTOR DE MODS Y ORQUESTADOR VFS
+           ====================================================================== -->
+      <section id="tab-mods" class="view-panel">
+        <!-- Subpestañas del Módulo de Mods -->
+        <div class="mod-subtab-bar">
+          <button class="mod-subtab-btn active" data-subtab="subtab-mods-catalog">📂 Catálogo &amp; Jerarquía VFS</button>
+          <button class="mod-subtab-btn" data-subtab="subtab-mods-injector">⚡ Inyector de Minimod &amp; Monitor RAM</button>
+        </div>
+
+        <!-- Subpestaña 1: Catálogo y Jerarquía -->
+        <div class="mod-subtab-pane active" id="subtab-mods-catalog">
+          <!-- Tarjeta de Detección Multiplataforma -->
+          <div class="reagle-card-panel" style="padding: 14px 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: 800;">Detección Automática de Rutas de Mods (Steam / GOG / Stardock)</h3>
+                <p style="font-size: 0.74rem; color: var(--text-muted);">
+                  Escanea el sistema operativo para ubicar la carpeta canónica de instalación de mods de Sins Rebellion.
+                </p>
+              </div>
+              <button class="btn-reagle" id="btn-scan-platforms">🔍 Re-escanear Rutas</button>
+            </div>
+            <div id="platform-detection-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"></div>
+          </div>
+
+          <!-- Jerarquía de Mods Activos -->
+          <div class="reagle-card-panel" style="padding: 14px 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: 800;">Jerarquía de Prioridades en EnabledMods.txt</h3>
+                <p style="font-size: 0.74rem; color: var(--text-muted);">
+                  Reordena la cascada de sobrescritura de archivos. Prioridad 999 se carga en la cima del VFS.
+                </p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-reagle" onclick="ModManagerModule.scanMods();">📁 Escanear</button>
+                <button class="btn-reagle btn-reagle-primary" onclick="ModManagerModule.saveVfsHierarchy();">💾 Guardar VFS</button>
+              </div>
+            </div>
+            <div id="mod-active-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto;"></div>
+          </div>
+
+          <!-- Auditoría de Colisiones VFS en Cascada -->
+          <div class="reagle-card-panel" style="padding: 14px 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div>
+                <h3 style="font-size: 0.95rem; font-weight: 800;">Auditoría de Colisiones VFS (Archivos Compartidos)</h3>
+                <p style="font-size: 0.74rem; color: var(--text-muted);">
+                  Detecta colisiones donde múltiples mods intentan sobreescribir el mismo archivo (.str, .brushes, .entity).
+                </p>
+              </div>
+              <button class="btn-reagle" id="btn-check-vfs-conflicts">🔍 Auditar Colisiones</button>
+            </div>
+            <div id="vfs-conflicts-container" style="display: none; flex-direction: column; gap: 6px; font-size: 0.78rem;"></div>
+          </div>
+        </div>
+
+        <!-- Subpestaña 2: Inyector y Monitor LAA -->
+        <div class="mod-subtab-pane" id="subtab-mods-injector">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <!-- Inyector de Minimod -->
+            <div class="reagle-card-panel" style="padding: 18px;">
+              <h3 style="font-size: 0.95rem; font-weight: 800;">Inyección Quirúrgica de Minimod (P999)</h3>
+              <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                Crea e inyecta un minimod de idioma español en la cúspide de EnabledMods.txt sin alterar archivos del mod base.
+              </p>
+              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-secondary);">Nombre del Minimod:</label>
+                <input type="text" id="input-minimod-name" class="reagle-input" value="Star Wars Interregnum Traduccion" placeholder="Nombre de mod..." style="width: 100%;">
+                <button class="btn-reagle btn-reagle-primary" id="btn-inject-minimod-action" style="align-self: flex-start; margin-top: 4px;">
+                  + Inyectar en Cascada VFS
+                </button>
+              </div>
+            </div>
+
+            <!-- Monitor de Memoria LAA (32-bit Crash Prevention) -->
+            <div class="reagle-card-panel" style="padding: 18px;">
+              <h3 style="font-size: 0.95rem; font-weight: 800;">Presupuesto de Memoria LAA (Techo 3.250 MB)</h3>
+              <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                Supervisa el consumo acumulado de memoria RAM para evitar caídas MiniDump causadas por el límite de 32 bits de Rebellion.
+              </p>
+              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+                  <span>Consumo Estimado:</span>
+                  <span id="ram-meter-text">1.865 MB / 3.250 MB (57%)</span>
+                </div>
+                <div class="reagle-progress-track">
+                  <div class="reagle-progress-fill" id="ram-meter-fill" style="width: 57%;"></div>
+                </div>
+                <div id="ram-risk-badge" style="font-size: 0.76rem; font-weight: 700; color: var(--text-success); padding: 8px 12px; background: rgba(5, 150, 105, 0.1); border-radius: 10px; margin-top: 6px;">
+                  ESTADO: SEGURO (Bajo riesgo de MiniDump Crash)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>

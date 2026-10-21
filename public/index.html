@@ -11,9 +11,8 @@
   <link rel="stylesheet" href="assets/css/modules/galaxy-forge.css">
 </head>
 <body>
-
   <!-- ==========================================================================
-       1. DOCK LATERAL FLOTANTE (ESTILO CÁPSULA REAGLE DE LA FOTO)
+       1. DOCK LATERAL FLOTANTE (ESTILO CÁPSULA REAGLE)
        ========================================================================== -->
   <aside class="reagle-dock-column">
     <div class="dock-top-capsule">
@@ -23,7 +22,7 @@
           <svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line></svg>
         </button>
 
-        <!-- 1. Dashboard (Home Activo como en la foto) -->
+        <!-- 1. Dashboard -->
         <button class="dock-btn active" data-tab="tab-dashboard" title="Dashboard">
           <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         </button>
@@ -33,28 +32,28 @@
           <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         </button>
 
-        <!-- 3. Gestor VFS (Globo con cuadrícula) -->
-        <button class="dock-btn" data-tab="tab-mods" title="Gestor VFS & Mods">
+        <!-- 3. Gestor VFS -->
+        <button class="dock-btn" data-tab="tab-mods" title="Gestor VFS &amp; Mods">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
         </button>
 
-        <!-- 4. Editor de Entidades (Naves / Flota) -->
+        <!-- 4. Editor de Entidades -->
         <button class="dock-btn" data-tab="tab-entities" title="Editor de Entidades">
           <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
         </button>
 
-        <!-- 5. Galaxy Forge (Dual Sliders / Red Estelar) -->
+        <!-- 5. Galaxy Forge -->
         <button class="dock-btn" data-tab="tab-galaxy" title="Galaxy Forge">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><circle cx="19" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle><path d="M10.4 10.4L6.4 17.6"></path><path d="M13.6 13.6l4-7.2"></path></svg>
         </button>
 
-        <!-- 6. ConvertData CLI (3D Box Compilador) -->
+        <!-- 6. ConvertData CLI -->
         <button class="dock-btn" data-tab="tab-convert" title="ConvertData CLI">
           <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         </button>
       </div>
 
-      <!-- Texto vertical rotado como en la imagen -->
+      <!-- Texto vertical rotado -->
       <span class="dock-vertical-label">SOLARIS 2026 NAV</span>
     </div>
 
@@ -67,12 +66,10 @@
     </div>
   </aside>
 
-  <!-- ==========================================================================
-       2. VENTANA PRINCIPAL NEUMÓRFICA (MAIN APP WINDOW)
-       ========================================================================== -->
   <div class="reagle-window">
-
-    <!-- SUB-SIDEBAR DE NAVEGACIÓN (IDÉNTICO A LA FOTO) -->
+    <!-- ==========================================================================
+         2. SUB-SIDEBAR DE NAVEGACIÓN Y EXPLORADOR VFS / LOCAL
+         ========================================================================== -->
     <nav class="reagle-sidebar">
       <!-- Semáforo Mac-like superior -->
       <div class="sidebar-top-bar">
@@ -84,7 +81,7 @@
         <button class="window-view-icon" id="btn-toggle-sidebar" title="Colapsar panel lateral" type="button" aria-label="Toggle Sidebar"></button>
       </div>
 
-      <!-- Perfil de Usuario con Avatar Circular -->
+      <!-- Perfil de Usuario Corporativo -->
       <div class="user-profile-row">
         <div class="user-avatar-circle">CN</div>
         <div class="user-info">
@@ -99,7 +96,7 @@
       <!-- Sección: Projects -->
       <div class="sidebar-section-title">Projects</div>
       <div class="sidebar-items-list">
-        <!-- Dashboard (Exacto a la foto de referencia) -->
+        <!-- Dashboard -->
         <button class="sidebar-nav-item active" data-tab="tab-dashboard">
           <div class="sidebar-nav-left">
             <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
@@ -117,20 +114,22 @@
           <span class="sidebar-pill-badge" id="sidebar-count-strings">0</span>
         </button>
 
+        <!-- Library (VFS Mods) -->
         <button class="sidebar-nav-item" data-tab="tab-mods">
           <div class="sidebar-nav-left">
             <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             <span>Library (VFS Mods)</span>
           </div>
-          <span class="sidebar-pill-badge">3</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-mods">3</span>
         </button>
 
+        <!-- Shared Entities -->
         <button class="sidebar-nav-item" data-tab="tab-entities">
           <div class="sidebar-nav-left">
             <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
             <span>Shared Entities</span>
           </div>
-          <span class="sidebar-pill-badge">Kol</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-entities">5</span>
         </button>
       </div>
 
@@ -150,7 +149,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"></path></svg>
             <span>Galaxy Forge</span>
           </div>
-          <span class="sidebar-pill-badge">12</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-galaxy">12</span>
         </button>
 
         <button class="sidebar-nav-item" data-tab="tab-convert">
@@ -165,93 +164,106 @@
       <!-- Sección: History -->
       <div class="sidebar-section-title">History</div>
       <div class="sidebar-items-list">
-        <div class="sidebar-nav-item" style="cursor: default;">
+        <div class="sidebar-nav-item" style="cursor: pointer;" onclick="NexusUI.switchTab('tab-translation');">
           <div class="sidebar-nav-left">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <span>Recently Edited</span>
           </div>
+          <span class="sidebar-pill-badge">.str</span>
         </div>
 
-        <div class="sidebar-nav-item" style="cursor: default;">
+        <div class="sidebar-nav-item" style="cursor: pointer;" onclick="NexusUI.switchTab('tab-mods');">
           <div class="sidebar-nav-left">
             <svg viewBox="0 0 24 24"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><line x1="10" y1="12" x2="14" y2="12"></line></svg>
-            <span>Archive</span>
+            <span>Archive (.bak)</span>
           </div>
+          <span class="sidebar-pill-badge">VFS</span>
         </div>
       </div>
 
-      <!-- Sección: Documents (con botón + y árbol) -->
+      <!-- ======================================================================
+           EXPLORADOR REAL DE RUTAS Y ARCHIVOS (VFS & JUEGO LOCAL)
+           ====================================================================== -->
       <div class="sidebar-section-title">
-        <span>Documents</span>
-        <span class="section-add-btn" title="Cargar Archivo">+</span>
+        <span>Explorador VFS &amp; Local</span>
+        <span class="section-add-btn" id="btn-sidebar-scan-vfs" title="Re-escanear Carpetas">+</span>
       </div>
 
       <div class="reagle-search-inset">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" placeholder="Search">
+        <input type="text" id="vfs-tree-search-input" placeholder="Buscar mod o archivo...">
       </div>
 
-      <!-- Árbol Jerárquico de Carpetas (Interactivo con navegación directa) -->
-      <div class="folder-tree">
-        <div class="tree-node" data-route="tab-system">
+      <!-- Árbol Real de Directorios (Mods Instalados & Juego Canónico) -->
+      <div class="folder-tree" id="sidebar-real-vfs-tree">
+        <!-- Rama 1: Directorio VFS de Mods Activos -->
+        <div class="tree-node selected" data-route="tab-mods" title="Directorio VFS de Mods">
           <div class="tree-node-left">
             <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-            <span>System Management's</span>
+            <span>Mods-Rebellion v1.85</span>
           </div>
-          <span class="sidebar-pill-badge">12</span>
+          <span class="sidebar-pill-badge" id="tree-badge-mods-count">3</span>
         </div>
 
-        <div class="tree-sub-group">
-          <div class="tree-node" data-route="tab-system">
+        <div class="tree-sub-group" id="tree-subgroup-mods">
+          <div class="tree-node" data-route="tab-mods" data-mod-target="[ES] Star Wars Interregnum Traduccion" title="Minimod de Localización P999">
             <div class="tree-node-left">
               <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-              <span>2026 Update's</span>
+              <span>[ES] Interregnum</span>
             </div>
-            <span class="sidebar-pill-badge">2</span>
+            <span class="sidebar-pill-badge" style="color: #059669; font-weight: 800;">P999</span>
           </div>
 
-          <div class="tree-sub-group">
-            <div class="tree-node" data-route="tab-translation">
-              <div class="tree-node-left">
-                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                <span>String Localizations</span>
-              </div>
-              <span class="sidebar-pill-badge">4</span>
+          <div class="tree-node" data-route="tab-mods" data-mod-target="Star Wars Interregnum" title="Mod de Expansión Galáctica P989">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>Star Wars Interregnum</span>
             </div>
+            <span class="sidebar-pill-badge">P989</span>
+          </div>
 
-            <div class="tree-node" data-route="tab-entities">
-              <div class="tree-node-left">
-                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                <span>Entity Balancing</span>
-              </div>
-              <span class="sidebar-pill-badge">3</span>
+          <div class="tree-node" data-route="tab-mods" data-mod-target="Enhanced 4X Mod" title="Mod de Balance Estratégico P979">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>Enhanced 4X Mod</span>
             </div>
-
-            <!-- Ítem seleccionado con relieve neumórfico suave -->
-            <div class="tree-node selected" data-route="tab-dashboard">
-              <div class="tree-node-left">
-                <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                <span>Fundamentals</span>
-              </div>
-              <span class="sidebar-pill-badge" style="background:#fff;">4</span>
-            </div>
+            <span class="sidebar-pill-badge">P979</span>
           </div>
         </div>
 
-        <div class="tree-node" data-route="tab-mods">
+        <!-- Rama 2: Instalación Canónica Local del Juego (Vanilla) -->
+        <div class="tree-node" data-route="tab-system" title="Ruta de Instalación Local">
           <div class="tree-node-left">
             <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-            <span>Off Grid Servers</span>
+            <span>Sins Rebellion (Vanilla)</span>
           </div>
-          <span class="sidebar-pill-badge">5</span>
+          <span class="sidebar-pill-badge" style="background:#fff;">LOCAL</span>
+        </div>
+
+        <div class="tree-sub-group" id="tree-subgroup-vanilla">
+          <div class="tree-node" data-route="tab-translation" title="Abrir Diccionario Oficial String_table.str">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <span>String_table.str</span>
+            </div>
+            <span class="sidebar-pill-badge">7.828</span>
+          </div>
+
+          <div class="tree-node" data-route="tab-entities" title="Abrir Acorazado Kol Vanilla">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
+              <span>Kol Battleship.entity</span>
+            </div>
+            <span class="sidebar-pill-badge">TEC</span>
+          </div>
         </div>
       </div>
     </nav>
 
-    <!-- ÁREA DE TRABAJO PRINCIPAL (WORKSPACE) -->
     <main class="reagle-workspace">
-
-      <!-- Encabezado del Módulo (como 'Dashboard' en la foto) -->
+      <!-- ==========================================================================
+           3. ENCABEZADO CONTEXTUAL NEUMÓRFICO (WORKSPACE HEADER)
+           ========================================================================== -->
       <header class="reagle-header">
         <div class="header-left-wrap">
           <button class="btn-restore-sidebar" id="btn-restore-sidebar" title="Expandir menú lateral" type="button" aria-label="Expand Sidebar">
@@ -263,11 +275,11 @@
           </div>
         </div>
         <div class="header-actions-group" id="header-actions-container">
-          <!-- Botones contextuales inyectados dinámicamente -->
+          <!-- Botones contextuales inyectados dinámicamente con SVGs -->
         </div>
       </header>
 
-      <!-- Fila de Métricas (Inspirada al 100% en 'Executions 340, +204%' de la foto) -->
+      <!-- FILA DE MÉTRICAS GLOBALES (HERO + SECUNDARIAS REACTIVAS) -->
       <section class="reagle-metric-card-container">
         <!-- Tarjeta Principal Dinámica -->
         <div class="reagle-metric-card">
@@ -276,33 +288,34 @@
             <span class="metric-huge-number" id="hero-metric-number">340</span>
             <span class="metric-badge-pill" id="hero-metric-badge">↑ 204%</span>
           </div>
-          <a class="metric-report-link" id="hero-metric-link">See Report →</a>
+          <a class="metric-report-link" id="hero-metric-link" onclick="NexusUI.switchTab('tab-system');">See Report →</a>
         </div>
 
-        <!-- Fila de Mini Métricas Secundarias (Distribuibles) -->
+        <!-- Fila de Mini Métricas Secundarias (Conectadas al Estado Real) -->
         <div class="secondary-metrics-row" id="secondary-metrics-row">
-          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');">
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');" title="Inspeccionar Presupuesto de Memoria LAA">
             <span class="mini-card-label">Memoria 32-bit</span>
             <span class="mini-card-value" id="mini-metric-ram">1.865 MB</span>
             <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Techo Seguro LAA</span>
           </div>
 
-          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');">
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');" title="Gestionar Cascada VFS">
             <span class="mini-card-label">Mods Activos</span>
-            <span class="mini-card-value">3 Mods</span>
-            <span style="font-size: 0.72rem; color: var(--text-blue); font-weight: 700;">● Minimod P999</span>
+            <span class="mini-card-value" id="mini-metric-mods">3 Mods</span>
+            <span style="font-size: 0.72rem; color: var(--text-blue); font-weight: 700;" id="mini-metric-mod-top">● Minimod P999</span>
           </div>
 
-          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-galaxy');">
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-galaxy');" title="Modelador de Topologías Estelares">
             <span class="mini-card-label">Galaxy Forge</span>
-            <span class="mini-card-value">12 Nodos</span>
+            <span class="mini-card-value" id="mini-metric-galaxy">12 Nodos</span>
             <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Grafo Conexo</span>
           </div>
         </div>
       </section>
 
+
       <!-- ======================================================================
-           VISTA 0: DASHBOARD / EXECUTIONS (COMO EN LA FOTO DE REFERENCIA)
+           VISTA 0: DASHBOARD / EXECUTIONS (ESTUDIO CENTRAL REAGLE)
            ====================================================================== -->
       <section id="tab-dashboard" class="view-panel active">
         <!-- Fila de Tabs de Ejecuciones y Búsqueda -->
@@ -341,7 +354,7 @@
                     <div style="font-size: 0.72rem; color: var(--text-muted);">Sins of a Solar Empire UTF-8 + BOM</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill">Activo (0 Errores)</span></div>
+                <div><span class="metric-badge-pill" id="dash-str-badge">Sin archivo</span></div>
                 <button class="btn-reagle" onclick="NexusUI.switchTab('tab-translation');">Abrir Editor .str →</button>
               </div>
 
@@ -353,7 +366,7 @@
                     <div style="font-size: 0.72rem; color: var(--text-muted);">EnabledMods.txt jerarquía en cascada</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill">3 Mods Activos</span></div>
+                <div><span class="metric-badge-pill" id="dash-vfs-badge">3 Mods Activos</span></div>
                 <button class="btn-reagle" onclick="NexusUI.switchTab('tab-mods');">Gestionar Mods →</button>
               </div>
 
@@ -406,37 +419,29 @@
             </div>
           </div>
 
-          <!-- 3. PANE EXECUTIONS -->
+          <!-- 3. PANE EXECUTIONS (TELEMETRÍA REAL EN TIEMPO DE EJECUCIÓN) -->
           <div id="pane-dash-executions" class="dash-pane" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 10px;">
               <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">REGISTRO DE EJECUCIÓN</span>
               <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">HORA</span>
               <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary); text-align: right;">RESULTADO</span>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+            <div id="dash-executions-list" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
               <div class="workflow-task-item">
                 <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">[STR] Carga y renderizado virtual 7.828 cadenas</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Buffer dinámico 60 FPS sin desbordamiento</div>
+                  <div style="font-weight: 700; font-size: 0.84rem;">[SYS] Inicialización de Arquitectura Modular</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Carga reactiva de 7 módulos sin memory leaks</div>
                 </div>
-                <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">01:46:28</div>
-                <div><span class="metric-badge-pill">✓ 60 FPS Exitoso</span></div>
-              </div>
-              <div class="workflow-task-item">
-                <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">[VFS] Sincronización EnabledMods.txt Minimod P999</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Cascada de jerarquía atómica preservada</div>
-                </div>
-                <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">01:38:12</div>
-                <div><span class="metric-badge-pill">✓ Aplicado</span></div>
-              </div>
-              <div class="workflow-task-item">
-                <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">[HEALTH] Auditoría Fail-Fast y UUID Safety</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">11 test suites pasando al 100%</div>
-                </div>
-                <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">01:48:37</div>
+                <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">BOOT</div>
                 <div><span class="metric-badge-pill">✓ Certificado</span></div>
+              </div>
+              <div class="workflow-task-item">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.84rem;">[VFS] Auditoría de Cascada EnabledMods.txt</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">3 mods activos verificados con P999 en la cima</div>
+                </div>
+                <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">1.865 MB</div>
+                <div><span class="metric-badge-pill">✓ Aplicado</span></div>
               </div>
             </div>
           </div>
@@ -501,8 +506,8 @@
       <section id="tab-mods" class="view-panel">
         <!-- Subpestañas del Módulo de Mods -->
         <div class="mod-subtab-bar">
-          <button class="mod-subtab-btn active" data-subtab="subtab-mods-catalog">📂 Catálogo & Jerarquía VFS</button>
-          <button class="mod-subtab-btn" data-subtab="subtab-mods-injector">⚡ Inyector de Minimod & Monitor RAM</button>
+          <button class="mod-subtab-btn active" data-subtab="subtab-mods-catalog">📂 Catálogo &amp; Jerarquía VFS</button>
+          <button class="mod-subtab-btn" data-subtab="subtab-mods-injector">⚡ Inyector de Minimod &amp; Monitor RAM</button>
         </div>
 
         <!-- Subpestaña 1: Catálogo y Jerarquía -->
@@ -557,35 +562,29 @@
         <div class="mod-subtab-pane" id="subtab-mods-injector">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
             <!-- Inyector de Minimod -->
-            <div class="reagle-card-panel" style="padding: 16px;">
-              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-blue);">Inyector Dinámico de Minimods</h3>
-              <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
-                Genera e inyecta un paquete minimod de localización en la cima de la jerarquía sin modificar el mod principal.
+            <div class="reagle-card-panel" style="padding: 18px;">
+              <h3 style="font-size: 0.95rem; font-weight: 800;">Inyección Quirúrgica de Minimod (P999)</h3>
+              <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                Crea e inyecta un minimod de idioma español en la cúspide de EnabledMods.txt sin alterar archivos del mod base.
               </p>
-              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
-                <div>
-                  <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Nombre del Minimod:</label>
-                  <input type="text" id="input-minimod-name" class="reagle-input" placeholder="Ej: StarWars_Spanish_Patch" style="width: 100%; margin-top: 3px;">
-                </div>
-                <div>
-                  <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Prioridad Asignada:</label>
-                  <input type="text" class="reagle-input" value="999 (Sobrescribe todo)" readonly style="width: 100%; margin-top: 3px;">
-                </div>
-                <button class="btn-reagle btn-reagle-success" id="btn-inject-minimod-action" style="margin-top: 6px;">
-                  ⚡ Inyectar Minimod en EnabledMods.txt
+              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+                <label style="font-size: 0.76rem; font-weight: 700; color: var(--text-secondary);">Nombre del Minimod:</label>
+                <input type="text" id="input-minimod-name" class="reagle-input" value="Star Wars Interregnum Traduccion" placeholder="Nombre de mod..." style="width: 100%;">
+                <button class="btn-reagle btn-reagle-primary" id="btn-inject-minimod-action" style="align-self: flex-start; margin-top: 4px;">
+                  + Inyectar en Cascada VFS
                 </button>
               </div>
             </div>
 
-            <!-- Monitor de Memoria LAA -->
-            <div class="reagle-card-panel" style="padding: 16px;">
-              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main);">Monitor Físico de Memoria RAM (LAA 32-bit)</h3>
-              <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
-                Límite de direccionamiento virtual de <strong>3.250 MB</strong> por arquitectura de 32 bits de Ironclad Engine.
+            <!-- Monitor de Memoria LAA (32-bit Crash Prevention) -->
+            <div class="reagle-card-panel" style="padding: 18px;">
+              <h3 style="font-size: 0.95rem; font-weight: 800;">Presupuesto de Memoria LAA (Techo 3.250 MB)</h3>
+              <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                Supervisa el consumo acumulado de memoria RAM para evitar caídas MiniDump causadas por el límite de 32 bits de Rebellion.
               </p>
-              <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
-                <div style="display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 800;">
-                  <span>Consumo Acumulado:</span>
+              <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+                  <span>Consumo Estimado:</span>
                   <span id="ram-meter-text">1.865 MB / 3.250 MB (57%)</span>
                 </div>
                 <div class="reagle-progress-track">
@@ -797,17 +796,12 @@
           </div>
         </div>
       </section>
-            </div>
-
-            <div id="convert-result-box" style="display: none; padding: 12px; border-radius: 12px; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.3); font-size: 0.84rem;"></div>
-          </div>
-        </div>
-      </section>
 
     </main>
   </div>
-
-  <!-- MODAL DE EDICIÓN CON TOKEN GUARD EN TIEMPO REAL -->
+  <!-- ==========================================================================
+       MODAL DE EDICIÓN CON TOKEN GUARD EN TIEMPO REAL
+       ========================================================================== -->
   <div class="modal-overlay" id="edit-modal">
     <div class="modal-card">
       <div style="display: flex; justify-content: space-between; align-items: center;">

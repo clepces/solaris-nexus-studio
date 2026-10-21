@@ -1,0 +1,51 @@
+      <!-- ==========================================================================
+           3. ENCABEZADO CONTEXTUAL NEUMÓRFICO (WORKSPACE HEADER)
+           ========================================================================== -->
+      <header class="reagle-header">
+        <div class="header-left-wrap">
+          <button class="btn-restore-sidebar" id="btn-restore-sidebar" title="Expandir menú lateral" type="button" aria-label="Expand Sidebar">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 id="view-main-title">Dashboard</h1>
+            <p id="view-main-subtitle">All Your Workflows And Permissions Managed</p>
+          </div>
+        </div>
+        <div class="header-actions-group" id="header-actions-container">
+          <!-- Botones contextuales inyectados dinámicamente con SVGs -->
+        </div>
+      </header>
+
+      <!-- FILA DE MÉTRICAS GLOBALES (HERO + SECUNDARIAS REACTIVAS) -->
+      <section class="reagle-metric-card-container">
+        <!-- Tarjeta Principal Dinámica -->
+        <div class="reagle-metric-card">
+          <span class="metric-title-small" id="hero-metric-label">Executions</span>
+          <div class="metric-value-row">
+            <span class="metric-huge-number" id="hero-metric-number">340</span>
+            <span class="metric-badge-pill" id="hero-metric-badge">↑ 204%</span>
+          </div>
+          <a class="metric-report-link" id="hero-metric-link" onclick="NexusUI.switchTab('tab-system');">See Report →</a>
+        </div>
+
+        <!-- Fila de Mini Métricas Secundarias (Conectadas al Estado Real) -->
+        <div class="secondary-metrics-row" id="secondary-metrics-row">
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');" title="Inspeccionar Presupuesto de Memoria LAA">
+            <span class="mini-card-label">Memoria 32-bit</span>
+            <span class="mini-card-value" id="mini-metric-ram">1.865 MB</span>
+            <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Techo Seguro LAA</span>
+          </div>
+
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');" title="Gestionar Cascada VFS">
+            <span class="mini-card-label">Mods Activos</span>
+            <span class="mini-card-value" id="mini-metric-mods">3 Mods</span>
+            <span style="font-size: 0.72rem; color: var(--text-blue); font-weight: 700;" id="mini-metric-mod-top">● Minimod P999</span>
+          </div>
+
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-galaxy');" title="Modelador de Topologías Estelares">
+            <span class="mini-card-label">Galaxy Forge</span>
+            <span class="mini-card-value" id="mini-metric-galaxy">12 Nodos</span>
+            <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Grafo Conexo</span>
+          </div>
+        </div>
+      </section>

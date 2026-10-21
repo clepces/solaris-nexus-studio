@@ -1,0 +1,51 @@
+      <!-- ======================================================================
+           VISTA 1: ESTUDIO DE TRADUCCIÓN (VIRTUAL DATA GRID)
+           ====================================================================== -->
+      <section id="tab-translation" class="view-panel">
+        <!-- Fila de Filtros y Búsqueda del Traductor -->
+        <div class="reagle-tabs-row" id="translation-filter-row">
+          <div>
+            <h2 class="section-subheading-title">Cadenas de Localización</h2>
+            <div class="reagle-segmented-tabs" style="margin-top: 8px;">
+              <button class="tab-link-btn active" data-filter="all">Todas</button>
+              <button class="tab-link-btn" data-filter="tokens">Con Tokens</button>
+              <button class="tab-link-btn" data-filter="translated">Modificadas</button>
+            </div>
+          </div>
+
+          <div class="reagle-search-full">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="grid-search-input" placeholder="Buscar clave o texto...">
+          </div>
+        </div>
+
+        <div class="virtual-grid-container">
+          <div class="grid-header">
+            <div>ID de Cadena</div>
+            <div>Texto Original (EN)</div>
+            <div>Traducción Activa (ES)</div>
+            <div>Tokens</div>
+            <div style="text-align: right;">Acción</div>
+          </div>
+          <div class="virtual-viewport" id="virtual-viewport">
+            <div class="virtual-empty-state" id="virtual-empty-state">
+              <div class="empty-state-card">
+                <div class="empty-state-badge">SINS REBELLION STR STUDIO</div>
+                <h3 class="empty-state-title">Ningún Diccionario .str Cargado</h3>
+                <p class="empty-state-desc">
+                  El espacio de trabajo está en blanco. Carga tu archivo oficial <code>String_table.str</code> o inicializa el catálogo de demostración para inspeccionar y validar tokens de la suite.
+                </p>
+                <div class="empty-state-actions">
+                  <button class="btn-reagle btn-reagle-primary" id="btn-empty-demo">🔄 Cargar Demo (7.828 Cadenas)</button>
+                  <button class="btn-reagle" id="btn-empty-upload">📁 Cargar Archivo .str</button>
+                </div>
+              </div>
+            </div>
+            <div class="virtual-runway" id="virtual-runway" style="display: none;"></div>
+          </div>
+          <div class="grid-footer-hud" id="grid-footer-hud">
+            <span id="hud-status-text">Cadenas 0 - 0 de 0</span>
+            <span class="hud-badge">VIRTUAL RUNWAY 60 FPS</span>
+          </div>
+        </div>
+      </section>

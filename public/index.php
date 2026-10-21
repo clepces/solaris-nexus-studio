@@ -8,6 +8,7 @@ error_reporting(E_ALL);
 require_once dirname(__DIR__) . '/src/backend/utils/uuid-generator.php';
 require_once dirname(__DIR__) . '/src/backend/utils/logger-service.php';
 require_once dirname(__DIR__) . '/src/backend/utils/byte-buffer-helper.php';
+require_once dirname(__DIR__) . '/src/backend/utils/view-renderer.php';
 require_once dirname(__DIR__) . '/config/app-config.php';
 require_once dirname(__DIR__) . '/config/database-config.php';
 
@@ -52,14 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
-// Si no es llamada a la API, servir index.html
+// Si no es llamada a la API, servir la SPA modularizada
 if (!str_contains($uri, '/api/')) {
-    $spaIndex = __DIR__ . '/index.html';
-    if (file_exists($spaIndex)) {
-        header('Content-Type: text/html; charset=UTF-8');
-        readfile($spaIndex);
-        exit;
-    }
+    header('Content-Type: text/html; charset=UTF-8');
+    echo \SolarisNexus\Backend\Utils\ViewRenderer::renderSpa(__DIR__ . '/views');
+    exit;
 }
 
 header('Content-Type: application/json; charset=UTF-8');

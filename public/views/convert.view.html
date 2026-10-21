@@ -1,0 +1,44 @@
+      <!-- ======================================================================
+           VISTA 6: CONVERTDATA CLI & ENGINE TOOLS
+           ====================================================================== -->
+      <section id="tab-convert" class="view-panel">
+        <div class="reagle-card-panel" style="max-width: 680px; margin: 0 auto; width: 100%; padding: 18px 24px;">
+          <h3 style="font-size: 1.10rem; font-weight: 800;">ConvertData CLI - Conversor Binario DirectX ↔ Texto</h3>
+          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+            Pipeline de compilación directa mediante subproceso nativo ConvertData_Rebellion.exe con cálculo de checksum SHA-256.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Tipo de Recurso:</label>
+                <select id="convert-resource-type" class="reagle-input" style="width: 100%; margin-top: 3px;">
+                  <option value="entity">Entidad (.entity)</option>
+                  <option value="mesh">Malla 3D (.mesh)</option>
+                  <option value="particle">Efecto Partícula (.particle)</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Dirección:</label>
+                <select id="convert-direction" class="reagle-input" style="width: 100%; margin-top: 3px;">
+                  <option value="bin_to_txt">Binario DirectX ➔ Texto Editable (TXT)</option>
+                  <option value="txt_to_bin">Texto Editable ➔ Binario DirectX (BIN)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Ruta del Archivo Objetivo:</label>
+              <input type="text" id="convert-file-path" class="reagle-input" value="tests/fixtures/sample_demo.entity" style="width: 100%; margin-top: 3px; font-family: var(--font-mono);">
+            </div>
+
+            <button class="btn-reagle btn-reagle-primary" id="btn-run-cli-main" style="align-self: flex-start; margin-top: 4px;">
+              ⚡ Ejecutar Conversión Nativa
+            </button>
+
+            <!-- Caja de Salida / Terminal -->
+            <div id="convert-result-box" style="display: none; background: var(--neu-slot-bg); box-shadow: var(--neu-shadow-inset); border-radius: 12px; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.45); margin-top: 6px;"></div>
+          </div>
+        </div>
+      </section>

@@ -29,6 +29,9 @@ window.ConvertCliModule = (() => {
     });
 
     if (res.success && res.data) {
+      if (window.ViewNavigator) {
+        window.ViewNavigator.logExecution('CLI', `Conversión ${direction} (${type}): ${filePath}`, 'DirectX OK');
+      }
       resultBox.innerHTML = `
         <div style="color: #059669; font-weight: 700; margin-bottom: 4px;">✓ CONVERSIÓN COMPLETADA EXITOSAMENTE (${res.data.mode})</div>
         <div style="font-family: var(--font-mono); font-size: 0.78rem;">

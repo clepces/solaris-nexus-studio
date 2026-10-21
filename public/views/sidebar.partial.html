@@ -1,0 +1,192 @@
+    <!-- ==========================================================================
+         2. SUB-SIDEBAR DE NAVEGACIÓN Y EXPLORADOR VFS / LOCAL
+         ========================================================================== -->
+    <nav class="reagle-sidebar">
+      <!-- Semáforo Mac-like superior -->
+      <div class="sidebar-top-bar">
+        <div class="traffic-dots-group">
+          <div class="traffic-dot dot-red"></div>
+          <div class="traffic-dot dot-yellow"></div>
+          <div class="traffic-dot dot-green"></div>
+        </div>
+        <button class="window-view-icon" id="btn-toggle-sidebar" title="Colapsar panel lateral" type="button" aria-label="Toggle Sidebar"></button>
+      </div>
+
+      <!-- Perfil de Usuario Corporativo -->
+      <div class="user-profile-row">
+        <div class="user-avatar-circle">CN</div>
+        <div class="user-info">
+          <div class="user-title-wrap">
+            <span class="user-name-text">Clepces org. ltd</span>
+            <span class="user-dropdown-arrow">▼</span>
+          </div>
+          <span class="user-subtext">solaris.nexus@clepces.com</span>
+        </div>
+      </div>
+
+      <!-- Sección: Projects -->
+      <div class="sidebar-section-title">Projects</div>
+      <div class="sidebar-items-list">
+        <!-- Dashboard -->
+        <button class="sidebar-nav-item active" data-tab="tab-dashboard">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+            <span>Dashboard</span>
+          </div>
+          <span class="sidebar-pill-badge" id="sidebar-count-dashboard">0</span>
+        </button>
+
+        <!-- Estudio de Traducción (.str) -->
+        <button class="sidebar-nav-item" data-tab="tab-translation">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span>Traducción (.str)</span>
+          </div>
+          <span class="sidebar-pill-badge" id="sidebar-count-strings">0</span>
+        </button>
+
+        <!-- Library (VFS Mods) -->
+        <button class="sidebar-nav-item" data-tab="tab-mods">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span>Library (VFS Mods)</span>
+          </div>
+          <span class="sidebar-pill-badge" id="sidebar-count-mods">3</span>
+        </button>
+
+        <!-- Shared Entities -->
+        <button class="sidebar-nav-item" data-tab="tab-entities">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+            <span>Shared Entities</span>
+          </div>
+          <span class="sidebar-pill-badge" id="sidebar-count-entities">5</span>
+        </button>
+      </div>
+
+      <!-- Sección: Status -->
+      <div class="sidebar-section-title">Status</div>
+      <div class="sidebar-items-list">
+        <button class="sidebar-nav-item" data-tab="tab-system">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>System Health</span>
+          </div>
+          <span class="sidebar-pill-badge">OK</span>
+        </button>
+
+        <button class="sidebar-nav-item" data-tab="tab-galaxy">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"></path></svg>
+            <span>Galaxy Forge</span>
+          </div>
+          <span class="sidebar-pill-badge" id="sidebar-count-galaxy">12</span>
+        </button>
+
+        <button class="sidebar-nav-item" data-tab="tab-convert">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>ConvertData CLI</span>
+          </div>
+          <span class="sidebar-pill-badge">BIN</span>
+        </button>
+      </div>
+
+      <!-- Sección: History -->
+      <div class="sidebar-section-title">History</div>
+      <div class="sidebar-items-list">
+        <div class="sidebar-nav-item" style="cursor: pointer;" onclick="NexusUI.switchTab('tab-translation');">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Recently Edited</span>
+          </div>
+          <span class="sidebar-pill-badge">.str</span>
+        </div>
+
+        <div class="sidebar-nav-item" style="cursor: pointer;" onclick="NexusUI.switchTab('tab-mods');">
+          <div class="sidebar-nav-left">
+            <svg viewBox="0 0 24 24"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+            <span>Archive (.bak)</span>
+          </div>
+          <span class="sidebar-pill-badge">VFS</span>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           EXPLORADOR REAL DE RUTAS Y ARCHIVOS (VFS & JUEGO LOCAL)
+           ====================================================================== -->
+      <div class="sidebar-section-title">
+        <span>Explorador VFS &amp; Local</span>
+        <span class="section-add-btn" id="btn-sidebar-scan-vfs" title="Re-escanear Carpetas">+</span>
+      </div>
+
+      <div class="reagle-search-inset">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="vfs-tree-search-input" placeholder="Buscar mod o archivo...">
+      </div>
+
+      <!-- Árbol Real de Directorios (Mods Instalados & Juego Canónico) -->
+      <div class="folder-tree" id="sidebar-real-vfs-tree">
+        <!-- Rama 1: Directorio VFS de Mods Activos -->
+        <div class="tree-node selected" data-route="tab-mods" title="Directorio VFS de Mods">
+          <div class="tree-node-left">
+            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            <span>Mods-Rebellion v1.85</span>
+          </div>
+          <span class="sidebar-pill-badge" id="tree-badge-mods-count">3</span>
+        </div>
+
+        <div class="tree-sub-group" id="tree-subgroup-mods">
+          <div class="tree-node" data-route="tab-mods" data-mod-target="[ES] Star Wars Interregnum Traduccion" title="Minimod de Localización P999">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>[ES] Interregnum</span>
+            </div>
+            <span class="sidebar-pill-badge" style="color: #059669; font-weight: 800;">P999</span>
+          </div>
+
+          <div class="tree-node" data-route="tab-mods" data-mod-target="Star Wars Interregnum" title="Mod de Expansión Galáctica P989">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>Star Wars Interregnum</span>
+            </div>
+            <span class="sidebar-pill-badge">P989</span>
+          </div>
+
+          <div class="tree-node" data-route="tab-mods" data-mod-target="Enhanced 4X Mod" title="Mod de Balance Estratégico P979">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>Enhanced 4X Mod</span>
+            </div>
+            <span class="sidebar-pill-badge">P979</span>
+          </div>
+        </div>
+
+        <!-- Rama 2: Instalación Canónica Local del Juego (Vanilla) -->
+        <div class="tree-node" data-route="tab-system" title="Ruta de Instalación Local">
+          <div class="tree-node-left">
+            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            <span>Sins Rebellion (Vanilla)</span>
+          </div>
+          <span class="sidebar-pill-badge" style="background:#fff;">LOCAL</span>
+        </div>
+
+        <div class="tree-sub-group" id="tree-subgroup-vanilla">
+          <div class="tree-node" data-route="tab-translation" title="Abrir Diccionario Oficial String_table.str">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <span>String_table.str</span>
+            </div>
+            <span class="sidebar-pill-badge">7.828</span>
+          </div>
+
+          <div class="tree-node" data-route="tab-entities" title="Abrir Acorazado Kol Vanilla">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
+              <span>Kol Battleship.entity</span>
+            </div>
+            <span class="sidebar-pill-badge">TEC</span>
+          </div>
+        </div>
+      </div>
+    </nav>
