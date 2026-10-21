@@ -21,6 +21,10 @@ final class ViewRenderer
             'entities' => $viewsDir . DIRECTORY_SEPARATOR . 'entities.view.html',
             'galaxy' => $viewsDir . DIRECTORY_SEPARATOR . 'galaxy.view.html',
             'convert' => $viewsDir . DIRECTORY_SEPARATOR . 'convert.view.html',
+            'network' => $viewsDir . DIRECTORY_SEPARATOR . 'network.view.html',
+            'pipeline' => $viewsDir . DIRECTORY_SEPARATOR . 'pipeline.view.html',
+            'swarm' => $viewsDir . DIRECTORY_SEPARATOR . 'swarm.view.html',
+            'vault' => $viewsDir . DIRECTORY_SEPARATOR . 'vault.view.html',
             'modal' => $viewsDir . DIRECTORY_SEPARATOR . 'modal-edit.partial.html',
         ];
 
@@ -45,7 +49,7 @@ HTML;
         $headerContent = file_exists($partials['header']) ? file_get_contents($partials['header']) : '';
 
         $viewsContent = '';
-        foreach (['dashboard', 'translation', 'mods', 'system', 'entities', 'galaxy', 'convert'] as $v) {
+        foreach (['dashboard', 'translation', 'mods', 'system', 'entities', 'galaxy', 'convert', 'network', 'pipeline', 'swarm', 'vault'] as $v) {
             if (file_exists($partials[$v])) {
                 $viewsContent .= "\n" . file_get_contents($partials[$v]);
             }

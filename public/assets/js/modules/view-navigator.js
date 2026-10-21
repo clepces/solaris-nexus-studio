@@ -3,6 +3,9 @@
  * Clepces org. ltd | Versión Oficial v0.3.0.0-alpha
  */
 window.ViewNavigator = (() => {
+  const STUDIO_TABS = ['tab-translation', 'tab-mods', 'tab-entities', 'tab-galaxy', 'tab-convert'];
+  let lastActiveStudioTab = 'tab-translation';
+
   const MODULE_METADATA = {
     'tab-dashboard': {
       title: 'Dashboard',
@@ -52,16 +55,53 @@ window.ViewNavigator = (() => {
       metricNumber: 'HEALTHY',
       metricLabel: 'Estado del Servidor WAMP',
       metricBadge: 'Cero Stack Traces'
+    },
+    'tab-network': {
+      title: 'Red Galáctica & Workshop',
+      subtitle: 'Conexión a repositorios remotos ModDB y Steam Workshop para distribución de paquetes de traducción.',
+      metricNumber: 'EN DESARROLLO',
+      metricLabel: 'Estado del Enlace',
+      metricBadge: 'Beta v0.4'
+    },
+    'tab-pipeline': {
+      title: 'Pipeline Gráfico & Shaders',
+      subtitle: 'Procesamiento de texturas DDS (DXT1/DXT5), verificación de MIP-maps y linter de shaders HLSL.',
+      metricNumber: 'EN DESARROLLO',
+      metricLabel: 'Motor Texturas',
+      metricBadge: 'DirectX 9 HLSL'
+    },
+    'tab-swarm': {
+      title: 'Swarm Event Bus & Sincronización P2P',
+      subtitle: 'Bus de eventos reactivo para colaboración multi-modder en tiempo real y resolución de conflictos.',
+      metricNumber: 'EN DESARROLLO',
+      metricLabel: 'Bus de Eventos',
+      metricBadge: 'Kernel Swarm'
+    },
+    'tab-vault': {
+      title: 'Bóveda de Resguardos (.bak)',
+      subtitle: 'Auditoría de snapshots de seguridad automáticos y empaquetado canónico comprimido (.zip / .solaris).',
+      metricNumber: 'SEGURO',
+      metricLabel: 'Integridad Bóveda',
+      metricBadge: 'Disaster Recovery'
     }
   };
 
   function switchTab(targetId) {
+    if (STUDIO_TABS.includes(targetId)) {
+      lastActiveStudioTab = targetId;
+    }
+
     document.querySelectorAll('.sidebar-nav-item').forEach(b => {
       b.classList.toggle('active', b.getAttribute('data-tab') === targetId);
     });
 
     document.querySelectorAll('.dock-btn[data-tab]').forEach(b => {
-      b.classList.toggle('active', b.getAttribute('data-tab') === targetId);
+      const tab = b.getAttribute('data-tab');
+      if (b.id === 'dock-btn-studio') {
+        b.classList.toggle('active', STUDIO_TABS.includes(targetId));
+      } else {
+        b.classList.toggle('active', tab === targetId);
+      }
     });
 
     document.querySelectorAll('.view-panel').forEach(p => {
@@ -232,12 +272,33 @@ window.ViewNavigator = (() => {
       container.innerHTML = `
         <button class="btn-reagle btn-reagle-primary" onclick="window.SystemHealthModule?.runAudit();">${ICONS.shield} Auditoría Fail-Fast</button>
       `;
+    } else if (tabId === 'tab-network') {
+      container.innerHTML = `
+        <button class="btn-reagle btn-reagle-primary" onclick="alert('Conectando a repositorios de la comunidad ModDB & Steam Workshop...');">${ICONS.refresh} Comprobar Actualizaciones</button>
+      `;
+    } else if (tabId === 'tab-pipeline') {
+      container.innerHTML = `
+        <button class="btn-reagle btn-reagle-primary" onclick="alert('Validando compresión DXT1/5 y Mip-Maps de texturas DDS...');">${ICONS.zap} Validar Mipmaps DDS</button>
+      `;
+    } else if (tabId === 'tab-swarm') {
+      container.innerHTML = `
+        <button class="btn-reagle btn-reagle-primary" onclick="alert('Enviando evento de sincronización a los nodos pares del enjambre...');">${ICONS.refresh} Ping Swarm Bus</button>
+      `;
+    } else if (tabId === 'tab-vault') {
+      container.innerHTML = `
+        <button class="btn-reagle btn-reagle-primary" onclick="window.NexusCore?.showToast ? NexusCore.showToast('Generando respaldo atómico .bak...') : alert('Generando respaldo atómico .bak...');">${ICONS.save} Nuevo Resguardo .bak</button>
+      `;
     }
   }
 
   function init() {
     document.querySelectorAll('.sidebar-nav-item, .dock-btn[data-tab]').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        if (btn.id === 'dock-btn-studio') {
+          e.stopPropagation();
+          switchTab(lastActiveStudioTab || 'tab-translation');
+          return;
+        }
         const tab = btn.getAttribute('data-tab');
         if (tab) switchTab(tab);
       });
@@ -261,14 +322,78 @@ window.ViewNavigator = (() => {
       });
     });
 
-    // Navegación interactiva desde el árbol de Documentos del Sidebar
-    document.querySelectorAll('.folder-tree .tree-node').forEach(node => {
-      node.addEventListener('click', () => {
-        document.querySelectorAll('.folder-tree .tree-node').forEach(n => n.classList.remove('selected'));
-        node.classList.add('selected');
-        const route = node.getAttribute('data-route');
-        if (route) switchTab(route);
+    // Control determinista de carpetas en el árbol VFS (Expandir/Colapsar sin cambiar de vista)
+    document.querySelectorAll('.tree-folder-toggle').forEach(folderNode => {
+      folderNode.addEventListener('click', (e) => {
+        e.stopPropagation();
+        folderNode.classList.toggle('active');
+        const folderKey = folderNode.getAttribute('data-folder');
+        const subGroup = document.getElementById(`tree-group-${folderKey}`);
+        const caret = folderNode.querySelector('.tree-caret');
+        const isOpen = folderNode.classList.contains('active');
+        if (subGroup) {
+          subGroup.style.display = isOpen ? 'block' : 'none';
+        }
+        if (caret) {
+          caret.innerText = isOpen ? '▼' : '▶';
+        }
       });
+    });
+
+    // Control de selección e inspección de archivos del árbol VFS (Sin saltos de vista desordenados)
+    const inspector = document.getElementById('tree-selection-inspector');
+    const selName = document.getElementById('tree-sel-name');
+    const selType = document.getElementById('tree-sel-type');
+    const btnOpen = document.getElementById('btn-tree-open-target');
+
+    let currentTreeTarget = null;
+    let currentTreeType = null;
+
+    function openTreeItem(type, target) {
+      if (type === 'str') {
+        switchTab('tab-translation');
+        if (window.TranslationStudioModule && window.TranslationStudioModule.getCount() === 0) {
+          window.TranslationStudioModule.loadDemoData();
+        }
+      } else if (type === 'mod') {
+        switchTab('tab-mods');
+      } else if (type === 'entity') {
+        switchTab('tab-entities');
+      }
+    }
+
+    document.querySelectorAll('.tree-file-item').forEach(fileNode => {
+      fileNode.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.tree-file-item').forEach(n => n.classList.remove('selected'));
+        fileNode.classList.add('selected');
+
+        currentTreeTarget = fileNode.getAttribute('data-target');
+        currentTreeType = fileNode.getAttribute('data-file-type');
+
+        if (inspector) inspector.style.display = 'block';
+        if (selName) selName.innerText = currentTreeTarget;
+        if (selType) selType.innerText = `Tipo: ${currentTreeType ? currentTreeType.toUpperCase() : 'RAW'}`;
+      });
+
+      fileNode.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        openTreeItem(fileNode.getAttribute('data-file-type'), fileNode.getAttribute('data-target'));
+      });
+    });
+
+    if (btnOpen) {
+      btnOpen.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentTreeType && currentTreeTarget) {
+          openTreeItem(currentTreeType, currentTreeTarget);
+        }
+      });
+    }
+
+    // Historial reciente de archivos sin desvío de navegación
+    document.getElementById('btn-sidebar-recent')?.addEventListener('click', () => {
+      alert("Archivos Recientemente Modificados:\n• String_table.str (TEC Vanilla - 7.828 cadenas)\n• EnabledMods.txt (VFS Cascade v1.85)\n• Kol Battleship.entity (TEC Capital)");
     });
 
     // Filtro en tiempo real para la matriz de Workflows del Dashboard
