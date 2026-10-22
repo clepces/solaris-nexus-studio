@@ -679,30 +679,33 @@ body {
 }
 
 /* ==========================================================================
-   5. TARJETA DE MÉTRICAS (COMO 'EXECUTIONS 340, +204%' DE LA FOTO)
+   5. TARJETA DE MÉTRICAS (TELEMETRÍA ADAPTATIVA ESTILO GOOGLE AI STUDIO)
    ========================================================================== */
 .reagle-metric-card-container {
-  display: flex;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: minmax(240px, 1.25fr) minmax(360px, 2.5fr);
+  gap: 12px;
   align-items: stretch;
   width: 100%;
   max-width: 100%;
-  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .reagle-metric-card {
   background: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.02);
   border-radius: 14px;
-  padding: 14px 18px;
+  padding: 10px 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 8px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   position: relative;
-  min-width: 280px;
-  flex: 1.2;
+  height: 92px;
+  min-height: 92px;
+  max-height: 92px;
+  box-sizing: border-box;
+  overflow: hidden;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -715,54 +718,67 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
+  height: 20px;
+  min-height: 20px;
+  max-height: 20px;
+  overflow: hidden;
 }
 
 .metric-title-small {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   color: #5f6368;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
 }
 
 .metric-value-row {
   display: flex;
   align-items: baseline;
   gap: 6px;
-  flex-wrap: wrap;
+  height: 32px;
+  min-height: 32px;
+  max-height: 32px;
+  overflow: hidden;
 }
 
 .metric-huge-number {
-  font-size: 2.1rem;
+  font-size: 1.95rem;
   font-weight: 800;
   color: #1e293b;
   line-height: 1;
   letter-spacing: -0.03em;
+  white-space: nowrap;
 }
 
 .metric-unit-text {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
   color: #64748b;
+  white-space: nowrap;
 }
 
 .metric-badge-pill {
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 700;
   background: #e6f4ea;
   color: #137333;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   border: 1px solid rgba(19, 115, 51, 0.15);
   white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
 }
 
 .metric-badge-pill.neutral {
@@ -782,12 +798,40 @@ body {
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #f1f5f9;
-  padding-top: 8px;
-  font-size: 0.72rem;
+  padding-top: 4px;
+  font-size: 0.70rem;
   color: #64748b;
   margin-top: auto;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
+  height: 18px;
+  max-height: 18px;
+  overflow: hidden;
+}
+
+.metric-footer-text {
+  font-size: 0.70rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+  line-height: 18px;
+}
+
+.metric-footer-text.success {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.metric-footer-text.muted {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.metric-footer-text.primary {
+  color: #1a73e8;
+  font-weight: 600;
 }
 
 #hero-metric-subtext {
@@ -797,16 +841,17 @@ body {
   max-width: 135px;
   display: inline-block;
   color: #64748b;
+  font-size: 0.70rem;
 }
 
 .metric-report-link {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: #1a73e8;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   cursor: pointer;
   transition: transform 0.15s ease;
   white-space: nowrap;
@@ -814,14 +859,14 @@ body {
 }
 
 .metric-report-link:hover {
-  transform: translateX(3px);
+  transform: translateX(2px);
   text-decoration: underline;
   color: #1557b0;
 }
 
-/* Botones del encabezado con expansión responsiva en hover (Estilo Google) */
+/* Botones del encabezado con microinteracciones Google AI Studio */
 .btn-reagle-action {
-  height: 36px;
+  height: 32px;
   border-radius: 9999px;
   background: #ffffff;
   border: 1px solid #dadce0;
@@ -829,13 +874,15 @@ body {
   padding: 0 12px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 1px 2px rgba(60,64,67,0.06);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(60,64,67,0.08);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
+  user-select: none;
 }
 
 .btn-reagle-action svg {
@@ -849,6 +896,7 @@ body {
   background: #1a73e8;
   color: #ffffff;
   border-color: #1a73e8;
+  box-shadow: 0 1px 3px rgba(26,115,232,0.3);
 }
 
 .btn-reagle-action:hover {
@@ -861,28 +909,36 @@ body {
 
 .btn-reagle-action.btn-reagle-primary:hover {
   background: #1557b0;
+  border-color: #1557b0;
   color: #ffffff;
+  box-shadow: 0 3px 8px rgba(26,115,232,0.35);
+}
+
+.btn-reagle-action:active {
+  transform: scale(0.94);
 }
 
 @media (max-width: 1140px) {
   .btn-reagle-action {
-    padding: 0 9px;
-    width: 36px;
-    height: 36px;
+    padding: 0;
+    width: 32px;
+    height: 32px;
     justify-content: center;
-    overflow: hidden;
+    border-radius: 50%;
   }
   .btn-reagle-action span.action-label {
     max-width: 0;
     opacity: 0;
     margin-left: 0;
     overflow: hidden;
+    display: inline-block;
     transition: max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, margin 0.2s ease;
     white-space: nowrap;
   }
   .btn-reagle-action:hover {
     width: auto;
-    padding: 0 14px;
+    padding: 0 12px;
+    border-radius: 9999px;
   }
   .btn-reagle-action:hover span.action-label {
     max-width: 160px;
@@ -891,28 +947,30 @@ body {
   }
 }
 
-/* Mini métricas secundarias en fila (Google AI Studio aesthetic) */
+/* Mini métricas secundarias en fila (Grid exacto y uniforme) */
 .secondary-metrics-row {
-  display: flex;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
   flex: 2;
   min-width: 0;
-  flex-wrap: wrap;
 }
 
 .mini-neu-card {
   background: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   border-radius: 14px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 6px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  flex: 1;
-  min-width: 160px;
+  height: 92px;
+  min-height: 92px;
+  max-height: 92px;
+  box-sizing: border-box;
+  overflow: hidden;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -923,58 +981,44 @@ body {
 }
 
 .mini-card-label {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
   color: #5f6368;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
 }
 
 .mini-card-value {
-  font-size: 1.35rem;
+  font-size: 1.22rem;
   font-weight: 800;
   color: #1e293b;
   letter-spacing: -0.02em;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.1;
 }
 
-/* Telemetría responsiva universal: NUNCA se oculta en 1016x648 */
-@media (max-width: 1200px) {
-  .reagle-metric-card-container {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .reagle-metric-card {
-    min-width: 200px;
-    flex: 1 1 200px;
-    padding: 10px 14px;
-  }
-  .secondary-metrics-row {
-    flex: 2 1 300px;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .mini-neu-card {
-    min-width: 110px;
-    padding: 8px 12px;
-  }
-  .mini-card-label {
-    font-size: 0.62rem;
-  }
-  .mini-card-value {
-    font-size: 1.18rem;
-  }
+.mini-card-value.val-sm {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
 }
 
+/* Responsividad estricta para 1016x648 */
 @media (max-width: 900px) {
-  .secondary-metrics-row {
-    flex-wrap: wrap;
+  .reagle-metric-card-container {
+    grid-template-columns: 1fr;
   }
-  .mini-neu-card {
-    flex: 1 1 calc(50% - 8px);
+}
+@media (max-width: 600px) {
+  .secondary-metrics-row {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -988,40 +1032,57 @@ body {
   border-bottom: 1px solid #e2e8f0;
   padding-bottom: 8px;
   margin-top: 6px;
-  flex-wrap: wrap;
-  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tabs-heading-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
 }
 
 .section-subheading-title {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #0f172a;
   letter-spacing: -0.02em;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .reagle-segmented-tabs {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   align-items: center;
   background: #f1f5f9;
   padding: 3px;
-  border-radius: 10px;
+  border-radius: 9999px;
   border: 1px solid #e2e8f0;
+  height: 32px;
+  box-sizing: border-box;
 }
 
 .tab-link-btn {
   background: transparent;
   border: none;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 600;
   color: #64748b;
   cursor: pointer;
-  padding: 6px 14px;
-  border-radius: 7px;
+  padding: 0 12px;
+  height: 26px;
+  border-radius: 9999px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  white-space: nowrap;
 }
 
 .tab-link-btn:hover {
@@ -1064,38 +1125,47 @@ body {
   }
 }
 
+.reagle-search-bar,
 .reagle-search-full {
   background: #ffffff;
   border-radius: 9999px;
-  padding: 6px 14px;
+  padding: 0 12px;
+  height: 32px;
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 250px;
-  border: 1px solid #e2e8f0;
+  width: 220px;
+  min-width: 160px;
+  flex-shrink: 0;
+  border: 1px solid #cbd5e1;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  transition: all 0.2s ease;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.reagle-search-bar:focus-within,
 .reagle-search-full:focus-within {
   border-color: #1a73e8;
-  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
-  width: 280px;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.18);
+  /* Mantiene ancho constante sin romper fila ni provocar saltos */
 }
 
+.reagle-search-bar svg,
 .reagle-search-full svg {
   width: 14px;
   height: 14px;
   stroke: #64748b;
   stroke-width: 2;
   fill: none;
+  flex-shrink: 0;
 }
 
+.reagle-search-bar input,
 .reagle-search-full input {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 0.80rem;
+  font-size: 0.78rem;
   color: #1e293b;
   width: 100%;
 }
@@ -1268,18 +1338,19 @@ body {
 
 .dash-grid-header {
   display: grid;
-  grid-template-columns: minmax(260px, 1.8fr) 190px 140px;
+  grid-template-columns: minmax(220px, 1.8fr) 180px 140px;
   align-items: center;
-  gap: 16px;
-  padding: 0 16px 8px 16px;
+  gap: 14px;
+  padding: 0 14px 8px 14px;
   border-bottom: 1px solid #e2e8f0;
   margin-bottom: 8px;
   font-weight: 700;
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   color: #64748b;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .dash-grid-header > div:last-child {
@@ -1288,16 +1359,18 @@ body {
 
 .workflow-task-item {
   display: grid;
-  grid-template-columns: minmax(260px, 1.8fr) 190px 140px;
+  grid-template-columns: minmax(220px, 1.8fr) 180px 140px;
   align-items: center;
-  gap: 16px;
-  padding: 10px 16px;
+  gap: 14px;
+  padding: 8px 14px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .workflow-task-item:hover {
@@ -1309,7 +1382,7 @@ body {
 .workflow-col-main {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
   overflow: hidden;
 }
@@ -1321,7 +1394,7 @@ body {
 
 .workflow-col-main .main-title {
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: #0f172a;
   white-space: nowrap;
   overflow: hidden;
@@ -1329,7 +1402,7 @@ body {
 }
 
 .workflow-col-main .main-desc {
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   color: #64748b;
   white-space: nowrap;
   overflow: hidden;
@@ -1343,10 +1416,108 @@ body {
   min-width: 0;
 }
 
+.workflow-col-badge .metric-badge-pill {
+  max-width: 175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .workflow-col-action {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  min-width: 0;
+}
+
+/* Botón compacto y refinado de fila para evitar desbordes */
+.btn-row-action {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.btn-row-action:hover {
+  background: #f8fafc;
+  border-color: #1a73e8;
+  color: #1a73e8;
+  box-shadow: 0 2px 4px rgba(26, 115, 232, 0.12);
+  transform: translateY(-1px);
+}
+
+.btn-row-action:active {
+  transform: scale(0.96);
+}
+
+/* Drawer colapsable para módulos experimentales en Estudio de Traducción */
+.experimental-drawer-panel {
+  margin-top: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
+}
+
+.experimental-drawer-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 14px;
+  background: #f8fafc;
+  border: none;
+  cursor: pointer;
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.02em;
+  transition: background 0.15s ease;
+}
+
+.experimental-drawer-toggle:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.experimental-drawer-content {
+  padding: 10px 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+}
+
+.tool-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.tool-card-title {
+  font-weight: 700;
+  font-size: 0.80rem;
+  color: #0f172a;
+}
+
+.tool-card-desc {
+  font-size: 0.70rem;
+  color: #64748b;
+  margin-top: 4px;
 }
 
 .task-icon-circle {

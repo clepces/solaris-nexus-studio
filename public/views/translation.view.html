@@ -4,16 +4,16 @@
       <section id="tab-translation" class="view-panel">
         <!-- Fila de Filtros y Búsqueda del Traductor -->
         <div class="reagle-tabs-row" id="translation-filter-row">
-          <div>
+          <div class="tabs-heading-group">
             <h2 class="section-subheading-title">Cadenas de Localización</h2>
-            <div class="reagle-segmented-tabs" style="margin-top: 8px;">
+            <div class="reagle-segmented-tabs">
               <button class="tab-link-btn active" data-filter="all">Todas</button>
               <button class="tab-link-btn" data-filter="tokens">Con Tokens</button>
               <button class="tab-link-btn" data-filter="translated">Modificadas</button>
             </div>
           </div>
 
-          <div class="reagle-search-full">
+          <div class="reagle-search-bar">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" id="grid-search-input" placeholder="Buscar clave o texto...">
           </div>
@@ -55,32 +55,41 @@
           </div>
         </div>
 
-        <!-- MÓDULOS OPCIONALES EN DESARROLLO (ESTADO BLOQUEADO CON NOT-ALLOWED) -->
-        <div style="margin-top: 16px;">
-          <h3 style="font-size: 0.82rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Módulos Experimentales &amp; Traductores Neurales</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
-            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:700; font-size:0.82rem; color:#0f172a;">Google Neural MT / DeepL</span>
+        <!-- MÓDULOS OPCIONALES EN DESARROLLO (DRAWER COLAPSABLE QUE NO ROBA ESPACIO AL EDITOR) -->
+        <div class="experimental-drawer-panel" id="experimental-drawer-panel">
+          <button class="experimental-drawer-toggle" id="btn-toggle-experimental" type="button" onclick="ViewNavigator.toggleExperimentalDrawer();">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5z"/></svg>
+              <span>Módulos Experimentales &amp; Traductores Neurales</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="metric-badge-pill neutral" style="font-size: 0.65rem;">3 Módulos (En Desarrollo)</span>
+              <span class="drawer-arrow" id="experimental-drawer-arrow">▾</span>
+            </div>
+          </button>
+          <div class="experimental-drawer-content" id="experimental-drawer-content" style="display: none;">
+            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:10px 12px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
+              <div class="tool-card-head">
+                <span class="tool-card-title">Google Neural MT / DeepL</span>
                 <span class="metric-badge-pill neutral" style="font-size:0.65rem;">🔒 En Desarrollo</span>
               </div>
-              <div style="font-size:0.72rem; color:#64748b; margin-top:4px;">Traducción automática por lotes con memoria relacional</div>
+              <div class="tool-card-desc">Traducción automática por lotes con memoria relacional</div>
             </div>
 
-            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:700; font-size:0.82rem; color:#0f172a;">Glosario Semántico JIT</span>
+            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:10px 12px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
+              <div class="tool-card-head">
+                <span class="tool-card-title">Glosario Semántico JIT</span>
                 <span class="metric-badge-pill neutral" style="font-size:0.65rem;">🔒 Beta Sandbox</span>
               </div>
-              <div style="font-size:0.72rem; color:#64748b; margin-top:4px;">Resolución inteligente de colisiones entre mods</div>
+              <div class="tool-card-desc">Resolución inteligente de colisiones entre mods</div>
             </div>
 
-            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-weight:700; font-size:0.82rem; color:#0f172a;">Exportador PO / GetText</span>
+            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:10px 12px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
+              <div class="tool-card-head">
+                <span class="tool-card-title">Exportador PO / GetText</span>
                 <span class="metric-badge-pill neutral" style="font-size:0.65rem;">🔒 En Desarrollo</span>
               </div>
-              <div style="font-size:0.72rem; color:#64748b; margin-top:4px;">Compatibilidad universal con herramientas Weblate / Crowdin</div>
+              <div class="tool-card-desc">Compatibilidad universal con herramientas Weblate / Crowdin</div>
             </div>
           </div>
         </div>

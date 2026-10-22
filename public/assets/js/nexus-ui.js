@@ -37,6 +37,12 @@ window.NexusUI = (() => {
     }
   }
 
+  function toggleExperimentalDrawer() {
+    if (window.ViewNavigator) {
+      window.ViewNavigator.toggleExperimentalDrawer();
+    }
+  }
+
   function loadDemoData() {
     if (window.TranslationStudioModule) {
       window.TranslationStudioModule.loadDemoData();
@@ -47,6 +53,7 @@ window.NexusUI = (() => {
     init,
     switchTab,
     toggleSidebar,
+    toggleExperimentalDrawer,
     loadDemoData
   };
 })();

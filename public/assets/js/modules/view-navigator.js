@@ -244,34 +244,76 @@ window.ViewNavigator = (() => {
 
     if (targetId === 'tab-translation') {
       if (miniCard1Label) miniCard1Label.innerText = 'TOKEN GUARD';
-      if (miniRam) miniRam.innerText = '100% OK';
+      if (miniRam) {
+        miniRam.innerText = '100% OK';
+        miniRam.className = 'mini-card-value';
+      }
       if (miniCard1Badge) { miniCard1Badge.innerText = '0 Errores'; miniCard1Badge.className = 'metric-badge-pill'; }
-      if (miniCard1Desc) miniCard1Desc.innerText = '[VALUE], %s protegidos';
+      if (miniCard1Desc) {
+        miniCard1Desc.innerText = '[VALUE], %s protegidos';
+        miniCard1Desc.title = '[VALUE], %s protegidos';
+        miniCard1Desc.className = 'metric-footer-text success';
+      }
 
       if (miniCard2Label) miniCard2Label.innerText = 'MODIFICADAS';
-      if (miniMods) miniMods.innerText = '0 Cadenas';
+      if (miniMods) {
+        miniMods.innerText = '0 Cadenas';
+        miniMods.className = 'mini-card-value';
+      }
       if (miniCard2Badge) { miniCard2Badge.innerText = 'Sin cambios'; miniCard2Badge.className = 'metric-badge-pill neutral'; }
-      if (miniCard2Desc) miniCard2Desc.innerText = 'Memoria de sesión limpia';
+      if (miniCard2Desc) {
+        miniCard2Desc.innerText = 'Memoria de sesión limpia';
+        miniCard2Desc.title = 'Memoria de sesión limpia';
+        miniCard2Desc.className = 'metric-footer-text muted';
+      }
 
       if (miniCard3Label) miniCard3Label.innerText = 'MEMORIA TRADUCCIÓN';
-      if (miniEntities) miniEntities.innerText = 'CONECTADA';
+      if (miniEntities) {
+        miniEntities.innerText = 'CONECTADA';
+        miniEntities.className = 'mini-card-value val-sm';
+      }
       if (miniCard3Badge) { miniCard3Badge.innerText = 'SQLite TM'; miniCard3Badge.className = 'metric-badge-pill'; }
-      if (miniCard3Desc) miniCard3Desc.innerText = 'IndexedDB & SQLite Sync';
+      if (miniCard3Desc) {
+        miniCard3Desc.innerText = 'IndexedDB & SQLite Sync';
+        miniCard3Desc.title = 'IndexedDB & SQLite Sync';
+        miniCard3Desc.className = 'metric-footer-text muted';
+      }
     } else {
       if (miniCard1Label) miniCard1Label.innerText = 'MEMORIA 32-BIT';
-      if (miniRam) miniRam.innerText = `${ramMb.toLocaleString()} MB`;
+      if (miniRam) {
+        miniRam.innerText = `${ramMb.toLocaleString()} MB`;
+        miniRam.className = 'mini-card-value';
+      }
       if (miniCard1Badge) { miniCard1Badge.innerText = 'LAA Seguro'; miniCard1Badge.className = 'metric-badge-pill'; }
-      if (miniCard1Desc) miniCard1Desc.innerText = `${safeMarginMb.toLocaleString()} MB margen libre`;
+      if (miniCard1Desc) {
+        miniCard1Desc.innerText = `${safeMarginMb.toLocaleString()} MB margen libre`;
+        miniCard1Desc.title = `${safeMarginMb.toLocaleString()} MB margen libre`;
+        miniCard1Desc.className = 'metric-footer-text success';
+      }
 
       if (miniCard2Label) miniCard2Label.innerText = 'MODS ACTIVOS';
-      if (miniMods) miniMods.innerText = `${modsCount} Mods`;
+      if (miniMods) {
+        miniMods.innerText = `${modsCount} Mods`;
+        miniMods.className = 'mini-card-value';
+      }
       if (miniCard2Badge) { miniCard2Badge.innerText = modsCount === 0 ? '0 Activos' : `${modsCount} Activos`; miniCard2Badge.className = `metric-badge-pill ${modsCount === 0 ? 'neutral' : ''}`; }
-      if (miniCard2Desc) miniCard2Desc.innerText = modsCount === 0 ? 'Vanilla (Sin mods)' : `${modsCount} mods en cascada`;
+      if (miniCard2Desc) {
+        miniCard2Desc.innerText = modsCount === 0 ? 'Vanilla (Sin mods)' : `${modsCount} mods en cascada`;
+        miniCard2Desc.title = modsCount === 0 ? 'Vanilla (Sin mods)' : `${modsCount} mods en cascada`;
+        miniCard2Desc.className = 'metric-footer-text muted';
+      }
 
       if (miniCard3Label) miniCard3Label.innerText = 'ENTIDADES GAMEINFO';
-      if (miniEntities) miniEntities.innerText = totalEntities.toLocaleString();
+      if (miniEntities) {
+        miniEntities.innerText = totalEntities.toLocaleString();
+        miniEntities.className = 'mini-card-value';
+      }
       if (miniCard3Badge) { miniCard3Badge.innerText = 'Vanilla'; miniCard3Badge.className = 'metric-badge-pill'; }
-      if (miniCard3Desc) miniCard3Desc.innerText = 'Directorio GameInfo';
+      if (miniCard3Desc) {
+        miniCard3Desc.innerText = 'Directorio GameInfo';
+        miniCard3Desc.title = 'Directorio GameInfo';
+        miniCard3Desc.className = 'metric-footer-text muted';
+      }
     }
 
     // Actualizar badges del sidebar y del árbol VFS real
@@ -664,10 +706,20 @@ window.ViewNavigator = (() => {
     } catch (e) {}
   }
 
+  function toggleExperimentalDrawer() {
+    const content = document.getElementById('experimental-drawer-content');
+    const arrow = document.getElementById('experimental-drawer-arrow');
+    if (!content) return;
+    const isHidden = content.style.display === 'none';
+    content.style.display = isHidden ? 'grid' : 'none';
+    if (arrow) arrow.innerText = isHidden ? '▴' : '▾';
+  }
+
   return {
     init,
     switchTab,
     toggleSidebar,
+    toggleExperimentalDrawer,
     updateHeroMetrics,
     logExecution,
     loadPermissions,
