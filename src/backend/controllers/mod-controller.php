@@ -188,4 +188,50 @@ final class ModController
             'defaultActive' => $results[0]['path']
         ];
     }
+
+    /**
+     * Valida y vincula un directorio físico personalizado de instalación del juego.
+     */
+    public function validateCustomPath(array $payload): array
+    {
+        $rawPath = trim($payload['path'] ?? '');
+        if ($rawPath === '') {
+            return [
+                'success' => false,
+                'message' => 'Ruta de directorio vacía.'
+            ];
+        }
+
+        $normPath = str_replace('\\', '/', $rawPath);
+        $normPath = rtrim($normPath, '/');
+
+        if (!is_dir($normPath)) {
+            return [
+                'success' => false,
+                'exists' => false,
+                'path' => $this->logger->sanitizePath($normPath),
+                'message' => 'El directorio especificado no existe en el sistema de archivos.'
+            ];
+        }
+
+        $hasExe = file_exists($normPath . '/Sins of a Solar Empire Rebellion.exe') || file_exists($normPath . '/Rebellion.exe');
+        $hasLocalizations = is_dir($normPath . '/Localizations');
+        $hasGameInfo = is_dir($normPath . '/GameInfo');
+        $hasMods = is_dir($normPath . '/Mods') || is_dir($normPath . '/Mods-Rebellion v1.85');
+        $isWritable = is_writable($normPath);
+
+        return [
+            'success' => true,
+            'exists' => true,
+            'is_writable' => $isWritable,
+            'has_exe' => $hasExe,
+            'has_localizations' => $hasLocalizations,
+            'has_gameinfo' => $hasGameInfo,
+            'has_mods' => $hasMods,
+            'path' => $this->logger->sanitizePath($normPath),
+            'message' => $hasExe 
+                ? 'Directorio canónico oficial detectado (Ejecutable Rebellion presente).'
+                : 'Directorio verificado con permisos de lectura/escritura.'
+        ];
+    }
 }

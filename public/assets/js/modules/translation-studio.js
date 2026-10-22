@@ -27,6 +27,27 @@ window.TranslationStudioModule = (() => {
       return;
     }
 
+    if (total === 0 && state.allEntries && state.allEntries.length > 0) {
+      if (emptyState) emptyState.style.display = 'none';
+      runway.style.display = 'block';
+      runway.style.height = '160px';
+      runway.innerHTML = `
+        <div style="padding: 36px 20px; text-align: center; color: #64748b;">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">🔍</div>
+          <div style="font-weight: 700; font-size: 0.88rem; color: #0f172a;">Sin resultados para la búsqueda</div>
+          <div style="font-size: 0.74rem; color: #64748b; margin-top: 4px;">
+            No se encontró ninguna clave o texto que coincida con el filtro actual.
+          </div>
+          <button class="btn-row-action" style="margin-top: 10px;" onclick="TranslationStudioModule.clearSearch();">
+            Limpiar Filtro de Búsqueda
+          </button>
+        </div>
+      `;
+      const hudText = document.getElementById('hud-status-text');
+      if (hudText) hudText.innerText = 'Cadenas 0 - 0 de 0 (Filtro sin resultados)';
+      return;
+    }
+
     if (emptyState) emptyState.style.display = 'none';
     runway.style.display = 'block';
     runway.style.height = `${total * state.rowHeight}px`;
@@ -54,15 +75,24 @@ window.TranslationStudioModule = (() => {
       row.className = 'virtual-row';
       row.style.transform = `translateY(${i * state.rowHeight}px)`;
 
-      const tokenPills = item.tokens.map(t => `<span class="token-pill">${t}</span>`).join('');
+      const tokenPills = item.tokens.map(t => {
+        let colorClass = 'token-pill';
+        if (t === '%s' || t.startsWith('%')) colorClass += ' token-var';
+        else if (t.includes('VALUE')) colorClass += ' token-num';
+        return `<span class="${colorClass}">${t}</span>`;
+      }).join('');
 
       row.innerHTML = `
         <div class="col-id" title="${item.id}">${item.id}</div>
         <div class="col-text" title="${item.original}">${item.original}</div>
-        <div class="col-text" title="${item.translated}">${item.translated}</div>
+        <div class="col-text" title="${item.translated || item.original}">
+          ${item.translated ? item.translated : `<span style="color:#94a3b8; font-style:italic;">${item.original}</span>`}
+        </div>
         <div class="col-tokens">${tokenPills}</div>
         <div class="col-actions">
-          <button class="btn-icon-reagle btn-edit" data-index="${i}" title="Editar traducción">✏️</button>
+          <button class="btn-icon-reagle btn-edit" data-index="${i}" title="Editar traducción">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          </button>
         </div>
       `;
       runway.appendChild(row);
@@ -251,6 +281,14 @@ window.TranslationStudioModule = (() => {
     renderVirtualGrid();
   }
 
+  function clearSearch() {
+    const searchInput = document.getElementById('grid-search-input');
+    if (searchInput) {
+      searchInput.value = '';
+      applyFilters();
+    }
+  }
+
   return {
     init,
     getCount,
@@ -258,6 +296,7 @@ window.TranslationStudioModule = (() => {
     loadDemoData,
     handleStrUpload,
     exportStrFile,
-    applyFilters
+    applyFilters,
+    clearSearch
   };
 })();

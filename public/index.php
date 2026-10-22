@@ -96,6 +96,9 @@ try {
     } elseif (str_ends_with($uri, '/api/mods/detect-platforms') && $method === 'GET') {
         $controller = new ModController(null, null, $logger);
         $response = $controller->detectPlatforms();
+    } elseif (str_ends_with($uri, '/api/mods/validate-custom-path') && $method === 'POST') {
+        $controller = new ModController(null, null, $logger);
+        $response = $controller->validateCustomPath($payload);
     } elseif (str_ends_with($uri, '/api/mods/scan') && $method === 'GET') {
         $controller = new ModController(null, null, $logger);
         $response = $controller->scan($config);

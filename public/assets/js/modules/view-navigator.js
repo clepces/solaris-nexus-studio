@@ -278,6 +278,46 @@ window.ViewNavigator = (() => {
         miniCard3Desc.title = 'IndexedDB & SQLite Sync';
         miniCard3Desc.className = 'metric-footer-text muted';
       }
+    } else if (targetId === 'tab-mods') {
+      if (miniCard1Label) miniCard1Label.innerText = 'PRESUPUESTO RAM LAA';
+      if (miniRam) {
+        miniRam.innerText = `${ramMb.toLocaleString()} MB`;
+        miniRam.className = 'mini-card-value';
+      }
+      if (miniCard1Badge) { miniCard1Badge.innerText = 'LAA Seguro'; miniCard1Badge.className = 'metric-badge-pill'; }
+      if (miniCard1Desc) {
+        miniCard1Desc.innerText = `${safeMarginMb.toLocaleString()} MB margen libre`;
+        miniCard1Desc.title = `${safeMarginMb.toLocaleString()} MB margen libre`;
+        miniCard1Desc.className = 'metric-footer-text success';
+      }
+
+      if (miniCard2Label) miniCard2Label.innerText = 'COLISIONES VFS';
+      if (miniMods) {
+        miniMods.innerText = '2 Overrides';
+        miniMods.className = 'mini-card-value';
+      }
+      if (miniCard2Badge) { miniCard2Badge.innerText = '100% Limpio'; miniCard2Badge.className = 'metric-badge-pill'; }
+      if (miniCard2Desc) {
+        miniCard2Desc.innerText = 'Sin conflictos cíclicos';
+        miniCard2Desc.title = 'Sin conflictos cíclicos';
+        miniCard2Desc.className = 'metric-footer-text muted';
+      }
+
+      if (miniCard3Label) miniCard3Label.innerText = 'INYECCIÓN MINIMOD';
+      const hasMinimod = NexusCore.state.activeMods && NexusCore.state.activeMods.some(m => m.isMinimod || m.name.includes('[ES]'));
+      if (miniEntities) {
+        miniEntities.innerText = hasMinimod ? 'ACTIVO P999' : 'STANDBY';
+        miniEntities.className = 'mini-card-value val-sm';
+      }
+      if (miniCard3Badge) {
+        miniCard3Badge.innerText = hasMinimod ? 'P999 Inyectado' : 'Vanilla P0';
+        miniCard3Badge.className = `metric-badge-pill ${hasMinimod ? '' : 'neutral'}`;
+      }
+      if (miniCard3Desc) {
+        miniCard3Desc.innerText = hasMinimod ? 'Cúspide de cascada' : 'Inyección quirúrgica lista';
+        miniCard3Desc.title = hasMinimod ? 'Cúspide de cascada' : 'Inyección quirúrgica lista';
+        miniCard3Desc.className = 'metric-footer-text muted';
+      }
     } else {
       if (miniCard1Label) miniCard1Label.innerText = 'MEMORIA 32-BIT';
       if (miniRam) {

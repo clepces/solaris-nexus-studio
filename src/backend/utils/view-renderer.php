@@ -59,15 +59,15 @@ HTML;
 
         $scripts = <<<HTML
   <!-- SCRIPTS MODULARES -->
-  <script src="assets/js/nexus-core.js?v=0.3.1"></script>
-  <script src="assets/js/modules/view-navigator.js?v=0.3.1"></script>
-  <script src="assets/js/modules/translation-studio.js?v=0.3.1"></script>
-  <script src="assets/js/modules/mod-manager.js?v=0.3.1"></script>
-  <script src="assets/js/modules/entity-editor.js?v=0.3.1"></script>
-  <script src="assets/js/modules/galaxy-forge.js?v=0.3.1"></script>
-  <script src="assets/js/modules/convert-cli.js?v=0.3.1"></script>
-  <script src="assets/js/modules/system-health.js?v=0.3.1"></script>
-  <script src="assets/js/nexus-ui.js?v=0.3.1"></script>
+  <script src="assets/js/nexus-core.js?v=0.3.2"></script>
+  <script src="assets/js/modules/view-navigator.js?v=0.3.2"></script>
+  <script src="assets/js/modules/translation-studio.js?v=0.3.2"></script>
+  <script src="assets/js/modules/mod-manager.js?v=0.3.2"></script>
+  <script src="assets/js/modules/entity-editor.js?v=0.3.2"></script>
+  <script src="assets/js/modules/galaxy-forge.js?v=0.3.2"></script>
+  <script src="assets/js/modules/convert-cli.js?v=0.3.2"></script>
+  <script src="assets/js/modules/system-health.js?v=0.3.2"></script>
+  <script src="assets/js/nexus-ui.js?v=0.3.2"></script>
 </body>
 </html>
 HTML;

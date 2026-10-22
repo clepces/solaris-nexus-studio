@@ -150,15 +150,28 @@
 }
 
 .token-pill {
-  background: #dbe0e6;
-  box-shadow: 2px 2px 4px #b8bdc7, -2px -2px 4px #ffffff;
-  color: #b45309;
+  background: #f1f5f9;
+  color: #475569;
   font-size: 0.68rem;
   padding: 2px 6px;
   border-radius: 6px;
   font-family: var(--font-mono);
   font-weight: 700;
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid #cbd5e1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.token-pill.token-var {
+  background: #ede9fe;
+  color: #6d28d9;
+  border-color: rgba(109, 40, 217, 0.25);
+}
+
+.token-pill.token-num {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: rgba(180, 83, 9, 0.25);
 }
 
 .col-actions {
