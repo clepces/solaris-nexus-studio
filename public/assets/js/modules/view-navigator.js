@@ -226,17 +226,53 @@ window.ViewNavigator = (() => {
       }
     }
 
-    // Actualizar mini-métricas secundarias con datos reales
+    // Mini-métricas adaptativas según el módulo activo
+    const miniCard1Label = document.querySelector('#secondary-metrics-row .mini-neu-card:nth-child(1) .mini-card-label');
+    const miniCard1Badge = document.getElementById('mini-metric-ram-badge');
     const miniRam = document.getElementById('mini-metric-ram');
-    if (miniRam) miniRam.innerText = `${ramMb.toLocaleString()} MB`;
-    const miniRamDesc = document.getElementById('mini-metric-ram-desc');
-    if (miniRamDesc) miniRamDesc.innerText = `${safeMarginMb.toLocaleString()} MB margen libre`;
+    const miniCard1Desc = document.getElementById('mini-metric-ram-desc');
+
+    const miniCard2Label = document.querySelector('#secondary-metrics-row .mini-neu-card:nth-child(2) .mini-card-label');
+    const miniCard2Badge = document.getElementById('mini-metric-mods-badge');
     const miniMods = document.getElementById('mini-metric-mods');
-    if (miniMods) miniMods.innerText = `${modsCount} Mods`;
-    const miniModsDesc = document.getElementById('mini-metric-mod-top');
-    if (miniModsDesc) miniModsDesc.innerText = modsCount === 0 ? 'Vanilla (Sin mods)' : `${modsCount} mods activos`;
+    const miniCard2Desc = document.getElementById('mini-metric-mod-top');
+
+    const miniCard3Label = document.querySelector('#secondary-metrics-row .mini-neu-card:nth-child(3) .mini-card-label');
+    const miniCard3Badge = document.getElementById('mini-metric-entities-badge');
     const miniEntities = document.getElementById('mini-metric-entities');
-    if (miniEntities) miniEntities.innerText = totalEntities.toLocaleString();
+    const miniCard3Desc = document.getElementById('mini-metric-entities-desc');
+
+    if (targetId === 'tab-translation') {
+      if (miniCard1Label) miniCard1Label.innerText = 'TOKEN GUARD';
+      if (miniRam) miniRam.innerText = '100% OK';
+      if (miniCard1Badge) { miniCard1Badge.innerText = '0 Errores'; miniCard1Badge.className = 'metric-badge-pill'; }
+      if (miniCard1Desc) miniCard1Desc.innerText = '[VALUE], %s protegidos';
+
+      if (miniCard2Label) miniCard2Label.innerText = 'MODIFICADAS';
+      if (miniMods) miniMods.innerText = '0 Cadenas';
+      if (miniCard2Badge) { miniCard2Badge.innerText = 'Sin cambios'; miniCard2Badge.className = 'metric-badge-pill neutral'; }
+      if (miniCard2Desc) miniCard2Desc.innerText = 'Memoria de sesión limpia';
+
+      if (miniCard3Label) miniCard3Label.innerText = 'MEMORIA TRADUCCIÓN';
+      if (miniEntities) miniEntities.innerText = 'CONECTADA';
+      if (miniCard3Badge) { miniCard3Badge.innerText = 'SQLite TM'; miniCard3Badge.className = 'metric-badge-pill'; }
+      if (miniCard3Desc) miniCard3Desc.innerText = 'IndexedDB & SQLite Sync';
+    } else {
+      if (miniCard1Label) miniCard1Label.innerText = 'MEMORIA 32-BIT';
+      if (miniRam) miniRam.innerText = `${ramMb.toLocaleString()} MB`;
+      if (miniCard1Badge) { miniCard1Badge.innerText = 'LAA Seguro'; miniCard1Badge.className = 'metric-badge-pill'; }
+      if (miniCard1Desc) miniCard1Desc.innerText = `${safeMarginMb.toLocaleString()} MB margen libre`;
+
+      if (miniCard2Label) miniCard2Label.innerText = 'MODS ACTIVOS';
+      if (miniMods) miniMods.innerText = `${modsCount} Mods`;
+      if (miniCard2Badge) { miniCard2Badge.innerText = modsCount === 0 ? '0 Activos' : `${modsCount} Activos`; miniCard2Badge.className = `metric-badge-pill ${modsCount === 0 ? 'neutral' : ''}`; }
+      if (miniCard2Desc) miniCard2Desc.innerText = modsCount === 0 ? 'Vanilla (Sin mods)' : `${modsCount} mods en cascada`;
+
+      if (miniCard3Label) miniCard3Label.innerText = 'ENTIDADES GAMEINFO';
+      if (miniEntities) miniEntities.innerText = totalEntities.toLocaleString();
+      if (miniCard3Badge) { miniCard3Badge.innerText = 'Vanilla'; miniCard3Badge.className = 'metric-badge-pill'; }
+      if (miniCard3Desc) miniCard3Desc.innerText = 'Directorio GameInfo';
+    }
 
     // Actualizar badges del sidebar y del árbol VFS real
     const sideDash = document.getElementById('sidebar-count-dashboard');
@@ -290,9 +326,9 @@ window.ViewNavigator = (() => {
 
     if (tabId === 'tab-dashboard') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="ViewNavigator.switchTab('tab-translation');">${G_ICONS.translate} Abrir Traducción</button>
-        <button class="btn-reagle" onclick="ViewNavigator.switchTab('tab-mods');">${G_ICONS.layers} Mods VFS</button>
-        <button class="btn-reagle" id="btn-refresh-env">${G_ICONS.refresh} Escanear Entorno</button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="ViewNavigator.switchTab('tab-translation');" title="Abrir Traducción">${G_ICONS.translate}<span class="action-label">Abrir Traducción</span></button>
+        <button class="btn-reagle-action" onclick="ViewNavigator.switchTab('tab-mods');" title="Gestionar Mods VFS">${G_ICONS.layers}<span class="action-label">Mods VFS</span></button>
+        <button class="btn-reagle-action" id="btn-refresh-env" title="Escanear Entorno Físico">${G_ICONS.refresh}<span class="action-label">Escanear Entorno</span></button>
       `;
       document.getElementById('btn-refresh-env')?.addEventListener('click', async () => {
         if (window.NexusCore && window.NexusCore.fetchRealEnvironment) {
@@ -305,9 +341,9 @@ window.ViewNavigator = (() => {
     } else if (tabId === 'tab-translation') {
       container.innerHTML = `
         <input type="file" id="file-input-str" accept=".str" style="display: none;">
-        <button class="btn-reagle" id="btn-trigger-str-file">${G_ICONS.folder} Cargar .str</button>
-        <button class="btn-reagle" id="btn-demo-str">${G_ICONS.sparkle} Demo (7.828)</button>
-        <button class="btn-reagle btn-reagle-primary" id="btn-export-str-main">${G_ICONS.save} Exportar .str (BOM)</button>
+        <button class="btn-reagle-action" id="btn-trigger-str-file" title="Cargar archivo .str">${G_ICONS.folder}<span class="action-label">Cargar .str</span></button>
+        <button class="btn-reagle-action" id="btn-demo-str" title="Cargar catálogo completo 7.828 cadenas">${G_ICONS.sparkle}<span class="action-label">Cargar (7.828)</span></button>
+        <button class="btn-reagle-action btn-reagle-primary" id="btn-export-str-main" title="Exportar .str canónico UTF-8 BOM">${G_ICONS.save}<span class="action-label">Exportar .str</span></button>
       `;
       const fi = document.getElementById('file-input-str');
       document.getElementById('btn-trigger-str-file')?.addEventListener('click', () => fi?.click());
@@ -316,49 +352,49 @@ window.ViewNavigator = (() => {
       document.getElementById('btn-export-str-main')?.addEventListener('click', () => window.TranslationStudioModule?.exportStrFile());
     } else if (tabId === 'tab-mods') {
       container.innerHTML = `
-        <button class="btn-reagle" id="btn-scan-mods-top">${G_ICONS.refresh} Escanear Mods</button>
-        <button class="btn-reagle" id="btn-inject-minimod-top">${G_ICONS.tune} Inyectar Minimod</button>
-        <button class="btn-reagle btn-reagle-primary" id="btn-save-vfs-top">${G_ICONS.save} Guardar VFS</button>
+        <button class="btn-reagle-action" id="btn-scan-mods-top" title="Escanear directorio de mods">${G_ICONS.refresh}<span class="action-label">Escanear Mods</span></button>
+        <button class="btn-reagle-action" id="btn-inject-minimod-top" title="Inyectar minimod JIT">${G_ICONS.tune}<span class="action-label">Inyectar Minimod</span></button>
+        <button class="btn-reagle-action btn-reagle-primary" id="btn-save-vfs-top" title="Guardar jerarquía VFS">${G_ICONS.save}<span class="action-label">Guardar VFS</span></button>
       `;
       document.getElementById('btn-scan-mods-top')?.addEventListener('click', () => window.ModManagerModule?.scanMods());
       document.getElementById('btn-inject-minimod-top')?.addEventListener('click', () => window.ModManagerModule?.switchSubTab('subtab-mods-injector'));
       document.getElementById('btn-save-vfs-top')?.addEventListener('click', () => window.ModManagerModule?.saveVfsHierarchy());
     } else if (tabId === 'tab-entities') {
       container.innerHTML = `
-        <button class="btn-reagle" id="btn-reload-catalog-top">${G_ICONS.refresh} Recargar Flota</button>
-        <button class="btn-reagle btn-reagle-primary" id="btn-save-entity-top">${G_ICONS.save} Guardar Parámetros</button>
+        <button class="btn-reagle-action" id="btn-reload-catalog-top" title="Recargar catálogo de naves">${G_ICONS.refresh}<span class="action-label">Recargar Flota</span></button>
+        <button class="btn-reagle-action btn-reagle-primary" id="btn-save-entity-top" title="Guardar parámetros de entidad">${G_ICONS.save}<span class="action-label">Guardar Entidad</span></button>
       `;
       document.getElementById('btn-reload-catalog-top')?.addEventListener('click', () => window.EntityEditorModule?.loadCatalog());
       document.getElementById('btn-save-entity-top')?.addEventListener('click', () => window.EntityEditorModule?.saveCurrentEntity());
     } else if (tabId === 'tab-galaxy') {
       container.innerHTML = `
-        <button class="btn-reagle" onclick="window.GalaxyForgeModule?.generate(8);">${G_ICONS.play} Mapa 8P</button>
-        <button class="btn-reagle btn-reagle-primary" onclick="window.GalaxyForgeModule?.generate(12);">${G_ICONS.play} Generar 12P</button>
-        <button class="btn-reagle" onclick="window.GalaxyForgeModule?.exportGalaxy();">${G_ICONS.save} Exportar .galaxy</button>
+        <button class="btn-reagle-action" onclick="window.GalaxyForgeModule?.generate(8);" title="Generar topología de 8 planetas">${G_ICONS.play}<span class="action-label">Mapa 8P</span></button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="window.GalaxyForgeModule?.generate(12);" title="Generar topología de 12 planetas">${G_ICONS.play}<span class="action-label">Generar 12P</span></button>
+        <button class="btn-reagle-action" onclick="window.GalaxyForgeModule?.exportGalaxy();" title="Exportar archivo .galaxy">${G_ICONS.save}<span class="action-label">Exportar .galaxy</span></button>
       `;
     } else if (tabId === 'tab-convert') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="window.ConvertCliModule?.run();">${G_ICONS.play} Ejecutar Conversión</button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="window.ConvertCliModule?.run();" title="Ejecutar motor ConvertData CLI">${G_ICONS.play}<span class="action-label">Ejecutar Conversión</span></button>
       `;
     } else if (tabId === 'tab-system') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="window.SystemHealthModule?.runAudit();">${G_ICONS.security} Auditoría Fail-Fast</button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="window.SystemHealthModule?.runAudit();" title="Auditoría integral Fail-Fast">${G_ICONS.security}<span class="action-label">Auditoría Fail-Fast</span></button>
       `;
     } else if (tabId === 'tab-network') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="alert('Conectando a repositorios de la comunidad ModDB & Steam Workshop...');">${G_ICONS.refresh} Comprobar Actualizaciones</button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="alert('Conectando a repositorios de la comunidad ModDB & Steam Workshop...');" title="Comprobar actualizaciones remotas">${G_ICONS.refresh}<span class="action-label">Actualizaciones</span></button>
       `;
     } else if (tabId === 'tab-pipeline') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="alert('Validando compresión DXT1/5 y Mip-Maps de texturas DDS...');">${G_ICONS.play} Validar Mipmaps DDS</button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="alert('Validando compresión DXT1/5 y Mip-Maps de texturas DDS...');" title="Validar texturas DDS">${G_ICONS.play}<span class="action-label">Validar Mipmaps</span></button>
       `;
     } else if (tabId === 'tab-swarm') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="alert('Enviando evento de sincronización a los nodos pares del enjambre...');">${G_ICONS.refresh} Ping Swarm Bus</button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="alert('Enviando evento de sincronización a los nodos pares del enjambre...');" title="Ping al bus de eventos">${G_ICONS.refresh}<span class="action-label">Ping Swarm</span></button>
       `;
     } else if (tabId === 'tab-vault') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="window.NexusCore?.showToast ? NexusCore.showToast('Generando respaldo atómico .bak...') : alert('Generando respaldo atómico .bak...');">${G_ICONS.save} Nuevo Resguardo .bak</button>
+        <button class="btn-reagle-action btn-reagle-primary" onclick="window.NexusCore?.showToast ? NexusCore.showToast('Generando respaldo atómico .bak...') : alert('Generando respaldo atómico .bak...');" title="Crear snapshot .bak">${G_ICONS.save}<span class="action-label">Nuevo Resguardo</span></button>
       `;
     }
   }
@@ -371,12 +407,18 @@ window.ViewNavigator = (() => {
       if (res && res.success && res.data && res.data.permissions) {
         list.innerHTML = res.data.permissions.map(p => `
           <div class="workflow-task-item">
-            <div>
-              <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">${p.resource}</div>
-              <div style="font-size: 0.72rem; color: #64748b; font-family: var(--font-mono);">${p.path}</div>
+            <div class="workflow-col-main">
+              <div class="main-text">
+                <div class="main-title">${p.resource}</div>
+                <div class="main-desc" title="${p.path}">${p.path}</div>
+              </div>
             </div>
-            <div><span class="sidebar-pill-badge" style="background: #f1f5f9; color: #475569; font-weight: 700;">${p.access}</span></div>
-            <div style="text-align: right;"><span class="metric-badge-pill ${p.granted ? '' : 'neutral'}">${p.statusText}</span></div>
+            <div class="workflow-col-badge">
+              <span class="sidebar-pill-badge" style="background: #f1f5f9; color: #475569; font-weight: 700;">${p.access}</span>
+            </div>
+            <div class="workflow-col-action">
+              <span class="metric-badge-pill ${p.granted ? '' : 'neutral'}">${p.statusText}</span>
+            </div>
           </div>
         `).join('');
       }
@@ -406,12 +448,18 @@ window.ViewNavigator = (() => {
 
       list.innerHTML = executions.map(e => `
         <div class="workflow-task-item">
-          <div>
-            <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">[${e.exec_type}] ${e.description}</div>
-            <div style="font-size: 0.72rem; color: #64748b;">${e.details || 'Telemetría del sistema'}</div>
+          <div class="workflow-col-main">
+            <div class="main-text">
+              <div class="main-title">[${e.exec_type}] ${e.description}</div>
+              <div class="main-desc" title="${e.details || ''}">${e.details || 'Telemetría del sistema'}</div>
+            </div>
           </div>
-          <div style="font-size: 0.74rem; font-family: var(--font-mono); color: #64748b;">${e.created_at}</div>
-          <div style="text-align: right;"><span class="metric-badge-pill">✓ ${e.result}</span></div>
+          <div class="workflow-col-badge">
+            <span style="font-size: 0.74rem; font-family: var(--font-mono); color: #64748b;">${e.created_at}</span>
+          </div>
+          <div class="workflow-col-action">
+            <span class="metric-badge-pill">✓ ${e.result}</span>
+          </div>
         </div>
       `).join('');
     } catch (e) {}

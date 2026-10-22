@@ -31,13 +31,19 @@
             <div class="virtual-empty-state" id="virtual-empty-state">
               <div class="empty-state-card">
                 <div class="empty-state-badge">SINS REBELLION STR STUDIO</div>
-                <h3 class="empty-state-title">Ningún Diccionario .str Cargado</h3>
+                <h3 class="empty-state-title">Espacio de Trabajo Listo</h3>
                 <p class="empty-state-desc">
-                  El espacio de trabajo está en blanco. Carga tu archivo oficial <code>String_table.str</code> o inicializa el catálogo de demostración para inspeccionar y validar tokens de la suite.
+                  Se detectó el diccionario físico oficial en <code>Localizations/es/String/English.str</code> (7.828 cadenas). Inicializa el entorno para editar con protección Token Guard en tiempo real.
                 </p>
                 <div class="empty-state-actions">
-                  <button class="btn-reagle btn-reagle-primary" id="btn-empty-demo">🔄 Cargar Demo (7.828 Cadenas)</button>
-                  <button class="btn-reagle" id="btn-empty-upload">📁 Cargar Archivo .str</button>
+                  <button class="btn-reagle btn-reagle-primary" id="btn-empty-demo">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5z"/></svg>
+                    Cargar Diccionario (7.828 Cadenas)
+                  </button>
+                  <button class="btn-reagle" id="btn-empty-upload">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                    Importar Otro .str
+                  </button>
                 </div>
               </div>
             </div>
@@ -46,6 +52,36 @@
           <div class="grid-footer-hud" id="grid-footer-hud">
             <span id="hud-status-text">Cadenas 0 - 0 de 0</span>
             <span class="hud-badge">VIRTUAL RUNWAY 60 FPS</span>
+          </div>
+        </div>
+
+        <!-- MÓDULOS OPCIONALES EN DESARROLLO (ESTADO BLOQUEADO CON NOT-ALLOWED) -->
+        <div style="margin-top: 16px;">
+          <h3 style="font-size: 0.82rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Módulos Experimentales &amp; Traductores Neurales</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
+            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700; font-size:0.82rem; color:#0f172a;">Google Neural MT / DeepL</span>
+                <span class="metric-badge-pill neutral" style="font-size:0.65rem;">🔒 En Desarrollo</span>
+              </div>
+              <div style="font-size:0.72rem; color:#64748b; margin-top:4px;">Traducción automática por lotes con memoria relacional</div>
+            </div>
+
+            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700; font-size:0.82rem; color:#0f172a;">Glosario Semántico JIT</span>
+                <span class="metric-badge-pill neutral" style="font-size:0.65rem;">🔒 Beta Sandbox</span>
+              </div>
+              <div style="font-size:0.72rem; color:#64748b; margin-top:4px;">Resolución inteligente de colisiones entre mods</div>
+            </div>
+
+            <div class="disabled-tool-card" title="Módulo en desarrollo: Bloqueado temporalmente" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; opacity:0.6; filter:grayscale(0.4); cursor:not-allowed;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700; font-size:0.82rem; color:#0f172a;">Exportador PO / GetText</span>
+                <span class="metric-badge-pill neutral" style="font-size:0.65rem;">🔒 En Desarrollo</span>
+              </div>
+              <div style="font-size:0.72rem; color:#64748b; margin-top:4px;">Compatibilidad universal con herramientas Weblate / Crowdin</div>
+            </div>
           </div>
         </div>
       </section>

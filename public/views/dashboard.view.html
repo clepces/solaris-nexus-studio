@@ -32,86 +32,106 @@
         <div class="reagle-card-panel" style="flex: 1; padding: 18px 22px; background: transparent; box-shadow: none; border: none;">
           <!-- 1. PANE WORKFLOWS -->
           <div id="pane-dash-workflows" class="dash-pane active">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 10px;">
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">WORKFLOW / TAREA</span>
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">ESTADO CANÓNICO</span>
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase; text-align: right;">ACCIÓN</span>
+            <div class="dash-grid-header">
+              <div>WORKFLOW / TAREA</div>
+              <div>ESTADO CANÓNICO</div>
+              <div>ACCIÓN</div>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Tarea 1: Traducción -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="workflow-col-main">
                   <div class="task-icon-circle" style="background:#e0f2fe; color:#0284c7; font-weight:800;">STR</div>
-                  <div>
-                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Diccionario de Traducción Rebellion</div>
-                    <div style="font-size: 0.72rem; color: #64748b;">Localizations/es/String/English.str (UTF-8 BOM)</div>
+                  <div class="main-text">
+                    <div class="main-title">Diccionario de Traducción Rebellion</div>
+                    <div class="main-desc">Localizations/es/String/English.str (UTF-8 BOM)</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill" id="dash-str-badge">7.828 Cadenas (0 Errores)</span></div>
-                <button class="btn-reagle" onclick="NexusUI.switchTab('tab-translation');">Abrir Editor .str →</button>
+                <div class="workflow-col-badge">
+                  <span class="metric-badge-pill" id="dash-str-badge">7.828 Cadenas (0 Errores)</span>
+                </div>
+                <div class="workflow-col-action">
+                  <button class="btn-reagle" onclick="NexusUI.switchTab('tab-translation');">Abrir Editor .str →</button>
+                </div>
               </div>
 
               <!-- Tarea 2: VFS Mods -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="workflow-col-main">
                   <div class="task-icon-circle" style="background:#dbeafe; color:#2563eb; font-weight:800;">VFS</div>
-                  <div>
-                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Gestor de Mods y Prioridades VFS</div>
-                    <div style="font-size: 0.72rem; color: #64748b;">EnabledMods.txt (Directorio Mods-Rebellion v1.85)</div>
+                  <div class="main-text">
+                    <div class="main-title">Gestor de Mods y Prioridades VFS</div>
+                    <div class="main-desc">EnabledMods.txt (Directorio Mods-Rebellion v1.85)</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill neutral" id="dash-vfs-badge">0 Mods Activos (Vanilla)</span></div>
-                <button class="btn-reagle" onclick="NexusUI.switchTab('tab-mods');">Gestionar Mods →</button>
+                <div class="workflow-col-badge">
+                  <span class="metric-badge-pill neutral" id="dash-vfs-badge">0 Mods Activos (Vanilla)</span>
+                </div>
+                <div class="workflow-col-action">
+                  <button class="btn-reagle" onclick="NexusUI.switchTab('tab-mods');">Gestionar Mods →</button>
+                </div>
               </div>
 
               <!-- Tarea 3: ConvertData CLI -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="workflow-col-main">
                   <div class="task-icon-circle" style="background:#e0e7ff; color:#4f46e5; font-weight:800;">BIN</div>
-                  <div>
-                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">ConvertData CLI Native Engine</div>
-                    <div style="font-size: 0.72rem; color: #64748b;">Conversor bidireccional binario DirectX / texto plano</div>
+                  <div class="main-text">
+                    <div class="main-title">ConvertData CLI Native Engine</div>
+                    <div class="main-desc">Conversor bidireccional binario DirectX / texto plano</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill">DirectX 9 OK</span></div>
-                <button class="btn-reagle" onclick="NexusUI.switchTab('tab-convert');">Conversor CLI →</button>
+                <div class="workflow-col-badge">
+                  <span class="metric-badge-pill">DirectX 9 OK</span>
+                </div>
+                <div class="workflow-col-action">
+                  <button class="btn-reagle" onclick="NexusUI.switchTab('tab-convert');">Conversor CLI →</button>
+                </div>
               </div>
 
               <!-- Tarea 4: GameInfo Entities -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="workflow-col-main">
                   <div class="task-icon-circle" style="background:#fef3c7; color:#d97706; font-weight:800;">ENT</div>
-                  <div>
-                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Catálogo de Flota GameInfo</div>
-                    <div style="font-size: 0.72rem; color: #64748b;">Archivos .entity oficiales de Rebellion</div>
+                  <div class="main-text">
+                    <div class="main-title">Catálogo de Flota GameInfo</div>
+                    <div class="main-desc">Archivos .entity oficiales de Rebellion</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill" id="dash-wf-entities-badge">1.872 Archivos .entity</span></div>
-                <button class="btn-reagle" onclick="NexusUI.switchTab('tab-entities');">Explorar Flota →</button>
+                <div class="workflow-col-badge">
+                  <span class="metric-badge-pill" id="dash-wf-entities-badge">1.872 Archivos .entity</span>
+                </div>
+                <div class="workflow-col-action">
+                  <button class="btn-reagle" onclick="NexusUI.switchTab('tab-entities');">Explorar Flota →</button>
+                </div>
               </div>
 
               <!-- Tarea 5: Galaxy Forge -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="workflow-col-main">
                   <div class="task-icon-circle" style="background:#fce7f3; color:#db2777; font-weight:800;">GAL</div>
-                  <div>
-                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Galaxy Forge Companion</div>
-                    <div style="font-size: 0.72rem; color: #64748b;">Modelador de topologías estelares y grafos conexos</div>
+                  <div class="main-text">
+                    <div class="main-title">Galaxy Forge Companion</div>
+                    <div class="main-desc">Modelador de topologías estelares y grafos conexos</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill" id="dash-wf-galaxy-badge">126 Mapas Conexos</span></div>
-                <button class="btn-reagle" onclick="NexusUI.switchTab('tab-galaxy');">Ver Mapas →</button>
+                <div class="workflow-col-badge">
+                  <span class="metric-badge-pill" id="dash-wf-galaxy-badge">126 Mapas Conexos</span>
+                </div>
+                <div class="workflow-col-action">
+                  <button class="btn-reagle" onclick="NexusUI.switchTab('tab-galaxy');">Ver Mapas →</button>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- 2. PANE PERMISSIONS (DINÁMICO Y VERIFICADO FÍSICAMENTE) -->
           <div id="pane-dash-permissions" class="dash-pane" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 10px;">
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">RECURSO / SUBSISTEMA</span>
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">PERMISOS DISCO</span>
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase; text-align: right;">ESTADO</span>
+            <div class="dash-grid-header">
+              <div>RECURSO / SUBSISTEMA</div>
+              <div>PERMISOS DISCO</div>
+              <div>ESTADO</div>
             </div>
             <div id="dash-permissions-list" style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Renderizado dinámico desde /api/system/permissions -->
@@ -120,10 +140,10 @@
 
           <!-- 3. PANE EXECUTIONS (HISTORIAL PERSISTIDO EN SQLITE + LOCALSTORAGE) -->
           <div id="pane-dash-executions" class="dash-pane" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 10px;">
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">REGISTRO DE EJECUCIÓN</span>
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">FECHA / HORA</span>
-              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase; text-align: right;">RESULTADO</span>
+            <div class="dash-grid-header">
+              <div>REGISTRO DE EJECUCIÓN</div>
+              <div>FECHA / HORA</div>
+              <div>RESULTADO</div>
             </div>
             <div id="dash-executions-list" style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Renderizado reactivo persistido -->

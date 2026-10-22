@@ -786,6 +786,17 @@ body {
   font-size: 0.72rem;
   color: #64748b;
   margin-top: auto;
+  gap: 8px;
+  min-width: 0;
+}
+
+#hero-metric-subtext {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 135px;
+  display: inline-block;
+  color: #64748b;
 }
 
 .metric-report-link {
@@ -798,12 +809,86 @@ body {
   gap: 4px;
   cursor: pointer;
   transition: transform 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .metric-report-link:hover {
   transform: translateX(3px);
   text-decoration: underline;
   color: #1557b0;
+}
+
+/* Botones del encabezado con expansión responsiva en hover (Estilo Google) */
+.btn-reagle-action {
+  height: 36px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  color: #3c4043;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(60,64,67,0.06);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.btn-reagle-action svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.btn-reagle-action.btn-reagle-primary {
+  background: #1a73e8;
+  color: #ffffff;
+  border-color: #1a73e8;
+}
+
+.btn-reagle-action:hover {
+  background: #f8fafd;
+  border-color: #1a73e8;
+  color: #1a73e8;
+  box-shadow: 0 2px 6px rgba(26,115,232,0.18);
+  transform: translateY(-1px);
+}
+
+.btn-reagle-action.btn-reagle-primary:hover {
+  background: #1557b0;
+  color: #ffffff;
+}
+
+@media (max-width: 1140px) {
+  .btn-reagle-action {
+    padding: 0 9px;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .btn-reagle-action span.action-label {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    overflow: hidden;
+    transition: max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, margin 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-reagle-action:hover {
+    width: auto;
+    padding: 0 14px;
+  }
+  .btn-reagle-action:hover span.action-label {
+    max-width: 160px;
+    opacity: 1;
+    margin-left: 4px;
+  }
 }
 
 /* Mini métricas secundarias en fila (Google AI Studio aesthetic) */
@@ -1181,29 +1266,100 @@ body {
   gap: 14px;
 }
 
+.dash-grid-header {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.8fr) 190px 140px;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px 8px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.dash-grid-header > div:last-child {
+  text-align: right;
+}
+
 .workflow-task-item {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.8fr) 190px 140px;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
+.workflow-task-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.workflow-col-main {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  background: var(--neu-card-bg);
-  box-shadow: var(--neu-shadow-card-sm);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  gap: 12px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.workflow-col-main .main-text {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.workflow-col-main .main-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workflow-col-main .main-desc {
+  font-size: 0.72rem;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workflow-col-badge {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.workflow-col-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .task-icon-circle {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  background: #cfd4db;
-  box-shadow: inset 1px 1px 2px #b7bcc5, inset -1px -1px 2px #ffffff;
+  border-radius: 8px;
+  background: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 0.65rem;
-  color: var(--text-success);
+  font-size: 0.68rem;
+  color: #475569;
   flex-shrink: 0;
 }
 
