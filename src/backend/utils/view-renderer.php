@@ -40,6 +40,7 @@ final class ViewRenderer
   <link rel="stylesheet" href="assets/css/modules/mods-manager.css">
   <link rel="stylesheet" href="assets/css/modules/entity-editor.css">
   <link rel="stylesheet" href="assets/css/modules/galaxy-forge.css">
+  <link rel="stylesheet" href="assets/css/modules/nexus-components.css?v=0.4.0">
 </head>
 <body>
 HTML;
@@ -59,8 +60,9 @@ HTML;
 
         $scripts = <<<HTML
   <!-- SCRIPTS MODULARES -->
-  <script src="assets/js/nexus-core.js?v=0.3.2"></script>
-  <script src="assets/js/modules/view-navigator.js?v=0.3.2"></script>
+  <script src="assets/js/nexus-core.js?v=0.4.0"></script>
+  <script src="assets/js/modules/nexus-components.js?v=0.4.0"></script>
+  <script src="assets/js/modules/view-navigator.js?v=0.4.0"></script>
   <script src="assets/js/modules/translation-studio.js?v=0.3.2"></script>
   <script src="assets/js/modules/mod-manager.js?v=0.3.2"></script>
   <script src="assets/js/modules/entity-editor.js?v=0.3.2"></script>

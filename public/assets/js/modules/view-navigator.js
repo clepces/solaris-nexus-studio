@@ -507,10 +507,127 @@ window.ViewNavigator = (() => {
     } catch (e) {}
   }
 
+  let executionsData = [];
+  let executionsPagination = null;
+  const EXEC_PER_PAGE = 7;
+
+  function renderExecutionsPage(page) {
+    const list = document.getElementById('dash-executions-list');
+    const emptyContainer = document.getElementById('dash-executions-empty');
+    if (!list) return;
+
+    const dashSearch = document.getElementById('dashboard-search-input');
+    const query = dashSearch ? dashSearch.value.toLowerCase().trim() : '';
+
+    const filtered = query
+      ? executionsData.filter(e => 
+          (e.exec_type && e.exec_type.toLowerCase().includes(query)) ||
+          (e.description && e.description.toLowerCase().includes(query)) ||
+          (e.details && e.details.toLowerCase().includes(query)) ||
+          (e.result && e.result.toLowerCase().includes(query))
+        )
+      : executionsData;
+
+    if (filtered.length === 0) {
+      list.innerHTML = '';
+      if (emptyContainer) {
+        emptyContainer.style.display = 'block';
+        emptyContainer.innerHTML = window.NexusComponents ? window.NexusComponents.renderEmptyState({
+          title: 'Sin resultados de ejecución',
+          description: query 
+            ? `No se encontraron ejecuciones que coincidan con "${query}".`
+            : 'No hay registros de ejecución en la base de datos.',
+          icon: 'search',
+          actionText: query ? 'Limpiar Búsqueda' : null,
+          actionCallback: query ? 'ViewNavigator.clearDashboardSearch()' : null
+        }) : `<div style="text-align: center; padding: 24px; color: #94a3b8;">No hay registros</div>`;
+      }
+      if (executionsPagination) executionsPagination.setTotal(0);
+      return;
+    }
+
+    if (emptyContainer) emptyContainer.style.display = 'none';
+
+    if (executionsPagination) {
+      executionsPagination.setTotal(filtered.length);
+    }
+
+    const start = (page - 1) * EXEC_PER_PAGE;
+    const end = Math.min(filtered.length, start + EXEC_PER_PAGE);
+    const pageItems = filtered.slice(start, end);
+
+    list.innerHTML = pageItems.map(e => `
+      <div class="workflow-task-item">
+        <div class="workflow-col-main">
+          <div class="main-text">
+            <div class="main-title">[${e.exec_type}] ${e.description}</div>
+            <div class="main-desc" title="${e.details || ''}">${e.details || 'Telemetría del sistema'}</div>
+          </div>
+        </div>
+        <div class="workflow-col-badge">
+          <span style="font-size: 0.74rem; font-family: var(--font-mono); color: #64748b;">${e.created_at}</span>
+        </div>
+        <div class="workflow-col-action">
+          <span class="metric-badge-pill">✓ ${e.result}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function clearDashboardSearch() {
+    const dashSearch = document.getElementById('dashboard-search-input');
+    if (dashSearch) {
+      dashSearch.value = '';
+      applyDashboardSearch();
+    }
+  }
+
+  function applyDashboardSearch() {
+    const dashSearch = document.getElementById('dashboard-search-input');
+    const q = dashSearch ? dashSearch.value.toLowerCase().trim() : '';
+
+    // Si la pestaña activa es Executions, usamos la paginación reactiva
+    const activeExecPane = document.getElementById('pane-dash-executions');
+    if (activeExecPane && activeExecPane.classList.contains('active')) {
+      if (executionsPagination) executionsPagination.currentPage = 1;
+      renderExecutionsPage(1);
+      return;
+    }
+
+    // Para workflows y permissions
+    const activePane = document.querySelector('.dash-pane.active');
+    if (!activePane) return;
+
+    let visibleCount = 0;
+    activePane.querySelectorAll('.workflow-task-item').forEach(item => {
+      const match = item.innerText.toLowerCase().includes(q);
+      item.style.display = match ? 'grid' : 'none';
+      if (match) visibleCount++;
+    });
+
+    const emptyBox = activePane.querySelector('.dash-pane-empty');
+    if (emptyBox) {
+      if (visibleCount === 0 && q !== '') {
+        emptyBox.style.display = 'block';
+        emptyBox.innerHTML = window.NexusComponents ? window.NexusComponents.renderEmptyState({
+          title: 'Sin coincidencias en esta pestaña',
+          description: `No se encontraron elementos que coincidan con "${q}".`,
+          icon: 'search',
+          actionText: 'Limpiar Filtro',
+          actionCallback: 'ViewNavigator.clearDashboardSearch()'
+        }) : '';
+      } else {
+        emptyBox.style.display = 'none';
+      }
+    }
+  }
+
   async function loadExecutions() {
     const list = document.getElementById('dash-executions-list');
     const countEl = document.getElementById('dash-exec-count');
+    const paginationContainer = document.getElementById('dash-executions-pagination');
     if (!list) return;
+
     try {
       const res = await NexusCore.apiGet('system/executions');
       let executions = (res && res.success && res.data && res.data.executions) ? res.data.executions : [];
@@ -522,28 +639,22 @@ window.ViewNavigator = (() => {
         } catch (e) {}
       }
 
+      executionsData = executions;
       if (countEl) countEl.innerText = executions.length;
-      if (executions.length === 0) {
-        list.innerHTML = `<div style="text-align: center; padding: 24px; color: #94a3b8; font-size: 0.82rem;">No hay registros de ejecución</div>`;
-        return;
+
+      if (window.NexusComponents && paginationContainer && !executionsPagination) {
+        executionsPagination = new window.NexusComponents.Pagination({
+          container: paginationContainer,
+          totalItems: executionsData.length,
+          itemsPerPage: EXEC_PER_PAGE,
+          currentPage: 1,
+          onPageChange: (newPage) => {
+            renderExecutionsPage(newPage);
+          }
+        });
       }
 
-      list.innerHTML = executions.map(e => `
-        <div class="workflow-task-item">
-          <div class="workflow-col-main">
-            <div class="main-text">
-              <div class="main-title">[${e.exec_type}] ${e.description}</div>
-              <div class="main-desc" title="${e.details || ''}">${e.details || 'Telemetría del sistema'}</div>
-            </div>
-          </div>
-          <div class="workflow-col-badge">
-            <span style="font-size: 0.74rem; font-family: var(--font-mono); color: #64748b;">${e.created_at}</span>
-          </div>
-          <div class="workflow-col-action">
-            <span class="metric-badge-pill">✓ ${e.result}</span>
-          </div>
-        </div>
-      `).join('');
+      renderExecutionsPage(1);
     } catch (e) {}
   }
 
@@ -580,6 +691,7 @@ window.ViewNavigator = (() => {
           pane.classList.toggle('active', match);
           pane.style.display = match ? 'block' : 'none';
         });
+        applyDashboardSearch();
       });
     });
 
@@ -670,15 +782,10 @@ window.ViewNavigator = (() => {
       alert("Archivos Recientemente Modificados:\n• Localizations/es/String/English.str (7.828 cadenas)\n• Mods-Rebellion v1.85/EnabledMods.txt (Vanilla)\n• GameInfo/ (1.872 archivos .entity)");
     });
 
-    // Filtro en tiempo real para flujos, permisos y ejecuciones
+    // Filtro en tiempo real para flujos, permisos y ejecuciones (con sincronización total)
     const dashSearch = document.getElementById('dashboard-search-input');
     if (dashSearch) {
-      dashSearch.addEventListener('input', () => {
-        const q = dashSearch.value.toLowerCase().trim();
-        document.querySelectorAll('.dash-pane.active .workflow-task-item').forEach(item => {
-          item.style.display = item.innerText.toLowerCase().includes(q) ? 'grid' : 'none';
-        });
-      });
+      dashSearch.addEventListener('input', applyDashboardSearch);
     }
 
     // Filtro para el árbol VFS del Sidebar
@@ -760,6 +867,8 @@ window.ViewNavigator = (() => {
     switchTab,
     toggleSidebar,
     toggleExperimentalDrawer,
+    clearDashboardSearch,
+    applyDashboardSearch,
     updateHeroMetrics,
     logExecution,
     loadPermissions,

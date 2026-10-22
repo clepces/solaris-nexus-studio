@@ -40,6 +40,8 @@
               <div>ACCIÓN</div>
             </div>
 
+            <div class="dash-pane-empty" style="display: none;"></div>
+
             <div style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Tarea 1: Traducción -->
               <div class="workflow-task-item">
@@ -135,6 +137,7 @@
               <div>PERMISOS DISCO</div>
               <div>ESTADO</div>
             </div>
+            <div class="dash-pane-empty" style="display: none;"></div>
             <div id="dash-permissions-list" style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Renderizado dinámico desde /api/system/permissions -->
             </div>
@@ -147,9 +150,11 @@
               <div>FECHA / HORA</div>
               <div>RESULTADO</div>
             </div>
+            <div id="dash-executions-empty" style="display: none;"></div>
             <div id="dash-executions-list" style="display: flex; flex-direction: column; gap: 10px;">
               <!-- Renderizado reactivo persistido -->
             </div>
+            <div id="dash-executions-pagination"></div>
           </div>
         </div>
       </section>
