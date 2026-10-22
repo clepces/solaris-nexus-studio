@@ -75,6 +75,15 @@ try {
     } elseif (str_ends_with($uri, '/api/system/environment') && $method === 'GET') {
         $controller = new SystemController(null, $logger);
         $response = $controller->realEnvironment($config);
+    } elseif (str_ends_with($uri, '/api/system/executions') && $method === 'GET') {
+        $controller = new SystemController(null, $logger);
+        $response = $controller->getExecutions($config);
+    } elseif (str_ends_with($uri, '/api/system/executions') && $method === 'POST') {
+        $controller = new SystemController(null, $logger);
+        $response = $controller->recordExecution($payload, $config);
+    } elseif (str_ends_with($uri, '/api/system/permissions') && $method === 'GET') {
+        $controller = new SystemController(null, $logger);
+        $response = $controller->permissions($config);
     } elseif (str_ends_with($uri, '/api/strings/parse') && $method === 'POST') {
         $controller = new StringController(null, null, $logger);
         $response = $controller->parse($payload);

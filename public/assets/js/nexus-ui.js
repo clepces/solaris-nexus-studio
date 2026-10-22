@@ -18,9 +18,10 @@ window.NexusUI = (() => {
     if (window.ConvertCliModule) window.ConvertCliModule.init();
     if (window.SystemHealthModule) window.SystemHealthModule.init();
 
-    // 3. Arrancar en Vista Dashboard con Datos Reales y Telemetría Sólida
+    // 3. Arrancar en Vista Restaurada o Dashboard con Datos Reales
     if (window.ViewNavigator) {
-      window.ViewNavigator.switchTab('tab-dashboard');
+      const savedTab = localStorage.getItem('solaris_active_tab') || 'tab-dashboard';
+      window.ViewNavigator.switchTab(savedTab);
     }
   }
 

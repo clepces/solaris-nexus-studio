@@ -856,86 +856,153 @@ body {
   white-space: nowrap;
 }
 
-@media (max-width: 1050px) {
+/* Telemetría responsiva universal: NUNCA se oculta en 1016x648 */
+@media (max-width: 1200px) {
+  .reagle-metric-card-container {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .reagle-metric-card {
+    min-width: 200px;
+    flex: 1 1 200px;
+    padding: 10px 14px;
+  }
   .secondary-metrics-row {
-    display: none;
+    flex: 2 1 300px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .mini-neu-card {
+    min-width: 110px;
+    padding: 8px 12px;
+  }
+  .mini-card-label {
+    font-size: 0.62rem;
+  }
+  .mini-card-value {
+    font-size: 1.18rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .secondary-metrics-row {
+    flex-wrap: wrap;
+  }
+  .mini-neu-card {
+    flex: 1 1 calc(50% - 8px);
   }
 }
 
 /* ==========================================================================
-   6. SECCIÓN WORKFLOWS, TABS Y BARRA DE FILTROS (COMO EN LA FOTO)
+   6. SECCIÓN WORKFLOWS, TABS Y BARRA DE FILTROS (ESTILO GOOGLE AI STUDIO)
    ========================================================================== */
 .reagle-tabs-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  border-bottom: 1.5px solid rgba(160, 168, 180, 0.28);
-  padding-bottom: 6px;
-  margin-top: 2px;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .section-subheading-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #0f172a;
   letter-spacing: -0.02em;
 }
 
 .reagle-segmented-tabs {
   display: flex;
-  gap: 14px;
+  gap: 4px;
   align-items: center;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
 }
 
 .tab-link-btn {
   background: transparent;
   border: none;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: #64748b;
   cursor: pointer;
-  padding: 3px 2px;
-  position: relative;
-  transition: color 0.15s ease;
+  padding: 6px 14px;
+  border-radius: 7px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .tab-link-btn:hover {
-  color: var(--text-main);
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .tab-link-btn.active {
-  color: var(--text-main);
-  font-weight: 800;
+  color: #0f172a;
+  background: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.tab-link-btn.active::after {
-  content: '';
-  position: absolute;
-  bottom: -7.5px;
-  left: 0;
-  width: 100%;
-  height: 2.5px;
-  background: var(--text-main);
-  border-radius: 2px;
+.tab-link-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+.dash-pane {
+  display: none;
+}
+
+.dash-pane.active {
+  display: block;
+  animation: paneFadeSlideIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes paneFadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .reagle-search-full {
-  background: var(--neu-slot-bg);
-  box-shadow: var(--neu-shadow-inset);
-  border-radius: 12px;
-  padding: 6px 12px;
+  background: #ffffff;
+  border-radius: 9999px;
+  padding: 6px 14px;
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 220px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  width: 250px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.reagle-search-full:focus-within {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+  width: 280px;
 }
 
 .reagle-search-full svg {
   width: 14px;
   height: 14px;
-  stroke: var(--text-muted);
-  stroke-width: 2.2;
+  stroke: #64748b;
+  stroke-width: 2;
   fill: none;
 }
 
@@ -944,7 +1011,7 @@ body {
   border: none;
   outline: none;
   font-size: 0.80rem;
-  color: var(--text-main);
+  color: #1e293b;
   width: 100%;
 }
 

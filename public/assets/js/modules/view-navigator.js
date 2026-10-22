@@ -91,6 +91,10 @@ window.ViewNavigator = (() => {
       lastActiveStudioTab = targetId;
     }
 
+    try {
+      localStorage.setItem('solaris_active_tab', targetId);
+    } catch (e) {}
+
     document.querySelectorAll('.sidebar-nav-item').forEach(b => {
       b.classList.toggle('active', b.getAttribute('data-tab') === targetId);
     });
@@ -271,27 +275,39 @@ window.ViewNavigator = (() => {
     const container = document.getElementById('header-actions-container');
     if (!container) return;
 
-    const ICONS = {
-      folder: '<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>',
-      refresh: '<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>',
-      save: '<svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>',
-      gear: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>',
-      plus: '<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
-      shield: '<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>',
-      zap: '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>'
+    // Iconos limpios estilo Google Material Symbols
+    const G_ICONS = {
+      translate: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.87 15.07l-2.54-2.51.03-.08c1.74-1.94 2.98-4.17 3.71-6.48H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>',
+      folder: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>',
+      refresh: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>',
+      save: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>',
+      layers: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9.07l-9-7-9 7 1.63 1.27L12 16z"/></svg>',
+      tune: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>',
+      play: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+      security: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>',
+      sparkle: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>'
     };
 
     if (tabId === 'tab-dashboard') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="ViewNavigator.switchTab('tab-translation');">${ICONS.folder} Abrir Traducción</button>
-        <button class="btn-reagle" onclick="ViewNavigator.switchTab('tab-mods');">${ICONS.gear} Mods VFS</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="ViewNavigator.switchTab('tab-translation');">${G_ICONS.translate} Abrir Traducción</button>
+        <button class="btn-reagle" onclick="ViewNavigator.switchTab('tab-mods');">${G_ICONS.layers} Mods VFS</button>
+        <button class="btn-reagle" id="btn-refresh-env">${G_ICONS.refresh} Escanear Entorno</button>
       `;
+      document.getElementById('btn-refresh-env')?.addEventListener('click', async () => {
+        if (window.NexusCore && window.NexusCore.fetchRealEnvironment) {
+          await window.NexusCore.fetchRealEnvironment();
+          await loadPermissions();
+          await loadExecutions();
+          logExecution('SYS', 'Re-escaneo manual de entorno y subsistemas físicos', 'OK', 'C:/Games/...');
+        }
+      });
     } else if (tabId === 'tab-translation') {
       container.innerHTML = `
         <input type="file" id="file-input-str" accept=".str" style="display: none;">
-        <button class="btn-reagle" id="btn-trigger-str-file">${ICONS.folder} Cargar .str</button>
-        <button class="btn-reagle" id="btn-demo-str">${ICONS.refresh} Demo (7.828)</button>
-        <button class="btn-reagle btn-reagle-primary" id="btn-export-str-main">${ICONS.save} Exportar .str (BOM)</button>
+        <button class="btn-reagle" id="btn-trigger-str-file">${G_ICONS.folder} Cargar .str</button>
+        <button class="btn-reagle" id="btn-demo-str">${G_ICONS.sparkle} Demo (7.828)</button>
+        <button class="btn-reagle btn-reagle-primary" id="btn-export-str-main">${G_ICONS.save} Exportar .str (BOM)</button>
       `;
       const fi = document.getElementById('file-input-str');
       document.getElementById('btn-trigger-str-file')?.addEventListener('click', () => fi?.click());
@@ -300,51 +316,105 @@ window.ViewNavigator = (() => {
       document.getElementById('btn-export-str-main')?.addEventListener('click', () => window.TranslationStudioModule?.exportStrFile());
     } else if (tabId === 'tab-mods') {
       container.innerHTML = `
-        <button class="btn-reagle" id="btn-scan-mods-top">${ICONS.refresh} Escanear Mods</button>
-        <button class="btn-reagle" id="btn-inject-minimod-top">${ICONS.plus} Inyectar Minimod</button>
-        <button class="btn-reagle btn-reagle-primary" id="btn-save-vfs-top">${ICONS.save} Guardar VFS</button>
+        <button class="btn-reagle" id="btn-scan-mods-top">${G_ICONS.refresh} Escanear Mods</button>
+        <button class="btn-reagle" id="btn-inject-minimod-top">${G_ICONS.tune} Inyectar Minimod</button>
+        <button class="btn-reagle btn-reagle-primary" id="btn-save-vfs-top">${G_ICONS.save} Guardar VFS</button>
       `;
       document.getElementById('btn-scan-mods-top')?.addEventListener('click', () => window.ModManagerModule?.scanMods());
       document.getElementById('btn-inject-minimod-top')?.addEventListener('click', () => window.ModManagerModule?.switchSubTab('subtab-mods-injector'));
       document.getElementById('btn-save-vfs-top')?.addEventListener('click', () => window.ModManagerModule?.saveVfsHierarchy());
     } else if (tabId === 'tab-entities') {
       container.innerHTML = `
-        <button class="btn-reagle" id="btn-reload-catalog-top">${ICONS.refresh} Recargar Flota</button>
-        <button class="btn-reagle btn-reagle-primary" id="btn-save-entity-top">${ICONS.save} Guardar Parámetros</button>
+        <button class="btn-reagle" id="btn-reload-catalog-top">${G_ICONS.refresh} Recargar Flota</button>
+        <button class="btn-reagle btn-reagle-primary" id="btn-save-entity-top">${G_ICONS.save} Guardar Parámetros</button>
       `;
       document.getElementById('btn-reload-catalog-top')?.addEventListener('click', () => window.EntityEditorModule?.loadCatalog());
       document.getElementById('btn-save-entity-top')?.addEventListener('click', () => window.EntityEditorModule?.saveCurrentEntity());
     } else if (tabId === 'tab-galaxy') {
       container.innerHTML = `
-        <button class="btn-reagle" onclick="window.GalaxyForgeModule?.generate(8);">${ICONS.zap} Mapa 8P</button>
-        <button class="btn-reagle btn-reagle-primary" onclick="window.GalaxyForgeModule?.generate(12);">${ICONS.zap} Generar 12P</button>
-        <button class="btn-reagle" onclick="window.GalaxyForgeModule?.exportGalaxy();">${ICONS.save} Exportar .galaxy</button>
+        <button class="btn-reagle" onclick="window.GalaxyForgeModule?.generate(8);">${G_ICONS.play} Mapa 8P</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="window.GalaxyForgeModule?.generate(12);">${G_ICONS.play} Generar 12P</button>
+        <button class="btn-reagle" onclick="window.GalaxyForgeModule?.exportGalaxy();">${G_ICONS.save} Exportar .galaxy</button>
       `;
     } else if (tabId === 'tab-convert') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="window.ConvertCliModule?.run();">${ICONS.zap} Ejecutar Conversión</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="window.ConvertCliModule?.run();">${G_ICONS.play} Ejecutar Conversión</button>
       `;
     } else if (tabId === 'tab-system') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="window.SystemHealthModule?.runAudit();">${ICONS.shield} Auditoría Fail-Fast</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="window.SystemHealthModule?.runAudit();">${G_ICONS.security} Auditoría Fail-Fast</button>
       `;
     } else if (tabId === 'tab-network') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="alert('Conectando a repositorios de la comunidad ModDB & Steam Workshop...');">${ICONS.refresh} Comprobar Actualizaciones</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="alert('Conectando a repositorios de la comunidad ModDB & Steam Workshop...');">${G_ICONS.refresh} Comprobar Actualizaciones</button>
       `;
     } else if (tabId === 'tab-pipeline') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="alert('Validando compresión DXT1/5 y Mip-Maps de texturas DDS...');">${ICONS.zap} Validar Mipmaps DDS</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="alert('Validando compresión DXT1/5 y Mip-Maps de texturas DDS...');">${G_ICONS.play} Validar Mipmaps DDS</button>
       `;
     } else if (tabId === 'tab-swarm') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="alert('Enviando evento de sincronización a los nodos pares del enjambre...');">${ICONS.refresh} Ping Swarm Bus</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="alert('Enviando evento de sincronización a los nodos pares del enjambre...');">${G_ICONS.refresh} Ping Swarm Bus</button>
       `;
     } else if (tabId === 'tab-vault') {
       container.innerHTML = `
-        <button class="btn-reagle btn-reagle-primary" onclick="window.NexusCore?.showToast ? NexusCore.showToast('Generando respaldo atómico .bak...') : alert('Generando respaldo atómico .bak...');">${ICONS.save} Nuevo Resguardo .bak</button>
+        <button class="btn-reagle btn-reagle-primary" onclick="window.NexusCore?.showToast ? NexusCore.showToast('Generando respaldo atómico .bak...') : alert('Generando respaldo atómico .bak...');">${G_ICONS.save} Nuevo Resguardo .bak</button>
       `;
     }
+  }
+
+  async function loadPermissions() {
+    const list = document.getElementById('dash-permissions-list');
+    if (!list) return;
+    try {
+      const res = await NexusCore.apiGet('system/permissions');
+      if (res && res.success && res.data && res.data.permissions) {
+        list.innerHTML = res.data.permissions.map(p => `
+          <div class="workflow-task-item">
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">${p.resource}</div>
+              <div style="font-size: 0.72rem; color: #64748b; font-family: var(--font-mono);">${p.path}</div>
+            </div>
+            <div><span class="sidebar-pill-badge" style="background: #f1f5f9; color: #475569; font-weight: 700;">${p.access}</span></div>
+            <div style="text-align: right;"><span class="metric-badge-pill ${p.granted ? '' : 'neutral'}">${p.statusText}</span></div>
+          </div>
+        `).join('');
+      }
+    } catch (e) {}
+  }
+
+  async function loadExecutions() {
+    const list = document.getElementById('dash-executions-list');
+    const countEl = document.getElementById('dash-exec-count');
+    if (!list) return;
+    try {
+      const res = await NexusCore.apiGet('system/executions');
+      let executions = (res && res.success && res.data && res.data.executions) ? res.data.executions : [];
+
+      if (executions.length === 0) {
+        try {
+          const cached = JSON.parse(localStorage.getItem('solaris_executions') || '[]');
+          if (Array.isArray(cached) && cached.length > 0) executions = cached;
+        } catch (e) {}
+      }
+
+      if (countEl) countEl.innerText = executions.length;
+      if (executions.length === 0) {
+        list.innerHTML = `<div style="text-align: center; padding: 24px; color: #94a3b8; font-size: 0.82rem;">No hay registros de ejecución</div>`;
+        return;
+      }
+
+      list.innerHTML = executions.map(e => `
+        <div class="workflow-task-item">
+          <div>
+            <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">[${e.exec_type}] ${e.description}</div>
+            <div style="font-size: 0.72rem; color: #64748b;">${e.details || 'Telemetría del sistema'}</div>
+          </div>
+          <div style="font-size: 0.74rem; font-family: var(--font-mono); color: #64748b;">${e.created_at}</div>
+          <div style="text-align: right;"><span class="metric-badge-pill">✓ ${e.result}</span></div>
+        </div>
+      `).join('');
+    } catch (e) {}
   }
 
   function init() {
@@ -366,19 +436,35 @@ window.ViewNavigator = (() => {
     const restoreBtn = document.getElementById('btn-restore-sidebar');
     if (restoreBtn) restoreBtn.addEventListener('click', () => toggleSidebar(true));
 
-    // Pestañas segmentadas interactivas del Dashboard (Workflows / Permissions / Executions)
+    // Pestañas segmentadas interactivas del Dashboard con persistencia
     document.querySelectorAll('.tab-link-btn[data-dash-tab]').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-link-btn[data-dash-tab]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const tabName = btn.getAttribute('data-dash-tab');
+        try {
+          localStorage.setItem('solaris_dash_tab', tabName);
+        } catch (e) {}
         document.querySelectorAll('.dash-pane').forEach(pane => {
-          pane.style.display = pane.id === `pane-dash-${tabName}` ? 'block' : 'none';
+          const match = pane.id === `pane-dash-${tabName}`;
+          pane.classList.toggle('active', match);
+          pane.style.display = match ? 'block' : 'none';
         });
       });
     });
 
-    // Control determinista de carpetas en el árbol VFS (Expandir/Colapsar sin cambiar de vista)
+    // Restaurar subpestaña del Dashboard
+    const savedDashTab = localStorage.getItem('solaris_dash_tab');
+    if (savedDashTab) {
+      const matchBtn = document.querySelector(`.tab-link-btn[data-dash-tab="${savedDashTab}"]`);
+      if (matchBtn) matchBtn.click();
+    }
+
+    // Cargar permisos y ejecuciones físicas reales
+    loadPermissions();
+    loadExecutions();
+
+    // Control determinista de carpetas en el árbol VFS
     document.querySelectorAll('.tree-folder-toggle').forEach(folderNode => {
       folderNode.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -396,7 +482,7 @@ window.ViewNavigator = (() => {
       });
     });
 
-    // Control de selección e inspección de archivos del árbol VFS (Sin saltos de vista desordenados)
+    // Control de selección e inspección de archivos del árbol VFS
     const inspector = document.getElementById('tree-selection-inspector');
     const selName = document.getElementById('tree-sel-name');
     const selType = document.getElementById('tree-sel-type');
@@ -411,10 +497,12 @@ window.ViewNavigator = (() => {
         if (window.TranslationStudioModule && window.TranslationStudioModule.getCount() === 0) {
           window.TranslationStudioModule.loadDemoData();
         }
-      } else if (type === 'mod') {
+      } else if (type === 'mod' || type === 'txt') {
         switchTab('tab-mods');
       } else if (type === 'entity') {
         switchTab('tab-entities');
+      } else if (type === 'galaxy') {
+        switchTab('tab-galaxy');
       }
     }
 
@@ -447,23 +535,23 @@ window.ViewNavigator = (() => {
       });
     }
 
-    // Historial reciente de archivos sin desvío de navegación
+    // Historial reciente de archivos
     document.getElementById('btn-sidebar-recent')?.addEventListener('click', () => {
-      alert("Archivos Recientemente Modificados:\n• String_table.str (TEC Vanilla - 7.828 cadenas)\n• EnabledMods.txt (VFS Cascade v1.85)\n• Kol Battleship.entity (TEC Capital)");
+      alert("Archivos Recientemente Modificados:\n• Localizations/es/String/English.str (7.828 cadenas)\n• Mods-Rebellion v1.85/EnabledMods.txt (Vanilla)\n• GameInfo/ (1.872 archivos .entity)");
     });
 
-    // Filtro en tiempo real para la matriz de Workflows del Dashboard
+    // Filtro en tiempo real para flujos, permisos y ejecuciones
     const dashSearch = document.getElementById('dashboard-search-input');
     if (dashSearch) {
       dashSearch.addEventListener('input', () => {
         const q = dashSearch.value.toLowerCase().trim();
-        document.querySelectorAll('#pane-dash-workflows .workflow-task-item').forEach(item => {
-          item.style.display = item.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
+        document.querySelectorAll('.dash-pane.active .workflow-task-item').forEach(item => {
+          item.style.display = item.innerText.toLowerCase().includes(q) ? 'grid' : 'none';
         });
       });
     }
 
-    // Filtro en tiempo real para el árbol VFS y directorios locales del Sidebar
+    // Filtro para el árbol VFS del Sidebar
     const vfsSearch = document.getElementById('vfs-tree-search-input');
     if (vfsSearch) {
       vfsSearch.addEventListener('input', () => {
@@ -474,29 +562,58 @@ window.ViewNavigator = (() => {
       });
     }
 
-    // Botón de re-escaneo rápido VFS en el encabezado del Sidebar
+    // Botón de re-escaneo rápido VFS
     document.getElementById('btn-sidebar-scan-vfs')?.addEventListener('click', () => {
       switchTab('tab-mods');
       if (window.ModManagerModule) window.ModManagerModule.scanMods();
     });
   }
 
-  function logExecution(type, description, result) {
+  function logExecution(type, description, result, details = null) {
     const list = document.getElementById('dash-executions-list');
-    if (!list) return;
-    const item = document.createElement('div');
-    item.className = 'workflow-task-item';
+    const countEl = document.getElementById('dash-exec-count');
     const now = new Date();
-    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-    item.innerHTML = `
-      <div>
-        <div style="font-weight: 700; font-size: 0.84rem;">[${type}] ${description}</div>
-        <div style="font-size: 0.72rem; color: var(--text-muted);">Registro reactivo de telemetría</div>
-      </div>
-      <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">${timeStr}</div>
-      <div><span class="metric-badge-pill">✓ ${result}</span></div>
-    `;
-    list.insertBefore(item, list.firstChild);
+    const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+    if (list) {
+      const item = document.createElement('div');
+      item.className = 'workflow-task-item';
+      item.style.animation = 'paneFadeSlideIn 0.3s ease forwards';
+      item.innerHTML = `
+        <div>
+          <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">[${type}] ${description}</div>
+          <div style="font-size: 0.72rem; color: #64748b;">${details || 'Registro reactivo de telemetría'}</div>
+        </div>
+        <div style="font-size: 0.74rem; font-family: var(--font-mono); color: #64748b;">${timeStr}</div>
+        <div style="text-align: right;"><span class="metric-badge-pill">✓ ${result}</span></div>
+      `;
+      list.insertBefore(item, list.firstChild);
+      if (countEl) {
+        const cur = parseInt(countEl.innerText) || 0;
+        countEl.innerText = cur + 1;
+      }
+    }
+
+    // Persistir en SQLite físico vía API asíncrona
+    NexusCore.apiPost('system/executions', {
+      type,
+      description,
+      details: details || 'Telemetría del sistema',
+      result
+    });
+
+    // Guardar espejo en LocalStorage para arranque instantáneo (0ms)
+    try {
+      const cached = JSON.parse(localStorage.getItem('solaris_executions') || '[]');
+      cached.unshift({
+        exec_type: type,
+        description,
+        details: details || 'Telemetría del sistema',
+        result,
+        created_at: timeStr
+      });
+      localStorage.setItem('solaris_executions', JSON.stringify(cached.slice(0, 50)));
+    } catch (e) {}
   }
 
   return {
@@ -504,6 +621,8 @@ window.ViewNavigator = (() => {
     switchTab,
     toggleSidebar,
     updateHeroMetrics,
-    logExecution
+    logExecution,
+    loadPermissions,
+    loadExecutions
   };
 })();

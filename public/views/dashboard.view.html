@@ -5,128 +5,128 @@
         <!-- Fila de Tabs de Ejecuciones y Búsqueda -->
         <div class="reagle-tabs-row">
           <div>
-            <h2 class="section-subheading-title">Executions</h2>
+            <h2 class="section-subheading-title">Executions &amp; Telemetría</h2>
             <div class="reagle-segmented-tabs" style="margin-top: 8px;">
-              <button class="tab-link-btn active" data-dash-tab="workflows">Workflows</button>
-              <button class="tab-link-btn" data-dash-tab="permissions">Permissions</button>
-              <button class="tab-link-btn" data-dash-tab="executions">Executions</button>
+              <button class="tab-link-btn active" data-dash-tab="workflows">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                <span>Workflows</span>
+              </button>
+              <button class="tab-link-btn" data-dash-tab="permissions">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Permissions</span>
+              </button>
+              <button class="tab-link-btn" data-dash-tab="executions">
+                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <span>Executions (<span id="dash-exec-count">0</span>)</span>
+              </button>
             </div>
           </div>
 
           <div class="reagle-search-full">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="dashboard-search-input" placeholder="Buscar workflow...">
+            <input type="text" id="dashboard-search-input" placeholder="Buscar flujo, permiso o registro...">
           </div>
         </div>
 
-        <!-- Matriz de Tareas y Workflows Neumórfica con Paneles Conmutables -->
-        <div class="reagle-card-panel" style="flex: 1; padding: 18px 22px;">
+        <!-- Matriz de Tareas y Workflows con Paneles Conmutables -->
+        <div class="reagle-card-panel" style="flex: 1; padding: 18px 22px; background: transparent; box-shadow: none; border: none;">
           <!-- 1. PANE WORKFLOWS -->
           <div id="pane-dash-workflows" class="dash-pane active">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 10px;">
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">WORKFLOW / TAREA</span>
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">ESTADO</span>
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary); text-align: right;">ACCIÓN</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 10px;">
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">WORKFLOW / TAREA</span>
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">ESTADO CANÓNICO</span>
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase; text-align: right;">ACCIÓN</span>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Tarea 1: Traducción -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div class="task-icon-circle">STR</div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="task-icon-circle" style="background:#e0f2fe; color:#0284c7; font-weight:800;">STR</div>
                   <div>
-                    <div style="font-weight: 700; font-size: 0.84rem;">Diccionario de Traducción Rebellion</div>
-                    <div style="font-size: 0.72rem; color: var(--text-muted);">Sins of a Solar Empire UTF-8 + BOM</div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Diccionario de Traducción Rebellion</div>
+                    <div style="font-size: 0.72rem; color: #64748b;">Localizations/es/String/English.str (UTF-8 BOM)</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill" id="dash-str-badge">Sin archivo</span></div>
+                <div><span class="metric-badge-pill" id="dash-str-badge">7.828 Cadenas (0 Errores)</span></div>
                 <button class="btn-reagle" onclick="NexusUI.switchTab('tab-translation');">Abrir Editor .str →</button>
               </div>
 
+              <!-- Tarea 2: VFS Mods -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div class="task-icon-circle" style="color: #2563eb;">VFS</div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="task-icon-circle" style="background:#dbeafe; color:#2563eb; font-weight:800;">VFS</div>
                   <div>
-                    <div style="font-weight: 700; font-size: 0.84rem;">Gestor de Mods y Prioridades VFS</div>
-                    <div style="font-size: 0.72rem; color: var(--text-muted);">EnabledMods.txt jerarquía en cascada</div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Gestor de Mods y Prioridades VFS</div>
+                    <div style="font-size: 0.72rem; color: #64748b;">EnabledMods.txt (Directorio Mods-Rebellion v1.85)</div>
                   </div>
                 </div>
-                <div><span class="metric-badge-pill" id="dash-vfs-badge">3 Mods Activos</span></div>
+                <div><span class="metric-badge-pill neutral" id="dash-vfs-badge">0 Mods Activos (Vanilla)</span></div>
                 <button class="btn-reagle" onclick="NexusUI.switchTab('tab-mods');">Gestionar Mods →</button>
               </div>
 
+              <!-- Tarea 3: ConvertData CLI -->
               <div class="workflow-task-item">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div class="task-icon-circle" style="color: #0891b2;">BIN</div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="task-icon-circle" style="background:#e0e7ff; color:#4f46e5; font-weight:800;">BIN</div>
                   <div>
-                    <div style="font-weight: 700; font-size: 0.84rem;">ConvertData CLI Native Engine</div>
-                    <div style="font-size: 0.72rem; color: var(--text-muted);">DirectX binario a texto legible</div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">ConvertData CLI Native Engine</div>
+                    <div style="font-size: 0.72rem; color: #64748b;">Conversor bidireccional binario DirectX / texto plano</div>
                   </div>
                 </div>
                 <div><span class="metric-badge-pill">DirectX 9 OK</span></div>
                 <button class="btn-reagle" onclick="NexusUI.switchTab('tab-convert');">Conversor CLI →</button>
               </div>
+
+              <!-- Tarea 4: GameInfo Entities -->
+              <div class="workflow-task-item">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="task-icon-circle" style="background:#fef3c7; color:#d97706; font-weight:800;">ENT</div>
+                  <div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Catálogo de Flota GameInfo</div>
+                    <div style="font-size: 0.72rem; color: #64748b;">Archivos .entity oficiales de Rebellion</div>
+                  </div>
+                </div>
+                <div><span class="metric-badge-pill" id="dash-wf-entities-badge">1.872 Archivos .entity</span></div>
+                <button class="btn-reagle" onclick="NexusUI.switchTab('tab-entities');">Explorar Flota →</button>
+              </div>
+
+              <!-- Tarea 5: Galaxy Forge -->
+              <div class="workflow-task-item">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="task-icon-circle" style="background:#fce7f3; color:#db2777; font-weight:800;">GAL</div>
+                  <div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a;">Galaxy Forge Companion</div>
+                    <div style="font-size: 0.72rem; color: #64748b;">Modelador de topologías estelares y grafos conexos</div>
+                  </div>
+                </div>
+                <div><span class="metric-badge-pill" id="dash-wf-galaxy-badge">126 Mapas Conexos</span></div>
+                <button class="btn-reagle" onclick="NexusUI.switchTab('tab-galaxy');">Ver Mapas →</button>
+              </div>
             </div>
           </div>
 
-          <!-- 2. PANE PERMISSIONS -->
+          <!-- 2. PANE PERMISSIONS (DINÁMICO Y VERIFICADO FÍSICAMENTE) -->
           <div id="pane-dash-permissions" class="dash-pane" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 10px;">
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">RECURSO / SUBSISTEMA</span>
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">PERMISOS</span>
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary); text-align: right;">ESTADO</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 10px;">
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">RECURSO / SUBSISTEMA</span>
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">PERMISOS DISCO</span>
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase; text-align: right;">ESTADO</span>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-              <div class="workflow-task-item">
-                <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">Mods-Rebellion v1.85 / Directorio VFS</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Escritura no destructiva y respaldo .bak</div>
-                </div>
-                <div><span class="sidebar-pill-badge" style="background: #e2e8f0;">READ / WRITE</span></div>
-                <div><span class="metric-badge-pill">✓ Concedido</span></div>
-              </div>
-              <div class="workflow-task-item">
-                <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">Motor ConvertData.exe (DirectX 9 CLI)</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Binario nativo y ejecución asíncrona</div>
-                </div>
-                <div><span class="sidebar-pill-badge" style="background: #e2e8f0;">EXECUTE</span></div>
-                <div><span class="metric-badge-pill">✓ Autorizado</span></div>
-              </div>
-              <div class="workflow-task-item">
-                <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">Memoria LAA (Large Address Aware 32-bit)</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Límite virtual 3.250 MB para evitar crash</div>
-                </div>
-                <div><span class="sidebar-pill-badge" style="background: #e2e8f0;">SYSTEM ALLOC</span></div>
-                <div><span class="metric-badge-pill">✓ Monitor Activo</span></div>
-              </div>
+            <div id="dash-permissions-list" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Renderizado dinámico desde /api/system/permissions -->
             </div>
           </div>
 
-          <!-- 3. PANE EXECUTIONS (TELEMETRÍA REAL EN TIEMPO DE EJECUCIÓN) -->
+          <!-- 3. PANE EXECUTIONS (HISTORIAL PERSISTIDO EN SQLITE + LOCALSTORAGE) -->
           <div id="pane-dash-executions" class="dash-pane" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 10px;">
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">REGISTRO DE EJECUCIÓN</span>
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary);">HORA</span>
-              <span style="font-weight: 700; font-size: 0.86rem; color: var(--text-secondary); text-align: right;">RESULTADO</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 10px;">
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">REGISTRO DE EJECUCIÓN</span>
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase;">FECHA / HORA</span>
+              <span style="font-weight: 700; font-size: 0.76rem; color: #64748b; letter-spacing: 0.05em; text-transform: uppercase; text-align: right;">RESULTADO</span>
             </div>
-            <div id="dash-executions-list" style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-              <div class="workflow-task-item">
-                <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">[SYS] Inicialización de Arquitectura Modular</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">Carga reactiva de 7 módulos sin memory leaks</div>
-                </div>
-                <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">BOOT</div>
-                <div><span class="metric-badge-pill">✓ Certificado</span></div>
-              </div>
-              <div class="workflow-task-item">
-                <div>
-                  <div style="font-weight: 700; font-size: 0.84rem;">[VFS] Auditoría de Cascada EnabledMods.txt</div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">3 mods activos verificados con P999 en la cima</div>
-                </div>
-                <div style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-secondary);">1.865 MB</div>
-                <div><span class="metric-badge-pill">✓ Aplicado</span></div>
-              </div>
+            <div id="dash-executions-list" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Renderizado reactivo persistido -->
             </div>
           </div>
         </div>
