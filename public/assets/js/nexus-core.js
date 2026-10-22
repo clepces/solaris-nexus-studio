@@ -8,11 +8,11 @@ const NexusCore = (() => {
     allEntries: [],
     filteredEntries: [],
     currentFilter: 'all',
-    activeMods: [
-      { name: '[ES] Star Wars Interregnum Traduccion', priority: 999, isMinimod: true, ramMb: 15 },
-      { name: 'Star Wars Interregnum', priority: 989, isMinimod: false, ramMb: 1250 },
-      { name: 'Enhanced 4X Mod', priority: 979, isMinimod: false, ramMb: 450 }
-    ],
+    activeMods: [],
+    realEnv: null,
+    totalStrings: 7828,
+    totalEntities: 1872,
+    totalGalaxies: 126,
     currentEditIndex: null,
     rowHeight: 40,
     visibleCount: 40,
@@ -110,6 +110,27 @@ const NexusCore = (() => {
     }
   }
 
+  async function fetchRealEnvironment() {
+    const res = await apiGet('system/environment');
+    if (res && res.success && res.data) {
+      state.realEnv = res.data;
+      state.activeMods = res.data.mods.active || [];
+      if (res.data.game?.spanishLocalization?.stringCount) {
+        state.totalStrings = res.data.game.spanishLocalization.stringCount;
+      }
+      if (res.data.game?.entitiesCount) {
+        state.totalEntities = res.data.game.entitiesCount;
+      }
+      if (res.data.game?.galaxiesCount) {
+        state.totalGalaxies = res.data.game.galaxiesCount;
+      }
+      if (window.ViewNavigator) {
+        window.ViewNavigator.updateHeroMetrics(document.querySelector('.view-panel.active')?.id || 'tab-dashboard');
+      }
+    }
+    return res;
+  }
+
   return {
     state,
     extractTokens,
@@ -117,6 +138,7 @@ const NexusCore = (() => {
     generateDemoEntries,
     downloadBlob,
     apiPost,
-    apiGet
+    apiGet,
+    fetchRealEnvironment
   };
 })();

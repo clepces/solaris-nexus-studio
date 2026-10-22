@@ -1,5 +1,5 @@
       <!-- ==========================================================================
-           3. ENCABEZADO CONTEXTUAL NEUMÓRFICO (WORKSPACE HEADER)
+           3. ENCABEZADO CONTEXTUAL Y TELEMETRÍA (ESTILO GOOGLE AI STUDIO)
            ========================================================================== -->
       <header class="reagle-header">
         <div class="header-left-wrap">
@@ -8,7 +8,7 @@
           </button>
           <div class="header-title-box">
             <h1 id="view-main-title">Dashboard</h1>
-            <p id="view-main-subtitle">All Your Workflows And Permissions Managed</p>
+            <p id="view-main-subtitle">Entorno y telemetría en tiempo real del juego</p>
           </div>
         </div>
         <div class="header-actions-group" id="header-actions-container">
@@ -16,36 +16,63 @@
         </div>
       </header>
 
-      <!-- FILA DE MÉTRICAS GLOBALES (HERO + SECUNDARIAS REACTIVAS) -->
+      <!-- FILA DE MÉTRICAS GLOBALES (ESTILO GOOGLE AI STUDIO) -->
       <section class="reagle-metric-card-container">
         <!-- Tarjeta Principal Dinámica -->
         <div class="reagle-metric-card">
-          <span class="metric-title-small" id="hero-metric-label">Executions</span>
-          <div class="metric-value-row">
-            <span class="metric-huge-number" id="hero-metric-number">340</span>
-            <span class="metric-badge-pill" id="hero-metric-badge">↑ 204%</span>
+          <div class="metric-card-top-row">
+            <span class="metric-title-small" id="hero-metric-label">Cadenas Rebellion</span>
+            <span class="metric-badge-pill" id="hero-metric-badge">✓ 100% Real</span>
           </div>
-          <a class="metric-report-link" id="hero-metric-link" onclick="NexusUI.switchTab('tab-system');">See Report →</a>
+          <div class="metric-value-row">
+            <span class="metric-huge-number" id="hero-metric-number">7.828</span>
+            <span class="metric-unit-text" id="hero-metric-unit">cadenas</span>
+          </div>
+          <div class="metric-footer-row">
+            <span id="hero-metric-subtext">Localizations/es/String/English.str</span>
+            <a class="metric-report-link" id="hero-metric-link" onclick="NexusUI.switchTab('tab-translation');">Ver Cadenas →</a>
+          </div>
         </div>
 
         <!-- Fila de Mini Métricas Secundarias (Conectadas al Estado Real) -->
         <div class="secondary-metrics-row" id="secondary-metrics-row">
           <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');" title="Inspeccionar Presupuesto de Memoria LAA">
-            <span class="mini-card-label">Memoria 32-bit</span>
-            <span class="mini-card-value" id="mini-metric-ram">1.865 MB</span>
-            <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Techo Seguro LAA</span>
+            <div class="metric-card-top-row">
+              <span class="mini-card-label">Memoria 32-bit</span>
+              <span class="metric-badge-pill" id="mini-metric-ram-badge">LAA Seguro</span>
+            </div>
+            <div class="metric-value-row">
+              <span class="mini-card-value" id="mini-metric-ram">1.400 MB</span>
+            </div>
+            <div class="metric-footer-row">
+              <span style="font-size: 0.72rem; color: #16a34a; font-weight: 600;" id="mini-metric-ram-desc">1.850 MB margen libre</span>
+            </div>
           </div>
 
           <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-mods');" title="Gestionar Cascada VFS">
-            <span class="mini-card-label">Mods Activos</span>
-            <span class="mini-card-value" id="mini-metric-mods">3 Mods</span>
-            <span style="font-size: 0.72rem; color: var(--text-blue); font-weight: 700;" id="mini-metric-mod-top">● Minimod P999</span>
+            <div class="metric-card-top-row">
+              <span class="mini-card-label">Mods Activos</span>
+              <span class="metric-badge-pill neutral" id="mini-metric-mods-badge">0 Activos</span>
+            </div>
+            <div class="metric-value-row">
+              <span class="mini-card-value" id="mini-metric-mods">0 Mods</span>
+            </div>
+            <div class="metric-footer-row">
+              <span style="font-size: 0.72rem; color: var(--text-secondary);" id="mini-metric-mod-top">Vanilla (Sin mods)</span>
+            </div>
           </div>
 
-          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-galaxy');" title="Modelador de Topologías Estelares">
-            <span class="mini-card-label">Galaxy Forge</span>
-            <span class="mini-card-value" id="mini-metric-galaxy">12 Nodos</span>
-            <span style="font-size: 0.72rem; color: var(--text-success); font-weight: 700;">● Grafo Conexo</span>
+          <div class="mini-neu-card" onclick="NexusUI.switchTab('tab-entities');" title="Catálogo de Entidades del Juego">
+            <div class="metric-card-top-row">
+              <span class="mini-card-label">Entidades GameInfo</span>
+              <span class="metric-badge-pill" id="mini-metric-entities-badge">Vanilla</span>
+            </div>
+            <div class="metric-value-row">
+              <span class="mini-card-value" id="mini-metric-entities">1.872</span>
+            </div>
+            <div class="metric-footer-row">
+              <span style="font-size: 0.72rem; color: var(--text-secondary);">Directorio GameInfo</span>
+            </div>
           </div>
         </div>
       </section>

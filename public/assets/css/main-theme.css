@@ -687,75 +687,115 @@ body {
   align-items: stretch;
   width: 100%;
   max-width: 100%;
-  flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .reagle-metric-card {
-  background: var(--neu-card-bg);
-  box-shadow: 8px 8px 18px #bcc1cb, -8px -8px 18px #ffffff;
-  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.02);
+  border-radius: 14px;
   padding: 14px 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  gap: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   position: relative;
-  width: 250px;
-  min-width: 220px;
-  flex-shrink: 0;
+  min-width: 280px;
+  flex: 1.2;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reagle-metric-card:hover {
+  border-color: #1a73e8;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.12);
+}
+
+.metric-card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 }
 
 .metric-title-small {
-  font-size: 0.76rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  color: var(--text-secondary);
+  color: #5f6368;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .metric-value-row {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .metric-huge-number {
-  font-size: 2.5rem;
+  font-size: 2.1rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #1e293b;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
+}
+
+.metric-unit-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #64748b;
 }
 
 .metric-badge-pill {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  background: var(--badge-green-bg);
-  color: var(--badge-green-text);
-  padding: 3px 8px;
-  border-radius: 12px;
+  background: #e6f4ea;
+  color: #137333;
+  padding: 2px 8px;
+  border-radius: 9999px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(19, 115, 51, 0.15);
   white-space: nowrap;
 }
 
 .metric-badge-pill.neutral {
-  background: #e2e8f0;
-  color: var(--text-secondary);
+  background: #f1f3f4;
+  color: #5f6368;
+  border-color: #dadce0;
+}
+
+.metric-badge-pill.warning {
+  background: #fef7e0;
+  color: #b06000;
+  border-color: rgba(176, 96, 0, 0.15);
+}
+
+.metric-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 8px;
+  font-size: 0.72rem;
+  color: #64748b;
+  margin-top: auto;
 }
 
 .metric-report-link {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  color: var(--text-blue);
+  color: #1a73e8;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin-top: 2px;
   cursor: pointer;
   transition: transform 0.15s ease;
 }
@@ -763,41 +803,44 @@ body {
 .metric-report-link:hover {
   transform: translateX(3px);
   text-decoration: underline;
+  color: #1557b0;
 }
 
-/* Mini métricas secundarias en fila */
+/* Mini métricas secundarias en fila (Google AI Studio aesthetic) */
 .secondary-metrics-row {
   display: flex;
   gap: 12px;
-  flex: 1;
+  flex: 2;
   min-width: 0;
+  flex-wrap: wrap;
 }
 
 .mini-neu-card {
-  background: var(--neu-card-bg);
-  box-shadow: 6px 6px 14px #bcc1cb, -6px -6px 14px #ffffff;
-  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
   padding: 12px 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  gap: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   cursor: pointer;
   flex: 1;
-  min-width: 0;
+  min-width: 160px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mini-neu-card:hover {
   transform: translateY(-2px);
-  box-shadow: 8px 8px 18px #bcc1cb, -8px -8px 18px #ffffff;
+  border-color: #1a73e8;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.12);
 }
 
 .mini-card-label {
-  font-size: 0.70rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  color: var(--text-secondary);
+  color: #5f6368;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -806,9 +849,9 @@ body {
 }
 
 .mini-card-value {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #1e293b;
   letter-spacing: -0.02em;
   white-space: nowrap;
 }

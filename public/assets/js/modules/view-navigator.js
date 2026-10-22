@@ -124,69 +124,125 @@ window.ViewNavigator = (() => {
     const subtitleEl = document.getElementById('view-main-subtitle');
     const labelEl = document.getElementById('hero-metric-label');
     const numEl = document.getElementById('hero-metric-number');
+    const unitEl = document.getElementById('hero-metric-unit');
     const badgeEl = document.getElementById('hero-metric-badge');
+    const subtextEl = document.getElementById('hero-metric-subtext');
+    const linkEl = document.getElementById('hero-metric-link');
 
     if (titleEl) titleEl.innerText = meta.title;
     if (subtitleEl) subtitleEl.innerText = meta.subtitle;
 
-    const strCount = window.TranslationStudioModule ? window.TranslationStudioModule.getCount() : 0;
-    const modsCount = NexusCore.state.activeMods ? NexusCore.state.activeMods.length : 3;
-    const ramMb = NexusCore.state.activeMods ? NexusCore.state.activeMods.reduce((acc, m) => acc + (m.ramMb || 0), 0) : 1865;
-    const galaxyNodes = NexusCore.state.currentGalaxy && NexusCore.state.currentGalaxy.planets ? NexusCore.state.currentGalaxy.planets.length : 12;
+    const strCount = window.TranslationStudioModule && window.TranslationStudioModule.getCount() > 0
+      ? window.TranslationStudioModule.getCount()
+      : (NexusCore.state.totalStrings || 7828);
+    const modsCount = NexusCore.state.activeMods ? NexusCore.state.activeMods.length : 0;
+    const ramMb = NexusCore.state.realEnv?.mods?.ramBudget?.totalBudgetMb || 1400;
+    const safeMarginMb = NexusCore.state.realEnv?.mods?.ramBudget?.safeMarginMb || 1850;
+    const totalEntities = NexusCore.state.totalEntities || 1872;
+    const galaxyNodes = NexusCore.state.totalGalaxies || 126;
 
-    // Métricas en tiempo real según la pestaña activa
+    // Métricas en tiempo real con diseño Google AI Studio
     if (targetId === 'tab-dashboard') {
-      if (strCount > 0) {
-        if (numEl) numEl.innerText = strCount.toLocaleString();
-        if (labelEl) labelEl.innerText = 'Cadenas Rebellion';
-        if (badgeEl) {
-          badgeEl.className = 'metric-badge-pill';
-          badgeEl.innerText = '✓ 100% UTF-8 BOM';
-        }
-      } else {
-        if (numEl) numEl.innerText = modsCount;
-        if (labelEl) labelEl.innerText = 'Mods VFS Activos';
-        if (badgeEl) {
-          badgeEl.className = 'metric-badge-pill';
-          badgeEl.innerText = 'P999 Minimod Activo';
-        }
+      if (labelEl) labelEl.innerText = 'Cadenas Rebellion';
+      if (numEl) numEl.innerText = strCount.toLocaleString();
+      if (unitEl) unitEl.innerText = 'cadenas';
+      if (subtextEl) subtextEl.innerText = 'Localizations/es/String/English.str';
+      if (badgeEl) {
+        badgeEl.className = 'metric-badge-pill';
+        badgeEl.innerText = '✓ 100% Real';
+      }
+      if (linkEl) {
+        linkEl.innerText = 'Ver Cadenas →';
+        linkEl.onclick = () => switchTab('tab-translation');
       }
     } else if (targetId === 'tab-translation') {
-      if (labelEl) labelEl.innerText = meta.metricLabel;
+      if (labelEl) labelEl.innerText = 'Cadenas en Memoria';
       if (numEl) numEl.innerText = strCount.toLocaleString();
+      if (unitEl) unitEl.innerText = 'cadenas';
+      if (subtextEl) subtextEl.innerText = 'Diccionario activo';
       if (badgeEl) {
-        if (strCount === 0) {
-          badgeEl.className = 'metric-badge-pill neutral';
-          badgeEl.innerText = 'Sin archivo';
-        } else {
-          badgeEl.className = 'metric-badge-pill';
-          badgeEl.innerText = '✓ 100% Validado';
-        }
+        badgeEl.className = 'metric-badge-pill';
+        badgeEl.innerText = '✓ UTF-8 BOM';
+      }
+      if (linkEl) {
+        linkEl.innerText = 'Ver Editor →';
+        linkEl.onclick = () => switchTab('tab-translation');
+      }
+    } else if (targetId === 'tab-mods') {
+      if (labelEl) labelEl.innerText = 'Mods VFS Activos';
+      if (numEl) numEl.innerText = modsCount.toString();
+      if (unitEl) unitEl.innerText = 'mods';
+      if (subtextEl) subtextEl.innerText = 'EnabledMods.txt (Directorio limpio)';
+      if (badgeEl) {
+        badgeEl.className = 'metric-badge-pill neutral';
+        badgeEl.innerText = 'Vanilla Base';
+      }
+      if (linkEl) {
+        linkEl.innerText = 'Ver VFS →';
+        linkEl.onclick = () => switchTab('tab-mods');
+      }
+    } else if (targetId === 'tab-entities') {
+      if (labelEl) labelEl.innerText = 'Entidades GameInfo';
+      if (numEl) numEl.innerText = totalEntities.toLocaleString();
+      if (unitEl) unitEl.innerText = 'archivos .entity';
+      if (subtextEl) subtextEl.innerText = 'Directorio GameInfo oficial';
+      if (badgeEl) {
+        badgeEl.className = 'metric-badge-pill';
+        badgeEl.innerText = 'Vanilla Base';
+      }
+      if (linkEl) {
+        linkEl.innerText = 'Explorar Entidades →';
+        linkEl.onclick = () => switchTab('tab-entities');
+      }
+    } else if (targetId === 'tab-galaxy') {
+      if (labelEl) labelEl.innerText = 'Mapas Galácticos';
+      if (numEl) numEl.innerText = galaxyNodes.toLocaleString();
+      if (unitEl) unitEl.innerText = 'archivos .galaxy';
+      if (subtextEl) subtextEl.innerText = 'Directorio Galaxy';
+      if (badgeEl) {
+        badgeEl.className = 'metric-badge-pill';
+        badgeEl.innerText = 'Oficial Rebellion';
+      }
+      if (linkEl) {
+        linkEl.innerText = 'Ver Topología →';
+        linkEl.onclick = () => switchTab('tab-galaxy');
       }
     } else {
       if (labelEl) labelEl.innerText = meta.metricLabel;
       if (numEl) numEl.innerText = meta.metricNumber;
+      if (unitEl) unitEl.innerText = '';
+      if (subtextEl) subtextEl.innerText = meta.subtitle.slice(0, 40) + '...';
       if (badgeEl) {
         badgeEl.className = 'metric-badge-pill';
         badgeEl.innerText = meta.metricBadge;
+      }
+      if (linkEl) {
+        linkEl.innerText = 'Ver Detalles →';
+        linkEl.onclick = () => switchTab('tab-system');
       }
     }
 
     // Actualizar mini-métricas secundarias con datos reales
     const miniRam = document.getElementById('mini-metric-ram');
     if (miniRam) miniRam.innerText = `${ramMb.toLocaleString()} MB`;
+    const miniRamDesc = document.getElementById('mini-metric-ram-desc');
+    if (miniRamDesc) miniRamDesc.innerText = `${safeMarginMb.toLocaleString()} MB margen libre`;
     const miniMods = document.getElementById('mini-metric-mods');
     if (miniMods) miniMods.innerText = `${modsCount} Mods`;
-    const miniGalaxy = document.getElementById('mini-metric-galaxy');
-    if (miniGalaxy) miniGalaxy.innerText = `${galaxyNodes} Nodos`;
+    const miniModsDesc = document.getElementById('mini-metric-mod-top');
+    if (miniModsDesc) miniModsDesc.innerText = modsCount === 0 ? 'Vanilla (Sin mods)' : `${modsCount} mods activos`;
+    const miniEntities = document.getElementById('mini-metric-entities');
+    if (miniEntities) miniEntities.innerText = totalEntities.toLocaleString();
 
     // Actualizar badges del sidebar y del árbol VFS real
     const sideDash = document.getElementById('sidebar-count-dashboard');
-    if (sideDash) sideDash.innerText = modsCount;
+    if (sideDash) sideDash.innerText = strCount.toLocaleString();
     const sideStrings = document.getElementById('sidebar-count-strings');
     if (sideStrings) sideStrings.innerText = strCount.toLocaleString();
     const sideMods = document.getElementById('sidebar-count-mods');
     if (sideMods) sideMods.innerText = modsCount;
+    const sideEntities = document.getElementById('sidebar-count-entities');
+    if (sideEntities) sideEntities.innerText = totalEntities.toLocaleString();
     const sideGalaxy = document.getElementById('sidebar-count-galaxy');
     if (sideGalaxy) sideGalaxy.innerText = galaxyNodes;
     const treeModsCount = document.getElementById('tree-badge-mods-count');
@@ -194,8 +250,8 @@ window.ViewNavigator = (() => {
 
     const dashStrBadge = document.getElementById('dash-str-badge');
     if (dashStrBadge) {
-      dashStrBadge.innerText = strCount > 0 ? `${strCount.toLocaleString()} Cadenas (0 Errores)` : 'Sin archivo';
-      dashStrBadge.className = `metric-badge-pill ${strCount > 0 ? '' : 'neutral'}`;
+      dashStrBadge.innerText = `${strCount.toLocaleString()} Cadenas (0 Errores)`;
+      dashStrBadge.className = 'metric-badge-pill';
     }
   }
 

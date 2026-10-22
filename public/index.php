@@ -72,6 +72,9 @@ try {
     if (str_ends_with($uri, '/api/system/health') && $method === 'GET') {
         $controller = new SystemController(null, $logger);
         $response = $controller->health($config);
+    } elseif (str_ends_with($uri, '/api/system/environment') && $method === 'GET') {
+        $controller = new SystemController(null, $logger);
+        $response = $controller->realEnvironment($config);
     } elseif (str_ends_with($uri, '/api/strings/parse') && $method === 'POST') {
         $controller = new StringController(null, null, $logger);
         $response = $controller->parse($payload);

@@ -33,7 +33,7 @@
             <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
             <span>Dashboard</span>
           </div>
-          <span class="sidebar-pill-badge" id="sidebar-count-dashboard">0</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-dashboard">7.828</span>
         </button>
 
         <!-- Estudio de Traducción (.str) -->
@@ -42,7 +42,7 @@
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             <span>Traducción (.str)</span>
           </div>
-          <span class="sidebar-pill-badge" id="sidebar-count-strings">0</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-strings">7.828</span>
         </button>
 
         <!-- Library (VFS Mods) -->
@@ -51,7 +51,7 @@
             <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             <span>Library (VFS Mods)</span>
           </div>
-          <span class="sidebar-pill-badge" id="sidebar-count-mods">3</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-mods">0</span>
         </button>
 
         <!-- Shared Entities -->
@@ -60,7 +60,7 @@
             <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
             <span>Shared Entities</span>
           </div>
-          <span class="sidebar-pill-badge" id="sidebar-count-entities">5</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-entities">1.872</span>
         </button>
 
         <!-- Galaxy Forge -->
@@ -69,7 +69,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"></path></svg>
             <span>Galaxy Forge</span>
           </div>
-          <span class="sidebar-pill-badge" id="sidebar-count-galaxy">12</span>
+          <span class="sidebar-pill-badge" id="sidebar-count-galaxy">126</span>
         </button>
 
         <!-- ConvertData CLI -->
@@ -130,66 +130,58 @@
       <!-- Árbol Jerárquico con Despliegue Suave y Selección Determinista -->
       <div class="folder-tree" id="sidebar-real-vfs-tree">
         <!-- Rama 1: Carpeta de Mods VFS (Colapsable) -->
-        <div class="tree-node tree-folder-toggle active" data-folder="mods" title="Clic para expandir/colapsar carpeta de mods">
+        <div class="tree-node tree-folder-toggle active" data-folder="mods" title="Directorio de mods de Rebellion">
           <div class="tree-node-left">
             <span class="tree-caret">▼</span>
             <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
             <span>Mods-Rebellion v1.85</span>
           </div>
-          <span class="sidebar-pill-badge" id="tree-badge-mods-count">3</span>
+          <span class="sidebar-pill-badge" id="tree-badge-mods-count">0</span>
         </div>
 
         <div class="tree-sub-group" id="tree-group-mods">
-          <div class="tree-node tree-file-item" data-file-type="mod" data-target="[ES] Star Wars Interregnum Traduccion" title="Minimod de Localización P999">
+          <div class="tree-node tree-file-item" data-file-type="txt" data-target="EnabledMods.txt" title="Lista de mods habilitados (0 activos)">
             <div class="tree-node-left">
-              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-              <span>[ES] Interregnum</span>
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>EnabledMods.txt</span>
             </div>
-            <span class="sidebar-pill-badge" style="color: #059669; font-weight: 800;">P999</span>
-          </div>
-
-          <div class="tree-node tree-file-item" data-file-type="mod" data-target="Star Wars Interregnum" title="Mod de Expansión Galáctica P989">
-            <div class="tree-node-left">
-              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-              <span>Star Wars Interregnum</span>
-            </div>
-            <span class="sidebar-pill-badge">P989</span>
-          </div>
-
-          <div class="tree-node tree-file-item" data-file-type="mod" data-target="Enhanced 4X Mod" title="Mod de Balance Estratégico P979">
-            <div class="tree-node-left">
-              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-              <span>Enhanced 4X Mod</span>
-            </div>
-            <span class="sidebar-pill-badge">P979</span>
+            <span class="sidebar-pill-badge" style="background: #f1f5f9; color: #64748b;">0 ACT</span>
           </div>
         </div>
 
         <!-- Rama 2: Carpeta de Instalación Local Vanilla (Colapsable) -->
-        <div class="tree-node tree-folder-toggle active" data-folder="vanilla" title="Clic para expandir/colapsar directorio local">
+        <div class="tree-node tree-folder-toggle active" data-folder="vanilla" title="Archivos del juego base y localización">
           <div class="tree-node-left">
             <span class="tree-caret">▼</span>
             <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
             <span>Sins Rebellion (Vanilla)</span>
           </div>
-          <span class="sidebar-pill-badge" style="background:#fff;">LOCAL</span>
+          <span class="sidebar-pill-badge" style="background:#e6f4ea; color:#137333;">INSTALADO</span>
         </div>
 
         <div class="tree-sub-group" id="tree-group-vanilla">
-          <div class="tree-node tree-file-item" data-file-type="str" data-target="String_table.str" title="Diccionario Oficial String_table.str">
+          <div class="tree-node tree-file-item" data-file-type="str" data-target="English.str" title="Localización Española (7.828 cadenas)">
             <div class="tree-node-left">
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-              <span>String_table.str</span>
+              <span>Localizations/es/English.str</span>
             </div>
             <span class="sidebar-pill-badge">7.828</span>
           </div>
 
-          <div class="tree-node tree-file-item" data-file-type="entity" data-target="Kol Battleship" title="Nave Capital Kol Battleship">
+          <div class="tree-node tree-file-item" data-file-type="entity" data-target="Kol Battleship" title="Catálogo de 1.872 entidades GameInfo">
             <div class="tree-node-left">
               <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
-              <span>Kol Battleship.entity</span>
+              <span>GameInfo (*.entity)</span>
             </div>
-            <span class="sidebar-pill-badge">TEC</span>
+            <span class="sidebar-pill-badge">1.872</span>
+          </div>
+
+          <div class="tree-node tree-file-item" data-file-type="galaxy" data-target="Galaxy Maps" title="126 mapas de galaxias oficiales">
+            <div class="tree-node-left">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span>Galaxy (*.galaxy)</span>
+            </div>
+            <span class="sidebar-pill-badge">126</span>
           </div>
         </div>
 

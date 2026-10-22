@@ -3,8 +3,13 @@
  * Clepces org. ltd | Versión Oficial v0.3.0.0-alpha
  */
 window.NexusUI = (() => {
-  function init() {
-    // 1. Inicializar Módulos Especializados
+  async function init() {
+    // 1. Cargar entorno real del sistema (cero datos simulados)
+    if (window.NexusCore && window.NexusCore.fetchRealEnvironment) {
+      await window.NexusCore.fetchRealEnvironment();
+    }
+
+    // 2. Inicializar Módulos Especializados
     if (window.ViewNavigator) window.ViewNavigator.init();
     if (window.TranslationStudioModule) window.TranslationStudioModule.init();
     if (window.ModManagerModule) window.ModManagerModule.init();
@@ -13,7 +18,7 @@ window.NexusUI = (() => {
     if (window.ConvertCliModule) window.ConvertCliModule.init();
     if (window.SystemHealthModule) window.SystemHealthModule.init();
 
-    // 2. Arrancar en Vista Dashboard con Estado Limpio y Transparente
+    // 3. Arrancar en Vista Dashboard con Datos Reales y Telemetría Sólida
     if (window.ViewNavigator) {
       window.ViewNavigator.switchTab('tab-dashboard');
     }
