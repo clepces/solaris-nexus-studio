@@ -1,9 +1,9 @@
 # Estructura de Arquitectura y Árbol de Directorios Maestro - Solaris Nexus Studio (v0.4.1.0-alpha)
 
 ## 1. Principios de Aislamiento y Gobernanza de Código
-1. **Aislamiento Estricto de Fuentes:** Ningún archivo `.ts`, `.scss` o plantilla bruta de desarrollo debe existir dentro de la carpeta `public/`. Todo se compila mediante Vite y Sass desde `src/`.
-2. **Regla de Cero Monolitos:** Ningún script de lógica, controlador o módulo superará las 300 líneas de código. Toda responsabilidad debe segmentarse en servicios, controladores o componentes desacoplados.
-3. **Kebab-Case Obligatorio:** Todos los nombres de archivos y directorios nuevos deben seguir estrictamente la convención kebab-case en minúsculas.
+1. **Aislamiento Estricto de Fuentes:** Ningún archivo `.ts`, `.scss` o plantilla bruta de desarrollo reside en `public/`. Las plantillas maestras habitan exclusivamente en `src/frontend/templates/`.
+2. **Regla de Cero Monolitos:** Ningún script de lógica, controlador o módulo supera las 300 líneas de código. Toda responsabilidad está estrictamente desacoplada.
+3. **Kebab-Case Obligatorio:** Todos los nombres de archivos y directorios siguen la convención kebab-case en minúsculas.
 4. **Protocolo UUID Safety:** Toda respuesta de error en la API REST enmascara rutas físicas de disco y retorna un código `UUID v4` con registro en `storage/logs/`.
 5. **Patrón App Shell SPA:** La interfaz web opera cargando una única plantilla base en `public/index.php` con despacho desacoplado mediante el enrutador cliente `ViewNavigatorRouter`.
 
@@ -17,9 +17,9 @@ solaris-nexus-studio/
 ├── .env.example                                # [ACTIVO] Plantilla de variables obligatorias
 ├── .gitignore                                  # [ACTIVO] Exclusiones de Git (node_modules, vendor, dist, storage/logs)
 ├── composer.json                               # [ACTIVO] Autoloader PSR-4 y dependencias backend PHP
-├── package.json                                # [ACTIVO] Dependencias frontend, scripts de Vite y compilador SASS
+├── package.json                                # [ACTIVO] Dependencias frontend, scripts de compilación TS y SASS
 ├── tsconfig.json                               # [ACTIVO] Configuración estricta de TypeScript (Strict Mode, No-Any)
-├── vite.config.ts                              # [ACTIVO] Configuración central de Vite, bundler y alias (@/)
+├── vite.config.js                              # [ACTIVO] Configuración de empaquetado y alias (@/)
 ├── readme.md                                   # [ACTIVO] Documento maestro corporativo de la plataforma
 ├── game-engine-and-localization-audit.md       # [ACTIVO] Auditoría del motor IronEngine e ingeniería inversa
 │
@@ -46,21 +46,23 @@ solaris-nexus-studio/
 │       ├── agy_app.md
 │       ├── readme-dev.md
 │       ├── en/                                 # 9 especificaciones históricas en inglés
-│       └── es/                                 # 10 especificaciones históricas en español
+│       └── es/                                 # 9 especificaciones históricas en español
 │
 ├── src/                                        # [CÓDIGO FUENTE DE DESARROLLO PRINCIPAL]
 │   ├── backend/                                # [ACTIVO] Arquitectura MVC Limpia / Domain-Driven (PHP 8.2+)
-│   │   ├── controllers/                        # Controladores de la API REST
-│   │   │   ├── entity-controller.php           # Parser y API para naves, estructuras y armas (.entity)
-│   │   │   ├── galaxy-controller.php           # Parser y API topológica de galaxias (.galaxy / .scenario)
-│   │   │   ├── mod-controller.php              # API para gestión VFS, colisiones e inyección de minimods
-│   │   │   ├── string-controller.php           # API para diccionarios léxicos (.str / .json)
-│   │   │   └── system-controller.php           # Telemetría LAA, salud del entorno WAMP y permisos
+│   │   ├── controllers/                        # Controladores REST (<300 líneas cada uno)
+│   │   │   ├── entity-controller.php           # [85 líneas] API para entidades y naves (.entity)
+│   │   │   ├── galaxy-controller.php           # [64 líneas] API topológica de galaxias (.galaxy)
+│   │   │   ├── mod-controller.php              # [268 líneas] API para gestión VFS y colisiones
+│   │   │   ├── string-controller.php           # [81 líneas] API para diccionarios léxicos (.str)
+│   │   │   └── system-controller.php           # [140 líneas] Telemetría LAA, salud WAMP y permisos
 │   │   ├── middleware/                         # Capas intermedias de seguridad y validación
 │   │   │   ├── cors-middleware.php             # Cabeceras de control de acceso e integración local
 │   │   │   ├── error-handler-middleware.php    # Middleware UUID Safety (Cero Stack Traces expuestos)
 │   │   │   └── security-headers.php            # Sanitización de peticiones y protección XSS/CSRF
 │   │   ├── repositories/                       # Capa de Persistencia a Base de Datos (SQLite)
+│   │   │   ├── entity-catalog-repo.php         # Catálogo canónico de naves con datos reales
+│   │   │   ├── execution-repository.php        # Persistencia de auditorías y ejecuciones
 │   │   │   ├── mod-repository.php              # Persistencia de metadatos y perfiles de mods
 │   │   │   ├── project-repository.php          # Persistencia de proyectos de traducción
 │   │   │   └── translation-memory-repo.php     # Repositorio LRU de Memoria de Traducción (TM)
@@ -75,6 +77,7 @@ solaris-nexus-studio/
 │   │   │   ├── mod-orchestrator.php            # Resolutor de colisiones VFS en EnabledMods.txt
 │   │   │   ├── ram-profiler-service.php        # Predictor y monitor de memoria virtual 32-bit (LAA)
 │   │   │   ├── str-parser-service.php          # Parser bidireccional .str (TXT/BIN UTF-16LE BOM)
+│   │   │   ├── system-scanner-service.php      # Escáner de permisos y entorno físico del juego
 │   │   │   └── token-guard-service.php         # Blindaje algorítmico de variables protegidas {0}, {1}
 │   │   └── utils/                              # Utilidades de bajo nivel
 │   │       ├── byte-buffer-helper.php          # Manipulación de buffers binarios y BOM UTF-16LE
@@ -171,9 +174,9 @@ solaris-nexus-studio/
 ├── public/                                     # [DISTRIBUCIÓN PÚBLICA EN PRODUCCIÓN]
 │   ├── .htaccess                               # Reescritura de URL hacia index.php (Front Controller)
 │   ├── index.php                               # Punto de entrada HTTP y arranque del App Shell OOP (<100 líneas)
-│   └── assets/                                 # Artefactos compilados y estáticos puros (Cero .ts, cero .scss)
+│   └── assets/                                 # Artefactos compilados y módulos JS (<300 líneas cada uno)
 │       ├── css/
-│       │   ├── main-theme.css                  # CSS global compilado
+│       │   ├── main-theme.css                  # CSS global base neumórfico
 │       │   ├── datatable-virtual.css           # Grillas virtuales
 │       │   └── modules/                        # Estilos modulares auxiliares
 │       │       ├── animations.css              # Keyframes GPU
@@ -181,7 +184,24 @@ solaris-nexus-studio/
 │       │       ├── galaxy-forge.css            # Canvas galaxias
 │       │       ├── mods-manager.css            # Gestor de mods
 │       │       └── nexus-components.css        # Componentes UI
-│       ├── js/                                 # Scripts de runtime cliente
+│       ├── js/                                 # Scripts modulares y bundle empaquetado
+│       │   ├── bundle.js                       # Bundle compilado de TypeScript
+│       │   ├── nexus-core.js                   # Núcleo de estado
+│       │   ├── nexus-ui.js                     # Renderizador de toasts/modales
+│       │   └── modules/                        # Módulos desacoplados (<300 líneas)
+│       │       ├── contextual-actions.js       # [73 líneas] Botones de acción de cabecera
+│       │       ├── convert-cli.js              # [59 líneas] CLI ConvertData
+│       │       ├── dashboard-handler.js        # [242 líneas] Ejecuciones, paginación y búsqueda
+│       │       ├── entity-editor.js            # [355 líneas] Editor e inspector de naves
+│       │       ├── galaxy-forge.js             # [242 líneas] Topología galáctica
+│       │       ├── minimod-injector.js         # [80 líneas] Inyector quirúrgico P999
+│       │       ├── mod-manager.js              # [269 líneas] Gestor VFS y colisiones
+│       │       ├── nexus-components.js         # [215 líneas] Paginador y estados vacíos
+│       │       ├── platform-detector.js        # [65 líneas] Detección de plataformas y validación
+│       │       ├── sidebar-tree.js             # [101 líneas] Árbol de archivos VFS
+│       │       ├── system-health.js            # [55 líneas] Diagnóstico de salud
+│       │       ├── translation-studio.js       # [330 líneas] Editor de diccionarios .str
+│       │       └── view-navigator.js           # [297 líneas] Enrutador y gestor de layouts
 │       └── media/                              # Estructura multimedia organizada
 │           ├── avatars/                        # [.gitkeep]
 │           ├── banners/                        # [.gitkeep]
