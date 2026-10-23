@@ -3,6 +3,72 @@
    Empty States, Universal Pagination & Inputs (AIPA Enterprise v2.24.0)
    ========================================================================== */
 
+/* --- SUBTAB BARS & BUTTONS (MODULAR NAVIGATION) --- */
+.mod-subtab-bar {
+  display: flex;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.mod-subtab-btn,
+.str-subtab-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.mod-subtab-btn svg,
+.str-subtab-btn svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.mod-subtab-btn:hover,
+.str-subtab-btn:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.mod-subtab-btn.active,
+.str-subtab-btn.active {
+  color: #0f172a;
+  background: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.mod-subtab-pane,
+.str-subtab-pane {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mod-subtab-pane.active,
+.str-subtab-pane.active {
+  display: flex;
+  animation: paneFadeSlideIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* --- EMPTY STATES --- */
 .nexus-empty-state {
   display: flex;

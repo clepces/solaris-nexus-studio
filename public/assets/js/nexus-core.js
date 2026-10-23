@@ -114,7 +114,15 @@ const NexusCore = (() => {
     const res = await apiGet('system/environment');
     if (res && res.success && res.data) {
       state.realEnv = res.data;
-      state.activeMods = res.data.mods.active || [];
+      state.activeMods = (res.data.mods.activeDetailed && res.data.mods.activeDetailed.length > 0)
+        ? res.data.mods.activeDetailed
+        : (res.data.mods.active || []).map((name, i) => ({
+            name,
+            priority: 999 - (i * 10),
+            ramMb: 15,
+            isMinimod: name.startsWith('[ES]'),
+            state: 'OK'
+          }));
       if (res.data.game?.spanishLocalization?.stringCount) {
         state.totalStrings = res.data.game.spanishLocalization.stringCount;
       }

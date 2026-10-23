@@ -150,8 +150,66 @@ window.NexusComponents = (() => {
     }
   }
 
+  /**
+   * Componente Tab Carousel Horizontal
+   * Desplazamiento fluido, botones de navegación e integración wheel
+   */
+  class TabCarousel {
+    constructor(elementOrSelector) {
+      this.element = typeof elementOrSelector === 'string'
+        ? document.querySelector(elementOrSelector)
+        : elementOrSelector;
+      if (!this.element) return;
+      this.track = this.element.querySelector('.tabs-track') || this.element.querySelector('.reagle-segmented-tabs') || this.element;
+      this.prevBtn = this.element.querySelector('.carousel-nav-btn.prev');
+      this.nextBtn = this.element.querySelector('.carousel-nav-btn.next');
+      this.init();
+    }
+
+    init() {
+      if (this.prevBtn) {
+        this.prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.scroll(-160);
+        });
+      }
+      if (this.nextBtn) {
+        this.nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.scroll(160);
+        });
+      }
+      if (this.track) {
+        this.track.addEventListener('wheel', (e) => {
+          if (e.deltaY !== 0) {
+            e.preventDefault();
+            this.track.scrollLeft += e.deltaY;
+            this.updateArrows();
+          }
+        }, { passive: false });
+        this.track.addEventListener('scroll', () => this.updateArrows());
+      }
+      this.updateArrows();
+    }
+
+    scroll(offset) {
+      if (!this.track) return;
+      this.track.scrollBy({ left: offset, behavior: 'smooth' });
+      setTimeout(() => this.updateArrows(), 200);
+    }
+
+    updateArrows() {
+      if (!this.track) return;
+      const atStart = this.track.scrollLeft <= 2;
+      const atEnd = this.track.scrollLeft + this.track.clientWidth >= this.track.scrollWidth - 2;
+      if (this.prevBtn) this.prevBtn.disabled = atStart;
+      if (this.nextBtn) this.nextBtn.disabled = atEnd;
+    }
+  }
+
   return {
     renderEmptyState,
-    Pagination
+    Pagination,
+    TabCarousel
   };
 })();

@@ -1,0 +1,59 @@
+// =============================================================================
+// SOLARIS NEXUS STUDIO - SASS 7-1: COMPONENTS / INPUTS
+// Reagle Input & Search Bar Standardization
+// =============================================================================
+
+.reagle-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid $color-border-medium;
+  border-radius: $radius-sm;
+  color: $color-text-main;
+  font-size: 0.85rem;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &::placeholder {
+    color: $color-text-subtle;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px $color-primary-glow;
+  }
+}
+
+.reagle-search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 280px;
+
+  svg {
+    position: absolute;
+    left: 10px;
+    width: 15px;
+    height: 15px;
+    stroke: $color-text-muted;
+    stroke-width: 2;
+    fill: none;
+    pointer-events: none;
+  }
+
+  input {
+    width: 100%;
+    padding: 7px 12px 7px 32px;
+    background: #ffffff;
+    border: 1px solid $color-border-medium;
+    border-radius: $radius-full;
+    font-size: 0.82rem;
+    color: $color-text-main;
+    transition: all $transition-fast;
+
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px $color-primary-glow;
+      width: 320px;
+    }
+  }
+}

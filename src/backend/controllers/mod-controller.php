@@ -86,11 +86,42 @@ final class ModController
         $parsed = $this->orchestrator->parseEnabledMods($raw);
         $budget = $this->ramProfiler->calculateBudget($parsed['mods']);
 
+        $modsDir = dirname($enabledModsPath);
+        $modsDetailed = [];
+        $hasMissingDirs = false;
+
+        foreach ($parsed['mods'] as $modName) {
+            $fullDir = $modsDir . DIRECTORY_SEPARATOR . $modName;
+            $dirExists = is_dir($fullDir);
+            $hasContent = false;
+            if ($dirExists) {
+                $files = scandir($fullDir);
+                $hasContent = ($files !== false && count($files) > 2);
+            }
+
+            $state = 'OK';
+            if (!$dirExists) {
+                $state = 'MISSING_DIRECTORY';
+                $hasMissingDirs = true;
+            } elseif (!$hasContent) {
+                $state = 'EMPTY_DIRECTORY';
+            }
+
+            $modsDetailed[] = [
+                'name' => $modName,
+                'exists' => $dirExists,
+                'hasContent' => $hasContent,
+                'state' => $state
+            ];
+        }
+
         return [
             'exists' => true,
             'archiveVersion' => $parsed['archiveVersion'],
             'activeCount' => $parsed['actualCount'],
             'mods' => $parsed['mods'],
+            'modsDetailed' => $modsDetailed,
+            'hasMissingDirs' => $hasMissingDirs,
             'budget' => $budget,
         ];
     }

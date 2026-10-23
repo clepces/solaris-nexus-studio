@@ -1,0 +1,57 @@
+// =============================================================================
+// SOLARIS NEXUS STUDIO - SASS 7-1: COMPONENTS / TABS CAROUSEL
+// Horizontal Scrollable Segmented Tabs with Navigation Arrows
+// =============================================================================
+
+.nexus-tab-carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+
+  .carousel-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: $radius-sm;
+    background: #ffffff;
+    border: 1px solid $color-border-subtle;
+    color: $color-text-muted;
+    font-size: 1.1rem;
+    line-height: 1;
+    z-index: 2;
+    box-shadow: $shadow-sm;
+    transition: all $transition-fast;
+
+    &:hover:not(:disabled) {
+      background: $color-bg-base;
+      color: $color-text-main;
+      border-color: $color-border-medium;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    &.prev { margin-right: 6px; }
+    &.next { margin-left: 6px; }
+  }
+
+  .tabs-track {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; // Firefox
+    &::-webkit-scrollbar { display: none; } // Chrome/Safari
+
+    white-space: nowrap;
+    padding: 2px;
+  }
+}

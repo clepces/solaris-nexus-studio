@@ -70,10 +70,24 @@ window.ModManagerModule = (() => {
 
     state.activeMods.forEach((mod, idx) => {
       const card = document.createElement('div');
-      card.className = `mod-item-card ${mod.isMinimod ? 'is-minimod' : ''}`;
+      const isMissing = mod.state === 'MISSING_DIRECTORY';
+      const isEmpty = mod.state === 'EMPTY_DIRECTORY';
+      let statusWarning = '';
+      if (isMissing) {
+        statusWarning = `<div style="margin-top: 4px;"><span class="metric-badge-pill" style="background:#fef2f2; color:#ef4444; border:1px solid #fecaca; font-weight:700; font-size:0.68rem;">⚠️ ERROR CRÍTICO: CARPETA FANTASMA (NO EXISTE EN DISCO)</span></div>`;
+      } else if (isEmpty) {
+        statusWarning = `<div style="margin-top: 4px;"><span class="metric-badge-pill neutral" style="color:#d97706; border:1px solid #fde68a; font-size:0.68rem;">⚠️ AVISO: CARPETA VACÍA SIN ASSETS</span></div>`;
+      }
+
+      card.className = `mod-item-card ${mod.isMinimod ? 'is-minimod' : ''} ${isMissing ? 'mod-card-missing' : ''}`;
+      if (isMissing) {
+        card.style.borderColor = '#fca5a5';
+        card.style.background = '#fff5f5';
+      }
+
       card.innerHTML = `
         <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
-          <span class="mod-priority-badge">P${mod.priority}</span>
+          <span class="mod-priority-badge" style="${isMissing ? 'background:#ef4444; color:#fff;' : ''}">P${mod.priority}</span>
           <div style="min-width: 0;">
             <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
               ${mod.name}
@@ -81,12 +95,15 @@ window.ModManagerModule = (() => {
             <div style="font-size: 0.72rem; color: #64748b;">
               Consumo RAM: <strong>${mod.ramMb} MB</strong> ${mod.isMinimod ? '· <span style="color:#137333; font-weight:700;">[MINIMOD QUIRÚRGICO P999]</span>' : ''}
             </div>
+            ${statusWarning}
           </div>
         </div>
         <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
           <button class="btn-row-action btn-mod-up" data-idx="${idx}" title="Subir prioridad">▲ Subir</button>
           <button class="btn-row-action btn-mod-down" data-idx="${idx}" title="Bajar prioridad">▼ Bajar</button>
-          <button class="btn-row-action btn-mod-remove" data-idx="${idx}" style="color: #dc2626;" title="Desactivar">✕ Quitar</button>
+          <button class="btn-row-action btn-mod-remove" data-idx="${idx}" style="color: #dc2626;" title="${isMissing ? 'Purgar mod fantasma' : 'Desactivar'}">
+            ${isMissing ? '✕ Purgar Huérfano' : '✕ Quitar'}
+          </button>
         </div>
       `;
       container.appendChild(card);

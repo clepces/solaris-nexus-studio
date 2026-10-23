@@ -228,7 +228,7 @@ final class SystemController
             }
         }
 
-        // Inspección de carpetas de mods disponibles
+        // Inspección de carpetas de mods disponibles y verificación de integridad
         $availableMods = [];
         if ($modsExists) {
             $dirs = scandir($modsPath);
@@ -239,6 +239,39 @@ final class SystemController
                     }
                 }
             }
+        }
+
+        $activeModsDetailed = [];
+        $hasMissingDirs = false;
+        $priority = 999;
+        foreach ($activeMods as $modName) {
+            $fullDir = $modsPath . DIRECTORY_SEPARATOR . $modName;
+            $dirExists = is_dir($fullDir);
+            $hasContent = false;
+            if ($dirExists) {
+                $files = scandir($fullDir);
+                $hasContent = ($files !== false && count($files) > 2);
+            }
+
+            $state = 'OK';
+            if (!$dirExists) {
+                $state = 'MISSING_DIRECTORY';
+                $hasMissingDirs = true;
+            } elseif (!$hasContent) {
+                $state = 'EMPTY_DIRECTORY';
+            }
+
+            $isMinimod = str_starts_with($modName, '[ES]') || str_contains(strtolower($modName), 'traduccion');
+            $activeModsDetailed[] = [
+                'name' => $modName,
+                'exists' => $dirExists,
+                'hasContent' => $hasContent,
+                'state' => $state,
+                'isMinimod' => $isMinimod,
+                'priority' => $priority,
+                'ramMb' => $isMinimod ? 15 : 250
+            ];
+            $priority -= 10;
         }
 
         $ramProfiler = new \SolarisNexus\Backend\Services\RamProfilerService();
@@ -261,6 +294,8 @@ final class SystemController
                 'path' => $this->logger->sanitizePath($modsPath),
                 'activeCount' => count($activeMods),
                 'active' => $activeMods,
+                'activeDetailed' => $activeModsDetailed,
+                'hasMissingDirs' => $hasMissingDirs,
                 'availableCount' => count($availableMods),
                 'available' => $availableMods,
                 'ramBudget' => $ramBudget,

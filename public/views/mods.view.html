@@ -2,23 +2,27 @@
            VISTA 2: GESTOR DE MODS Y ORQUESTADOR VFS
            ====================================================================== -->
       <section id="tab-mods" class="view-panel">
-        <!-- Subpestañas Distribuidas del Gestor VFS -->
+        <!-- Subpestañas Distribuidas del Gestor VFS (5 Tabs Ejecutivas) -->
         <div class="mod-subtab-bar">
           <button class="mod-subtab-btn active" data-subtab="subtab-mods-hierarchy">
             <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
-            <span>Jerarquía EnabledMods.txt</span>
+            <span>Jerarquía</span>
           </button>
           <button class="mod-subtab-btn" data-subtab="subtab-mods-paths">
             <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            <span>Detección &amp; Rutas Personalizadas</span>
+            <span>Rutas &amp; Detección</span>
           </button>
           <button class="mod-subtab-btn" data-subtab="subtab-mods-collisions">
             <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v5h-2V7zm0 6h2v2h-2v-2z"/></svg>
-            <span>Auditoría de Colisiones VFS</span>
+            <span>Colisiones VFS</span>
           </button>
           <button class="mod-subtab-btn" data-subtab="subtab-mods-injector">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span>Inyector Minimod</span>
+          </button>
+          <button class="mod-subtab-btn" data-subtab="subtab-mods-ram">
             <svg viewBox="0 0 24 24"><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6z"/></svg>
-            <span>Inyector Minimod &amp; Monitor RAM</span>
+            <span>Monitor RAM LAA</span>
           </button>
         </div>
 
@@ -172,77 +176,76 @@
           </div>
         </div>
 
-        <!-- 4. SUBPESTAÑA: INYECTOR DE MINIMOD & MONITOR RAM LAA -->
+        <!-- 4. SUBPESTAÑA: INYECTOR DE MINIMOD (P999) -->
         <div class="mod-subtab-pane" id="subtab-mods-injector">
-          <div class="mod-injector-grid">
-            <!-- Inyector de Minimod Quirúrgico P999 -->
-            <div class="reagle-card-panel mod-card-panel">
-              <div class="mod-injector-header">
-                <h3 class="mod-card-title">Inyección Quirúrgica de Minimod (P999)</h3>
-                <span class="metric-badge-pill neutral" id="minimod-active-status-badge">○ STANDBY (Vanilla)</span>
-              </div>
-              <p class="mod-injector-desc">
-                Virtualiza un minimod en la cúspide de <code>EnabledMods.txt</code>. Permite traducir mods de gran escala (ej. Star Wars Interregnum, Sins Plus) prevaleciendo sin alterar sus carpetas.
-              </p>
+          <div class="reagle-card-panel mod-card-panel">
+            <div class="mod-injector-header">
+              <h3 class="mod-card-title">Inyección Quirúrgica de Minimod (P999)</h3>
+              <span class="metric-badge-pill neutral" id="minimod-active-status-badge">○ STANDBY (Vanilla)</span>
+            </div>
+            <p class="mod-injector-desc">
+              Virtualiza un minimod en la cúspide de <code>EnabledMods.txt</code>. Permite traducir mods de gran escala (ej. Star Wars Interregnum, Sins Plus) prevaleciendo sin alterar sus carpetas.
+            </p>
 
-              <!-- Panel de Control del Minimod -->
-              <div class="minimod-status-panel" id="minimod-status-panel">
-                <div>
-                  <div class="mod-minimod-title" id="minimod-current-title">Minimod: [ES] Idioma Español Rebellion</div>
-                  <div class="mod-minimod-detail" id="minimod-current-desc">Prioridad asignada: P999 · Consumo estimado: 15 MB RAM</div>
-                </div>
-                <button class="btn-row-action" id="btn-toggle-minimod-p999" onclick="ModManagerModule.toggleMinimodP999();">
-                  ⚡ Inyectar Minimod
-                </button>
+            <!-- Panel de Control del Minimod -->
+            <div class="minimod-status-panel" id="minimod-status-panel">
+              <div>
+                <div class="mod-minimod-title" id="minimod-current-title">Minimod: [ES] Idioma Español Rebellion</div>
+                <div class="mod-minimod-detail" id="minimod-current-desc">Prioridad asignada: P999 · Consumo estimado: 15 MB RAM</div>
               </div>
+              <button class="btn-row-action" id="btn-toggle-minimod-p999" onclick="ModManagerModule.toggleMinimodP999();">
+                ⚡ Inyectar Minimod
+              </button>
+            </div>
 
-              <div class="mod-custom-name-group">
-                <label class="mod-custom-name-label">Nombre Personalizado del Minimod:</label>
-                <input type="text" id="input-minimod-name" class="reagle-input" value="Sins Rebellion Traduccion Espanol" placeholder="Nombre de mod...">
+            <div class="mod-custom-name-group">
+              <label class="mod-custom-name-label">Nombre Personalizado del Minimod:</label>
+              <input type="text" id="input-minimod-name" class="reagle-input" value="Sins Rebellion Traduccion Espanol" placeholder="Nombre de mod...">
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. SUBPESTAÑA: MONITOR DE MEMORIA RAM LAA (32-BIT) -->
+        <div class="mod-subtab-pane" id="subtab-mods-ram">
+          <div class="reagle-card-panel mod-card-panel">
+            <div class="mod-injector-header">
+              <h3 class="mod-card-title">Presupuesto de Memoria LAA (Techo 3.250 MB)</h3>
+              <span class="metric-badge-pill" id="ram-margin-badge">1.850 MB Margen</span>
+            </div>
+            <p class="mod-injector-desc">
+              Supervisa el consumo acumulado de memoria RAM para evitar caídas MiniDump causadas por el límite de direccionamiento de 32 bits de Rebellion.
+            </p>
+
+            <div class="mod-ram-info">
+              <div class="mod-ram-row">
+                <span>Consumo Actual Estimado:</span>
+                <span id="ram-meter-text">0 MB / 3250 MB (0%)</span>
+              </div>
+              <div class="mod-ram-track">
+                <div class="mod-ram-fill" id="ram-meter-fill" style="width: 0%;"></div>
+              </div>
+              <div id="ram-risk-badge" class="mod-ram-risk safe">
+                ESTADO: SEGURO (Bajo riesgo de desbordamiento de memoria de 32 bits)
               </div>
             </div>
 
-            <!-- Monitor de Memoria LAA (32-bit Crash Prevention) -->
-            <div class="reagle-card-panel mod-card-panel">
-              <div class="mod-injector-header">
-                <h3 class="mod-card-title">Presupuesto de Memoria LAA (Techo 3.250 MB)</h3>
-                <span class="metric-badge-pill" id="ram-margin-badge">1.850 MB Margen</span>
+            <!-- Desglose por Subsistema -->
+            <div class="ram-breakdown-grid">
+              <div class="ram-subsystem-item">
+                <span>Texturas DirectX 9:</span>
+                <strong>520 MB</strong>
               </div>
-              <p class="mod-injector-desc">
-                Supervisa el consumo acumulado de memoria RAM para evitar caídas MiniDump causadas por el límite de direccionamiento de 32 bits de Rebellion.
-              </p>
-
-              <div class="mod-ram-info">
-                <div class="mod-ram-row">
-                  <span>Consumo Actual Estimado:</span>
-                  <span id="ram-meter-text">0 MB / 3250 MB (0%)</span>
-                </div>
-                <div class="mod-ram-track">
-                  <div class="mod-ram-fill" id="ram-meter-fill" style="width: 0%;"></div>
-                </div>
-                <div id="ram-risk-badge" class="mod-ram-risk safe">
-                  ESTADO: SEGURO (Bajo riesgo de desbordamiento de memoria de 32 bits)
-                </div>
+              <div class="ram-subsystem-item">
+                <span>Entidades de Flota:</span>
+                <strong>480 MB</strong>
               </div>
-
-              <!-- Desglose por Subsistema -->
-              <div class="ram-breakdown-grid">
-                <div class="ram-subsystem-item">
-                  <span>Texturas DirectX 9:</span>
-                  <strong>520 MB</strong>
-                </div>
-                <div class="ram-subsystem-item">
-                  <span>Entidades de Flota:</span>
-                  <strong>480 MB</strong>
-                </div>
-                <div class="ram-subsystem-item">
-                  <span>Partículas &amp; Audio:</span>
-                  <strong>260 MB</strong>
-                </div>
-                <div class="ram-subsystem-item">
-                  <span>Cadenas &amp; VFS:</span>
-                  <strong>140 MB</strong>
-                </div>
+              <div class="ram-subsystem-item">
+                <span>Partículas &amp; Audio:</span>
+                <strong>260 MB</strong>
+              </div>
+              <div class="ram-subsystem-item">
+                <span>Cadenas &amp; VFS:</span>
+                <strong>140 MB</strong>
               </div>
             </div>
           </div>

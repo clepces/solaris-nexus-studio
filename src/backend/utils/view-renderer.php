@@ -15,6 +15,7 @@ final class ViewRenderer
             'sidebar' => $viewsDir . DIRECTORY_SEPARATOR . 'sidebar.partial.html',
             'header' => $viewsDir . DIRECTORY_SEPARATOR . 'header.partial.html',
             'dashboard' => $viewsDir . DIRECTORY_SEPARATOR . 'dashboard.view.html',
+            'studio' => $viewsDir . DIRECTORY_SEPARATOR . 'studio.view.html',
             'translation' => $viewsDir . DIRECTORY_SEPARATOR . 'translation.view.html',
             'mods' => $viewsDir . DIRECTORY_SEPARATOR . 'mods.view.html',
             'system' => $viewsDir . DIRECTORY_SEPARATOR . 'system.view.html',
@@ -37,6 +38,7 @@ final class ViewRenderer
   <title>Solaris Nexus Studio - Clepces org. ltd</title>
   <link rel="stylesheet" href="assets/css/main-theme.css">
   <link rel="stylesheet" href="assets/css/datatable-virtual.css">
+  <link rel="stylesheet" href="assets/css/modules/animations.css?v=0.4.0">
   <link rel="stylesheet" href="assets/css/modules/mods-manager.css">
   <link rel="stylesheet" href="assets/css/modules/entity-editor.css">
   <link rel="stylesheet" href="assets/css/modules/galaxy-forge.css">
@@ -50,7 +52,7 @@ HTML;
         $headerContent = file_exists($partials['header']) ? file_get_contents($partials['header']) : '';
 
         $viewsContent = '';
-        foreach (['dashboard', 'translation', 'mods', 'system', 'entities', 'galaxy', 'convert', 'network', 'pipeline', 'swarm', 'vault'] as $v) {
+        foreach (['dashboard', 'studio', 'translation', 'mods', 'system', 'entities', 'galaxy', 'convert', 'network', 'pipeline', 'swarm', 'vault'] as $v) {
             if (file_exists($partials[$v])) {
                 $viewsContent .= "\n" . file_get_contents($partials[$v]);
             }

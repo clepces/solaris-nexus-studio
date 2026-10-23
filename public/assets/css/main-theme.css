@@ -880,14 +880,16 @@ body {
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(60,64,67,0.08);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
   white-space: nowrap;
   user-select: none;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .btn-reagle-action svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
   fill: currentColor;
 }
@@ -912,38 +914,28 @@ body {
   border-color: #1557b0;
   color: #ffffff;
   box-shadow: 0 3px 8px rgba(26,115,232,0.35);
+  transform: translateY(-1px);
 }
 
 .btn-reagle-action:active {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
+/* Modo compacto responsivo: Icon-only estable sin cambio de tamaño ni bucle de hover */
 @media (max-width: 1140px) {
   .btn-reagle-action {
     padding: 0;
     width: 32px;
+    min-width: 32px;
     height: 32px;
     justify-content: center;
     border-radius: 50%;
   }
   .btn-reagle-action span.action-label {
-    max-width: 0;
-    opacity: 0;
-    margin-left: 0;
-    overflow: hidden;
-    display: inline-block;
-    transition: max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, margin 0.2s ease;
-    white-space: nowrap;
+    display: none;
   }
   .btn-reagle-action:hover {
-    width: auto;
-    padding: 0 12px;
-    border-radius: 9999px;
-  }
-  .btn-reagle-action:hover span.action-label {
-    max-width: 160px;
-    opacity: 1;
-    margin-left: 4px;
+    transform: scale(1.05);
   }
 }
 

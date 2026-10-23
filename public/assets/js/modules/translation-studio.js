@@ -30,8 +30,14 @@ window.TranslationStudioModule = (() => {
     if (total === 0 && state.allEntries && state.allEntries.length > 0) {
       if (emptyState) emptyState.style.display = 'none';
       runway.style.display = 'block';
-      runway.style.height = '160px';
-      runway.innerHTML = `
+      runway.style.height = 'auto';
+      runway.innerHTML = window.NexusComponents ? window.NexusComponents.renderEmptyState({
+        title: 'Sin resultados para la búsqueda',
+        description: 'No se encontró ninguna clave o texto que coincida con el filtro actual.',
+        icon: 'search',
+        actionText: 'Limpiar Filtro de Búsqueda',
+        actionCallback: 'TranslationStudioModule.clearSearch()'
+      }) : `
         <div style="padding: 36px 20px; text-align: center; color: #64748b;">
           <div style="font-size: 1.8rem; margin-bottom: 6px;">🔍</div>
           <div style="font-weight: 700; font-size: 0.88rem; color: #0f172a;">Sin resultados para la búsqueda</div>
@@ -162,6 +168,18 @@ window.TranslationStudioModule = (() => {
     }
   }
 
+  function switchSubTab(targetSubTabId) {
+    document.querySelectorAll('.str-subtab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-subtab') === targetSubTabId);
+    });
+    document.querySelectorAll('.str-subtab-pane').forEach(pane => {
+      pane.classList.toggle('active', pane.id === targetSubTabId);
+    });
+    if (targetSubTabId === 'subtab-str-live') {
+      renderVirtualGrid();
+    }
+  }
+
   function loadDemoData() {
     state.allEntries = generateDemoEntries();
     state.filteredEntries = state.allEntries;
@@ -169,6 +187,7 @@ window.TranslationStudioModule = (() => {
       window.ViewNavigator.updateHeroMetrics('tab-translation');
       window.ViewNavigator.logExecution('STR', `Ingesta demo: ${state.allEntries.length.toLocaleString()} cadenas UTF-8 BOM`, '60 FPS OK');
     }
+    switchSubTab('subtab-str-live');
     renderVirtualGrid();
   }
 
@@ -278,6 +297,14 @@ window.TranslationStudioModule = (() => {
       document.getElementById('file-input-str')?.click();
     });
 
+    // Subpestañas del Editor STR (4 Tabs)
+    document.querySelectorAll('.str-subtab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-subtab');
+        if (target) switchSubTab(target);
+      });
+    });
+
     renderVirtualGrid();
   }
 
@@ -297,6 +324,7 @@ window.TranslationStudioModule = (() => {
     handleStrUpload,
     exportStrFile,
     applyFilters,
-    clearSearch
+    clearSearch,
+    switchSubTab
   };
 })();

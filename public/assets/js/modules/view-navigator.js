@@ -3,7 +3,7 @@
  * Clepces org. ltd | Versión Oficial v0.3.0.0-alpha
  */
 window.ViewNavigator = (() => {
-  const STUDIO_TABS = ['tab-translation', 'tab-mods', 'tab-entities', 'tab-galaxy', 'tab-convert'];
+  const STUDIO_TABS = ['tab-studio', 'tab-translation', 'tab-mods', 'tab-entities', 'tab-galaxy', 'tab-convert'];
   let lastActiveStudioTab = 'tab-translation';
 
   const MODULE_METADATA = {
@@ -13,6 +13,13 @@ window.ViewNavigator = (() => {
       metricNumber: '340',
       metricLabel: 'Executions',
       metricBadge: '↑ 204%'
+    },
+    'tab-studio': {
+      title: 'Studio Edition (Master)',
+      subtitle: 'Entorno unificado de ingeniería inversa: Cadenas léxicas, Entidades de flota y Topología galáctica en un solo espacio.',
+      metricNumber: 'UNIFICADO',
+      metricLabel: 'Modo de Trabajo',
+      metricBadge: 'Pro Edition'
     },
     'tab-translation': {
       title: 'Estudio de Traducción',
@@ -420,6 +427,10 @@ window.ViewNavigator = (() => {
           logExecution('SYS', 'Re-escaneo manual de entorno y subsistemas físicos', 'OK', 'C:/Games/...');
         }
       });
+    } else if (tabId === 'tab-studio') {
+      container.innerHTML = `
+        <button class="btn-reagle-action btn-reagle-primary" onclick="window.TranslationStudioModule?.loadDemoData();" title="Recargar dataset en caliente">${G_ICONS.refresh}<span class="action-label">Sincronizar</span></button>
+      `;
     } else if (tabId === 'tab-translation') {
       container.innerHTML = `
         <input type="file" id="file-input-str" accept=".str" style="display: none;">
@@ -803,6 +814,18 @@ window.ViewNavigator = (() => {
     document.getElementById('btn-sidebar-scan-vfs')?.addEventListener('click', () => {
       switchTab('tab-mods');
       if (window.ModManagerModule) window.ModManagerModule.scanMods();
+    });
+
+    // Selector de modo interno en Studio Edition
+    document.querySelectorAll('[data-studio-mode]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-studio-mode]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const mode = btn.getAttribute('data-studio-mode');
+        document.querySelectorAll('.studio-mode-panel').forEach(p => {
+          p.style.display = p.id === `studio-mode-${mode}` ? 'block' : 'none';
+        });
+      });
     });
   }
 

@@ -1,11 +1,12 @@
 /* ==========================================================================
-   SOLARIS NEXUS STUDIO - ENTITY EDITOR STYLES
+   SOLARIS NEXUS STUDIO - ENTITY EDITOR STYLES (MODERNIZADO V0.3)
+   Clepces org. ltd | Datos 100% Auténticos Sins of a Solar Empire
    ========================================================================== */
 
 .entity-layout-grid {
   display: grid;
-  grid-template-columns: minmax(180px, 220px) 1fr;
-  gap: 12px;
+  grid-template-columns: minmax(220px, 260px) 1fr;
+  gap: 14px;
   flex: 1;
   min-height: 0;
   min-width: 0;
@@ -21,10 +22,45 @@
   flex-direction: column;
   gap: 8px;
   overflow-y: auto;
-  max-height: 480px;
+  max-height: calc(100vh - 240px);
   padding-right: 4px;
 }
 
+/* Filtros por facción */
+.entity-faction-filter-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.entity-faction-btn {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-button);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 3px 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.entity-faction-btn:hover {
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+.entity-faction-btn.active {
+  background: var(--text-blue);
+  color: #ffffff;
+  box-shadow: var(--neu-shadow-button-pressed);
+  border-color: transparent;
+}
+
+/* Tarjeta en catálogo */
 .entity-card-item {
   background: var(--neu-card-bg);
   box-shadow: var(--neu-shadow-card-sm);
@@ -46,60 +82,244 @@
 .entity-card-item.selected {
   border: 1.5px solid var(--text-blue);
   box-shadow: var(--neu-shadow-inset);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(255, 255, 255, 0.5));
 }
 
-.entity-card-item.entity-dev {
-  opacity: 0.65;
-  filter: grayscale(80%);
+.entity-faction-tag {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.entity-card-item.entity-dev:hover {
-  filter: grayscale(40%);
-  opacity: 0.85;
+.entity-faction-tag.tag-tec {
+  background: rgba(59, 130, 246, 0.15);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.entity-faction-tag.tag-adv {
+  background: rgba(168, 85, 247, 0.15);
+  color: #7c3aed;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.entity-faction-tag.tag-vas {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .entity-mini-stat-bar {
   display: flex;
-  gap: 10px;
-  font-size: 0.68rem;
+  gap: 8px;
+  font-size: 0.66rem;
   color: var(--text-secondary);
   font-family: var(--font-mono);
-  margin-top: 4px;
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(160, 168, 180, 0.15);
 }
 
+/* Panel de edición principal */
 .entity-form-container {
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 160px);
+}
+
+/* Sub-pestañas del editor */
+.entity-subtab-bar {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid rgba(160, 168, 180, 0.25);
+  padding-bottom: 6px;
+  overflow-x: auto;
+}
+
+.entity-subtab-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.entity-subtab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.entity-subtab-btn.active {
+  background: #ffffff;
+  color: var(--text-blue);
+  box-shadow: var(--neu-shadow-pill-active);
+}
+
+/* Rejilla de parámetros interactivos */
+.entity-param-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
-.entity-form-container.in-development {
-  filter: grayscale(80%);
-  opacity: 0.75;
-}
-
-.entity-dev-overlay {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(220, 224, 230, 0.55);
-  backdrop-filter: blur(2px);
-  border-radius: 18px;
-  z-index: 10;
-  align-items: center;
-  justify-content: center;
+.entity-param-box {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-card-sm);
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  display: flex;
   flex-direction: column;
-  gap: 6px;
-  text-align: center;
-  padding: 20px;
+  gap: 4px;
 }
 
-.entity-param-grid {
+.entity-param-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.entity-param-sub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Telemetría EHP */
+.entity-telemetry-hud {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-inset);
+  border-radius: 14px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.entity-telemetry-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.entity-telemetry-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.entity-telemetry-metric .val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+}
+
+/* Armamento */
+.entity-weapons-grid {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
+}
+
+.entity-weapon-card {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-card-sm);
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Habilidades */
+.entity-abilities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.entity-ability-card {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-card-sm);
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Costes y Logística */
+.entity-costs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.entity-cost-item {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-card-sm);
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+.entity-cost-item .cost-num {
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD (1016x648 Y PANTALLAS COMPACTAS)
+   ========================================================================== */
+@media (max-width: 980px) {
+  .entity-layout-grid {
+    grid-template-columns: minmax(190px, 220px) 1fr;
+    gap: 10px;
+  }
+
+  .entity-param-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .entity-abilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .entity-telemetry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .entity-costs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .entity-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .entity-catalog-column {
+    max-height: 200px;
+  }
 }
