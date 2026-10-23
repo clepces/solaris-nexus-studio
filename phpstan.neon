@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    paths:
+        - config
+        - src/backend
+        - tests
+    excludePaths:
+        - vendor/*
+        - storage/*
+        - public/*
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

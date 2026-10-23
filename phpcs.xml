@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="SolarisNexusStudio">
+    <description>PSR-12 Coding Standard for Solaris Nexus Studio</description>
+
+    <file>config</file>
+    <file>src/backend</file>
+    <file>tests</file>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/public/*</exclude-pattern>
+
+    <arg name="colors"/>
+    <arg value="p"/>
+
+    <!-- Inherit standard PSR-12 -->
+    <rule ref="PSR12">
+        <exclude name="PSR12.Files.FileHeader"/>
+    </rule>
+
+    <!-- Strict typing enforcement -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.Files.ByteOrderMark"/>
+</ruleset>
