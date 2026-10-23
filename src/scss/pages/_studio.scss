@@ -1,0 +1,9 @@
+// Vista unificada Studio Edition
+#tab-studio {
+  .studio-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+  }
+}

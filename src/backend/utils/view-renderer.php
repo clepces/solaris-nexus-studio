@@ -6,86 +6,93 @@ namespace SolarisNexus\Backend\Utils;
 final class ViewRenderer
 {
     /**
-     * Ensambla la SPA modular desde los archivos de vista parciales.
+     * Ensambla la SPA modular desde las plantillas semánticas en src/frontend/templates/.
      */
-    public static function renderSpa(string $viewsDir): string
+    public static function renderSpa(?string $templatesDir = null): string
     {
-        $partials = [
-            'dock' => $viewsDir . DIRECTORY_SEPARATOR . 'dock.partial.html',
-            'sidebar' => $viewsDir . DIRECTORY_SEPARATOR . 'sidebar.partial.html',
-            'header' => $viewsDir . DIRECTORY_SEPARATOR . 'header.partial.html',
-            'dashboard' => $viewsDir . DIRECTORY_SEPARATOR . 'dashboard.view.html',
-            'studio' => $viewsDir . DIRECTORY_SEPARATOR . 'studio.view.html',
-            'translation' => $viewsDir . DIRECTORY_SEPARATOR . 'translation.view.html',
-            'mods' => $viewsDir . DIRECTORY_SEPARATOR . 'mods.view.html',
-            'system' => $viewsDir . DIRECTORY_SEPARATOR . 'system.view.html',
-            'entities' => $viewsDir . DIRECTORY_SEPARATOR . 'entities.view.html',
-            'galaxy' => $viewsDir . DIRECTORY_SEPARATOR . 'galaxy.view.html',
-            'convert' => $viewsDir . DIRECTORY_SEPARATOR . 'convert.view.html',
-            'network' => $viewsDir . DIRECTORY_SEPARATOR . 'network.view.html',
-            'pipeline' => $viewsDir . DIRECTORY_SEPARATOR . 'pipeline.view.html',
-            'swarm' => $viewsDir . DIRECTORY_SEPARATOR . 'swarm.view.html',
-            'vault' => $viewsDir . DIRECTORY_SEPARATOR . 'vault.view.html',
-            'modal' => $viewsDir . DIRECTORY_SEPARATOR . 'modal-edit.partial.html',
+        $baseDir = dirname(__DIR__, 2);
+        $tplDir = $templatesDir ?? ($baseDir . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'frontend' . DIRECTORY_SEPARATOR . 'templates');
+        
+        $layoutsDir = $tplDir . DIRECTORY_SEPARATOR . 'layouts';
+        $viewsDir = $tplDir . DIRECTORY_SEPARATOR . 'views';
+
+        // Si se suministró la carpeta legacy public/views, mantener compatibilidad
+        if (!is_dir($layoutsDir) && is_dir($tplDir)) {
+            $layoutsDir = $tplDir;
+            $viewsDir = $tplDir;
+        }
+
+        $appShellFile = $layoutsDir . DIRECTORY_SEPARATOR . 'app-shell.template.html';
+        $dockFile = $layoutsDir . DIRECTORY_SEPARATOR . (file_exists($layoutsDir . DIRECTORY_SEPARATOR . 'dock.template.html') ? 'dock.template.html' : 'dock.partial.html');
+        $sidebarFile = $layoutsDir . DIRECTORY_SEPARATOR . (file_exists($layoutsDir . DIRECTORY_SEPARATOR . 'sidebar.template.html') ? 'sidebar.template.html' : 'sidebar.partial.html');
+        $headerFile = $layoutsDir . DIRECTORY_SEPARATOR . (file_exists($layoutsDir . DIRECTORY_SEPARATOR . 'header.template.html') ? 'header.template.html' : 'header.partial.html');
+        $modalFile = $layoutsDir . DIRECTORY_SEPARATOR . (file_exists($layoutsDir . DIRECTORY_SEPARATOR . 'modal-edit.template.html') ? 'modal-edit.template.html' : 'modal-edit.partial.html');
+
+        $dockContent = file_exists($dockFile) ? file_get_contents($dockFile) : '';
+        $sidebarContent = file_exists($sidebarFile) ? file_get_contents($sidebarFile) : '';
+        $headerContent = file_exists($headerFile) ? file_get_contents($headerFile) : '';
+        $modalContent = file_exists($modalFile) ? file_get_contents($modalFile) : '';
+
+        $viewNames = [
+            'dashboard', 'studio', 'translation', 'mods', 'system',
+            'entities', 'galaxy', 'convert', 'network', 'pipeline',
+            'swarm', 'vault'
         ];
 
-        $head = <<<HTML
+        $viewsContent = '';
+        foreach ($viewNames as $v) {
+            $viewPath = $viewsDir . DIRECTORY_SEPARATOR . $v . '.template.html';
+            if (!file_exists($viewPath)) {
+                $viewPath = $viewsDir . DIRECTORY_SEPARATOR . $v . '.view.html';
+            }
+            if (file_exists($viewPath)) {
+                $viewsContent .= "\n" . file_get_contents($viewPath);
+            }
+        }
+
+        if (file_exists($appShellFile)) {
+            $shell = file_get_contents($appShellFile);
+            return str_replace(
+                ['{{dock}}', '{{sidebar}}', '{{header}}', '{{modal}}', '{{views}}'],
+                [$dockContent, $sidebarContent, $headerContent, $modalContent, $viewsContent],
+                $shell
+            );
+        }
+
+        // Fallback en caso de ausencia de app-shell
+        return self::renderFallback($dockContent, $sidebarContent, $headerContent, $viewsContent, $modalContent);
+    }
+
+    private static function renderFallback(string $dock, string $sidebar, string $header, string $views, string $modal): string
+    {
+        return <<<HTML
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solaris Nexus Studio - Clepces org. ltd</title>
+  <title>Solaris Nexus Studio</title>
   <link rel="stylesheet" href="assets/css/main-theme.css">
   <link rel="stylesheet" href="assets/css/datatable-virtual.css">
-  <link rel="stylesheet" href="assets/css/modules/animations.css?v=0.4.0">
-  <link rel="stylesheet" href="assets/css/modules/mods-manager.css">
-  <link rel="stylesheet" href="assets/css/modules/entity-editor.css">
-  <link rel="stylesheet" href="assets/css/modules/galaxy-forge.css">
-  <link rel="stylesheet" href="assets/css/modules/nexus-components.css?v=0.4.0">
+  <link rel="stylesheet" href="assets/css/modules/animations.css">
 </head>
 <body>
-HTML;
-
-        $dockContent = file_exists($partials['dock']) ? file_get_contents($partials['dock']) : '';
-        $sidebarContent = file_exists($partials['sidebar']) ? file_get_contents($partials['sidebar']) : '';
-        $headerContent = file_exists($partials['header']) ? file_get_contents($partials['header']) : '';
-
-        $viewsContent = '';
-        foreach (['dashboard', 'studio', 'translation', 'mods', 'system', 'entities', 'galaxy', 'convert', 'network', 'pipeline', 'swarm', 'vault'] as $v) {
-            if (file_exists($partials[$v])) {
-                $viewsContent .= "\n" . file_get_contents($partials[$v]);
-            }
-        }
-
-        $modalContent = file_exists($partials['modal']) ? file_get_contents($partials['modal']) : '';
-
-        $scripts = <<<HTML
-  <!-- SCRIPTS MODULARES -->
-  <script src="assets/js/nexus-core.js?v=0.4.0"></script>
-  <script src="assets/js/modules/nexus-components.js?v=0.4.0"></script>
-  <script src="assets/js/modules/view-navigator.js?v=0.4.0"></script>
-  <script src="assets/js/modules/translation-studio.js?v=0.3.2"></script>
-  <script src="assets/js/modules/mod-manager.js?v=0.3.2"></script>
-  <script src="assets/js/modules/entity-editor.js?v=0.3.2"></script>
-  <script src="assets/js/modules/galaxy-forge.js?v=0.3.2"></script>
-  <script src="assets/js/modules/convert-cli.js?v=0.3.2"></script>
-  <script src="assets/js/modules/system-health.js?v=0.3.2"></script>
-  <script src="assets/js/nexus-ui.js?v=0.3.2"></script>
+  {$dock}
+  <div class="reagle-window">
+    {$sidebar}
+    <main class="reagle-workspace">
+      {$header}
+      {$views}
+    </main>
+  </div>
+  {$modal}
+  <script src="assets/js/nexus-core.js?v=0.4.1"></script>
+  <script src="assets/js/modules/nexus-components.js?v=0.4.1"></script>
+  <script src="assets/js/modules/view-navigator.js?v=0.4.1"></script>
+  <script src="assets/js/nexus-ui.js?v=0.4.1"></script>
+  <script type="module" src="assets/js/bundle.js?v=0.4.1"></script>
 </body>
 </html>
 HTML;
-
-        return $head . "\n" .
-            $dockContent . "\n" .
-            "  <div class=\"reagle-window\">\n" .
-            $sidebarContent . "\n" .
-            "    <main class=\"reagle-workspace\">\n" .
-            $headerContent . "\n" .
-            $viewsContent . "\n" .
-            "    </main>\n" .
-            "  </div>\n" .
-            $modalContent . "\n" .
-            $scripts;
     }
 }

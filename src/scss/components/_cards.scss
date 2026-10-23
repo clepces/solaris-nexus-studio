@@ -1,0 +1,29 @@
+// Paneles y tarjetas neumórficas
+.reagle-card-panel {
+  background: var(--neu-card-bg, #151a23);
+  box-shadow: var(--neu-shadow-raised, 6px 6px 14px rgba(0,0,0,0.45));
+  border-radius: var(--radius-md, 12px);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 16px;
+  position: relative;
+}
+
+.telemetry-card {
+  background: var(--neu-card-bg, #151a23);
+  box-shadow: var(--neu-shadow-raised, 4px 4px 10px rgba(0,0,0,0.4));
+  border-radius: var(--radius-sm, 10px);
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent-blue, #38bdf8);
+
+  &.status-optimal {
+    border-left-color: var(--status-success, #10b981);
+  }
+
+  &.status-warning {
+    border-left-color: var(--status-warning, #f59e0b);
+  }
+
+  &.status-critical {
+    border-left-color: var(--status-danger, #ef4444);
+  }
+}

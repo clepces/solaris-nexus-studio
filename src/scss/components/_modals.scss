@@ -1,0 +1,30 @@
+// Ventanas modales accesibles con backdrop
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+
+  &.active {
+    display: flex;
+  }
+}
+
+.modal-card {
+  background: var(--neu-card-bg, #151a23);
+  box-shadow: var(--neu-shadow-raised, 10px 10px 30px rgba(0,0,0,0.7));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg, 16px);
+  width: 100%;
+  max-width: 600px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: paneFadeSlideIn 0.2s ease-out;
+}

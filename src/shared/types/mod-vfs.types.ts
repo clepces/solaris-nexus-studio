@@ -14,6 +14,7 @@ export interface ModItem {
   incompatibilities: readonly string[];
   dependencies: readonly string[];
   sha256Hash?: string;
+  status?: 'OK' | 'MISSING_DIRECTORY' | 'EMPTY_DIRECTORY';
 }
 
 export interface EnabledModsArchive {

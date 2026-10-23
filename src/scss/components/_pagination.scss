@@ -1,0 +1,46 @@
+// Barra de paginación universal
+.nexus-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--neu-card-bg, #151a23);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0 0 var(--radius-md, 12px) var(--radius-md, 12px);
+  font-size: 0.80rem;
+  color: var(--text-secondary, #94a3b8);
+  user-select: none;
+
+  .nexus-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nexus-page-btn {
+    padding: 4px 10px;
+    background: var(--neu-btn-bg, #1e2430);
+    box-shadow: var(--neu-shadow-btn, 1px 1px 3px rgba(0,0,0,0.3));
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm, 6px);
+    color: var(--text-main, #e2e8f0);
+    cursor: pointer;
+    font-size: 0.78rem;
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--neu-btn-hover, #283040);
+      border-color: rgba(56,189,248,0.3);
+    }
+  }
+
+  .nexus-page-current {
+    font-weight: 700;
+    color: var(--accent-blue, #38bdf8);
+    margin: 0 4px;
+  }
+}

@@ -1,0 +1,18 @@
+// Cabecera universal y buscador global
+.reagle-header {
+  height: 52px;
+  background: var(--neu-card-bg, #151a23);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 40;
+  gap: 16px;
+
+  .header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}

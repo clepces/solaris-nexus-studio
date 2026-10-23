@@ -1,0 +1,9 @@
+// Estilos específicos del Dashboard
+#tab-dashboard {
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+}

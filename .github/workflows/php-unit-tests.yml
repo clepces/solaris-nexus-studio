@@ -1,0 +1,27 @@
+name: PHP Unit Tests (11 Fases)
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo, pdo_sqlite, mbstring
+          coverage: none
+
+      - name: Copy .env.example to .env
+        run: copy .env.example .env
+
+      - name: Run 11 Certification Phases
+        run: php tests/run-all-tests.php

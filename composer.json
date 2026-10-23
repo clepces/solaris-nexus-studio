@@ -1,0 +1,24 @@
+{
+  "name": "solaris-nexus-studio/solaris-nexus-studio",
+  "description": "Enterprise Mod Creation, Localization & Asset Engine for Sins of a Solar Empire: Rebellion",
+  "type": "project",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Clepces org. ltd",
+      "homepage": "https://github.com/Clepces"
+    }
+  ],
+  "require": {
+    "php": "^8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "SolarisNexus\\": "src/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}

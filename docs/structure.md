@@ -1,163 +1,219 @@
-# Estructura de Arquitectura y Árbol de Directorios - Solaris Nexus Studio
+# Estructura de Arquitectura y Árbol de Directorios Maestro - Solaris Nexus Studio (v0.4.1.0-alpha)
 
 ## 1. Principios de Aislamiento y Gobernanza de Código
-1. **Regla de Cero Monolitos:** Ningún archivo de lógica o presentación superará las 300 líneas de código. Toda responsabilidad debe segmentarse en servicios, controladores o componentes desacoplados.
-2. **Kebab-Case Obligatorio:** Todos los nombres de archivos y directorios deben seguir la convención kebab-case (`view-renderer.php`, `str-parser-service.php`, `nexus-pagination.ts`).
-3. **Aislamiento de Código Compilado vs Fuentes:** El desarrollo se realiza en `/src` (TypeScript y PHP) y `/public/assets/scss/`. `/dist` o `/build` son exclusivamente para artefactos generados.
-4. **Protección de Runtime Activo:** La reestructuración arquitectónica convive con el sistema actual en `public/` para no interrumpir el funcionamiento ni la suite de pruebas automatizadas.
+1. **Aislamiento Estricto de Fuentes:** Ningún archivo `.ts`, `.scss` o plantilla bruta de desarrollo debe existir dentro de la carpeta `public/`. Todo se compila mediante Vite y Sass desde `src/`.
+2. **Regla de Cero Monolitos:** Ningún script de lógica, controlador o módulo superará las 300 líneas de código. Toda responsabilidad debe segmentarse en servicios, controladores o componentes desacoplados.
+3. **Kebab-Case Obligatorio:** Todos los nombres de archivos y directorios nuevos deben seguir estrictamente la convención kebab-case en minúsculas.
+4. **Protocolo UUID Safety:** Toda respuesta de error en la API REST enmascara rutas físicas de disco y retorna un código `UUID v4` con registro en `storage/logs/`.
+5. **Patrón App Shell SPA:** La interfaz web opera cargando una única plantilla base en `public/index.php` con despacho desacoplado mediante el enrutador cliente `ViewNavigatorRouter`.
 
 ---
 
-## 2. Diagnóstico de la Discrepancia `src/frontend/` vs `public/`
-* **Causa de Carpetas Vacías en `src/frontend/` (`api-client/`, `components/`, `state/`):**
-  En la fase de andamiaje inicial se crearon esas carpetas anticipando una migración a TypeScript / SPA empaquetada. Sin embargo, durante el desarrollo acelerado de las fases 1 a 12 de backend, el frontend se implementó directamente en `public/assets/js/modules/` como scripts nativos ES6 y en `public/views/` como vistas HTML parciales.
-* **Estrategia de Saneamiento sin Pérdida de Trabajo:**
-  No se descarta el código existente en `public/assets/js/`. Se modulariza:
-  1. Extraer los bloques gigantes de `view-navigator.js` (41 KB) hacia componentes modulares independientes.
-  2. Implementar los contratos de TypeScript en `src/frontend/` para verificación estática.
-  3. Compilar los módulos limpios hacia `public/assets/js/modules/` manteniendo compatibilidad 100% con los manejadores legacy.
-
----
-
-## 3. Árbol de Directorios Exhaustivo
+## 2. Árbol de Directorios y Archivos Maestro
 
 ```text
 solaris-nexus-studio/
-├── .env                                  # Variables de entorno seguras (Fail-Fast)
-├── .env.example                          # Plantilla de variables obligatorias
-├── .gitignore                            # Exclusiones de Git (logs, backups, temporales)
-├── readme.md                             # Documento maestro y guía rápida
-├── game-engine-and-localization-audit.md # Auditoría de motor IronEngine e idiomas
+├── .env                                        # [ACTIVO] Variables de entorno seguras (Fail-Fast: DB, Paths, Debug)
+├── .env.example                                # [ACTIVO] Plantilla de variables obligatorias
+├── .gitignore                                  # [ACTIVO] Exclusiones de Git (node_modules, vendor, dist, storage/logs)
+├── composer.json                               # [ACTIVO] Autoloader PSR-4 y dependencias backend PHP
+├── package.json                                # [ACTIVO] Dependencias frontend, scripts de Vite y compilador SASS
+├── tsconfig.json                               # [ACTIVO] Configuración estricta de TypeScript (Strict Mode, No-Any)
+├── vite.config.ts                              # [ACTIVO] Configuración central de Vite, bundler y alias (@/)
+├── readme.md                                   # [ACTIVO] Documento maestro corporativo de la plataforma
+├── game-engine-and-localization-audit.md       # [ACTIVO] Auditoría del motor IronEngine e ingeniería inversa
 │
-├── config/                               # Configuraciones globales
-│   ├── app-config.php                    # Parámetros del servidor WAMP y rutas
-│   └── database-config.php               # Conexión PDO SQLite/MySQL
+├── .github/                                    # [ACTIVO] Workflows CI/CD de automatización
+│   └── workflows/
+│       ├── php-unit-tests.yml                  # Runner de pruebas unitarias backend PHP
+│       └── ts-build-lint.yml                   # Verificación de compilación estricta TypeScript/SASS
 │
-├── docs/                                 # Documentación técnica modular
-│   ├── readme.md                         # Índice de la documentación
-│   ├── structure.md                      # Esta especificación arquitectónica
-│   ├── interface.md                      # UI, SASS 7-1 y diseño atómico
-│   ├── events.md                         # Bus de Eventos y ciclo de vida pub/sub
-│   ├── database.md                       # Esquemas y tablas relacionales
-│   ├── api.md                            # Endpoints REST y contratos JSON
-│   ├── components.md                     # Catálogo de componentes modulares
-│   ├── migration-roadmap.md              # Plan de ejecución por fases
-│   ├── en/                               # Documentación legacy en inglés
-│   └── es/                               # Documentación legacy en español
+├── config/                                     # [ACTIVO] Configuraciones globales seguras (PHP)
+│   ├── app-config.php                          # Configuración Fail-Fast, zonas horarias y rutas WAMP/Steam
+│   └── database-config.php                     # Conexión Singleton PDO SQLite / Prepared Statements
 │
-├── public/                               # Raíz web pública accesible en Apache/WAMP
-│   ├── .htaccess                         # Enrutamiento frontal hacia index.php
-│   ├── index.php                         # Front Controller central (Router HTTP)
-│   ├── assets/
-│   │   ├── css/                          # CSS compilado y módulos de estilo
-│   │   │   ├── main-theme.css            # Hoja de estilo global unificada
-│   │   │   ├── datatable-virtual.css     # Estilos de grilla y paginación
-│   │   │   └── modules/                  # Estilos específicos por módulo
-│   │   │       ├── entity-editor.css
-│   │   │       ├── galaxy-forge.css
-│   │   │       ├── mods-manager.css
-│   │   │       └── nexus-components.css
-│   │   ├── scss/                         # Arquitectura SASS (Patrón 7-1)
-│   │   │   ├── abstracts/                # _variables.scss, _mixins.scss, _functions.scss
-│   │   │   ├── base/                     # _reset.scss, _typography.scss, _utilities.scss
-│   │   │   ├── components/               # _buttons.scss, _inputs.scss, _pagination.scss, _empty-state.scss
-│   │   │   ├── layout/                   # _sidebar.scss, _header.scss, _tabs-carousel.scss, _dock.scss
-│   │   │   ├── pages/                    # _dashboard.scss, _translation.scss, _mods.scss, _studio.scss
-│   │   │   ├── themes/                   # _dark.scss, _light.scss
-│   │   │   └── main.scss                 # Agregador central compilador
-│   │   ├── js/
-│   │   │   ├── nexus-core.js             # Núcleo de estado y bus de eventos cliente
-│   │   │   ├── nexus-ui.js               # Renderizador UI, modales y toasts
-│   │   │   └── modules/                  # Módulos JS desacoplados
-│   │   │       ├── convert-cli.js        # Integración con ConvertData_Rebellion.exe
-│   │   │       ├── entity-editor.js      # Inspector y editor de entidades .entity
-│   │   │       ├── galaxy-forge.js       # Visualizador topológico de galaxias
-│   │   │       ├── mod-manager.js        # Gestor VFS y perfiles EnabledMods.txt
-│   │   │       ├── nexus-components.js   # Componentes modulares (Paginación, Empty States)
-│   │   │       ├── system-health.js      # Telemetría de memoria RAM LAA (32 bits)
-│   │   │       ├── translation-studio.js # Editor de diccionarios .str
-│   │   │       └── view-navigator.js     # Enrutador de pestañas y layouts
-│   │   └── img/                          # Iconografía e imágenes estáticas
-│   └── views/                            # Vistas y plantillas HTML modulares
-│       ├── header.partial.html           # Cabecera universal y estado de conexión
-│       ├── sidebar.partial.html          # Barra lateral con navegación unificada
-│       ├── dock.partial.html             # Panel de telemetría y consola inferior
-│       ├── modal-edit.partial.html       # Modal genérico reutilizable
-│       ├── dashboard.view.html           # Vista principal de métricas y ejecuciones
-│       ├── studio.view.html              # Vista Master Studio Edition (Entidades + STR + Galaxy)
-│       ├── translation.view.html         # Editor de cadenas .str (4 pestañas)
-│       ├── mods.view.html                # Gestor de VFS, colisiones y minimods
-│       ├── entities.view.html            # Inspector de GameInfo
-│       ├── galaxy.view.html              # Visor de mapas estelares
-│       ├── convert.view.html             # Interfaz CLI ConvertData
-│       ├── network.view.html             # Monitor de puertos y red
-│       ├── pipeline.view.html            # Telemetría de shaders y pipelines
-│       ├── swarm.view.html               # Monitor de agentes y procesos concurrentes
-│       ├── system.view.html              # Diagnóstico del entorno WAMP/PHP
-│       └── vault.view.html               # Almacén de memorias de traducción
-│
-├── src/                                  # Código Fuente del Núcleo Empresarial
-│   ├── backend/                          # Backend PHP (Arquitectura MVC Limpia)
-│   │   ├── controllers/                  # Controladores REST
-│   │   │   ├── entity-controller.php
-│   │   │   ├── galaxy-controller.php
-│   │   │   ├── mod-controller.php
-│   │   │   ├── string-controller.php
-│   │   │   └── system-controller.php
-│   │   ├── repositories/                 # Capa de Persistencia y Acceso a Datos
-│   │   │   ├── mod-repository.php
-│   │   │   ├── project-repository.php
-│   │   │   └── translation-memory-repo.php
-│   │   ├── services/                     # Lógica de Negocio y Dominio
-│   │   │   ├── convert-data-service.php  # Wrapper de ConvertData CLI
-│   │   │   ├── database-migrator.php     # Migraciones automáticas SQLite/MySQL
-│   │   │   ├── entity-inspector-service.php # Parser de archivos .entity
-│   │   │   ├── galaxy-forge-service.php  # Parser topológico .galaxy
-│   │   │   ├── language-packager.php     # Empaquetador de parches de idioma
-│   │   │   ├── language-synthesizer.php  # Sintetizador JIT de traducción
-│   │   │   ├── linter-service.php        # Validador léxico y comillas
-│   │   │   ├── mod-orchestrator.php      # Resolutor VFS y EnabledMods.txt
-│   │   │   ├── ram-profiler-service.php  # Monitor de memoria 32 bits (LAA)
-│   │   │   ├── str-parser-service.php    # Parser bidireccional .str (TXT/BIN)
-│   │   │   └── token-guard-service.php   # Blindaje de variables {0}, {1}
-│   │   └── utils/                        # Utilidades y Helpers
-│   │       ├── byte-buffer-helper.php    # Manipulación binaria de strings
-│   │       ├── logger-service.php        # Logger con enmascaramiento de rutas (UUID)
-│   │       ├── uuid-generator.php        # Generador de UUID v4 criptográfico
-│   │       └── view-renderer.php         # Renderizador de plantillas HTML
+├── docs/                                       # [ACTIVO] Documentación técnica y especificaciones de arquitectura
+│   ├── readme.md                               # Índice de documentación
+│   ├── structure.md                            # Esta especificación arquitectónica y aislamiento de directorios
+│   ├── interface.md                            # Guía de diseño atómico, BEM y SASS 7-1
+│   ├── events.md                               # Especificación del Bus Pub/Sub reactivo
+│   ├── database.md                             # Esquemas SQLite, ERD y Memoria de Traducción (TM)
+│   ├── api.md                                  # Contratos REST, seguridad y protocolo UUID Safety
+│   ├── components.md                           # Catálogo de componentes UI y skeletons
+│   ├── migration-roadmap.md                    # Hoja de ruta de evolución de la plataforma
 │   │
-│   ├── frontend/                         # Código Fuente Frontend (TypeScript)
-│   │   ├── api-client/                   # Clientes HTTP tipados hacia los controladores
-│   │   │   ├── entity-api.ts
-│   │   │   ├── mod-api.ts
-│   │   │   ├── string-api.ts
-│   │   │   └── system-api.ts
-│   │   ├── components/                   # Componentes Huecos (Skeletons) y UI
-│   │   │   ├── empty-state.ts            # Componente de estado vacío contextual
-│   │   │   ├── modal-dialog.ts           # Modal accesible desacoplado
-│   │   │   ├── pagination-bar.ts         # Paginador universal sin mutación de datos
-│   │   │   ├── tab-carousel.ts           # Carrusel de pestañas horizontal con scroll
-│   │   │   └── telemetry-card.ts         # Tarjeta de métricas con indicador de estado
-│   │   └── state/                        # Almacén de Estado Global Reactivo
-│   │       ├── event-bus.ts              # Bus de eventos tipado
-│   │       └── studio-store.ts           # Estado centralizado inmutable
+│   └── legacy/                                 # [LEGACY] Archivo histórico no destructivo
+│       ├── agy_app.md
+│       ├── readme-dev.md
+│       ├── en/                                 # 9 especificaciones históricas en inglés
+│       └── es/                                 # 10 especificaciones históricas en español
+│
+├── src/                                        # [CÓDIGO FUENTE DE DESARROLLO PRINCIPAL]
+│   ├── backend/                                # [ACTIVO] Arquitectura MVC Limpia / Domain-Driven (PHP 8.2+)
+│   │   ├── controllers/                        # Controladores de la API REST
+│   │   │   ├── entity-controller.php           # Parser y API para naves, estructuras y armas (.entity)
+│   │   │   ├── galaxy-controller.php           # Parser y API topológica de galaxias (.galaxy / .scenario)
+│   │   │   ├── mod-controller.php              # API para gestión VFS, colisiones e inyección de minimods
+│   │   │   ├── string-controller.php           # API para diccionarios léxicos (.str / .json)
+│   │   │   └── system-controller.php           # Telemetría LAA, salud del entorno WAMP y permisos
+│   │   ├── middleware/                         # Capas intermedias de seguridad y validación
+│   │   │   ├── cors-middleware.php             # Cabeceras de control de acceso e integración local
+│   │   │   ├── error-handler-middleware.php    # Middleware UUID Safety (Cero Stack Traces expuestos)
+│   │   │   └── security-headers.php            # Sanitización de peticiones y protección XSS/CSRF
+│   │   ├── repositories/                       # Capa de Persistencia a Base de Datos (SQLite)
+│   │   │   ├── mod-repository.php              # Persistencia de metadatos y perfiles de mods
+│   │   │   ├── project-repository.php          # Persistencia de proyectos de traducción
+│   │   │   └── translation-memory-repo.php     # Repositorio LRU de Memoria de Traducción (TM)
+│   │   ├── services/                           # Lógica de Negocio y Dominio del Motor IronEngine
+│   │   │   ├── convert-data-service.php        # Wrapper seguro de ConvertData CLI (BIN ↔ TXT)
+│   │   │   ├── database-migrator.php           # Migrador DDL automático e idempotente de SQLite
+│   │   │   ├── entity-inspector-service.php    # Inspector y calculador de EHP/DPS de entidades
+│   │   │   ├── galaxy-forge-service.php        # Generador de topología galáctica y carriles de salto
+│   │   │   ├── language-packager.php           # Empaquetador y creador de parches de localización
+│   │   │   ├── language-synthesizer.php        # Sintetizador JIT de diccionarios multilingües
+│   │   │   ├── linter-service.php              # Linter sintáctico de comillas y formato .str
+│   │   │   ├── mod-orchestrator.php            # Resolutor de colisiones VFS en EnabledMods.txt
+│   │   │   ├── ram-profiler-service.php        # Predictor y monitor de memoria virtual 32-bit (LAA)
+│   │   │   ├── str-parser-service.php          # Parser bidireccional .str (TXT/BIN UTF-16LE BOM)
+│   │   │   └── token-guard-service.php         # Blindaje algorítmico de variables protegidas {0}, {1}
+│   │   └── utils/                              # Utilidades de bajo nivel
+│   │       ├── byte-buffer-helper.php          # Manipulación de buffers binarios y BOM UTF-16LE
+│   │       ├── logger-service.php              # Log estructurado con UUID y enmascaramiento de rutas
+│   │       ├── router.php                      # Enrutador HTTP centralizado de clases (Sustituye if/elseif)
+│   │       ├── uuid-generator.php              # Generador de identificadores criptográficos UUID v4
+│   │       └── view-renderer.php               # Despachador de plantillas y layouts parciales
 │   │
-│   └── shared/                           # Contratos Compartidos (Full-Stack Types)
-│       ├── constants/
-│       │   ├── engine-limits.ts          # Constantes de límites de RAM y entidades
-│       │   └── reserved-tokens.ts        # Tokens protegidos de localización
-│       └── types/
-│           ├── api-response-types.ts     # Respuestas estándar {success, data, error, uuid}
-│           ├── localization-types.ts     # Tipos para Strings, Diccionarios y TM
-│           └── mod-types.ts              # Tipos para Mods, Manifiestos y VFS
+│   ├── frontend/                               # [ACTIVO] Lógica cliente desacoplada en TypeScript
+│   │   ├── api-client/                         # Clientes REST HTTP tipados (Sin tipo 'any')
+│   │   │   ├── base-api.client.ts              # Cliente base con fetch tipado y gestión de errores
+│   │   │   ├── entity-api.client.ts            # Cliente para inspección de entidades y HUD
+│   │   │   ├── galaxy-api.client.ts            # Cliente para mapas estelares y topología
+│   │   │   ├── mod-api.client.ts               # Cliente para perfiles VFS y colisiones de mods
+│   │   │   ├── string-api.client.ts            # Cliente para diccionarios .str y memoria TM
+│   │   │   └── system-api.client.ts            # Cliente para telemetría WAMP y monitor LAA
+│   │   ├── components/                         # Componentes UI reutilizables (Patrón Hollow)
+│   │   │   ├── empty-state.component.ts        # Renderizador de estados vacíos contextuales
+│   │   │   ├── modal.component.ts              # Diálogos modales accesibles (Focus Trap)
+│   │   │   ├── pagination.component.ts         # Paginador universal desacoplado
+│   │   │   ├── tab-carousel.component.ts       # Carrusel horizontal de pestañas con scroll fluido
+│   │   │   └── telemetry-card.component.ts     # Tarjeta de métrica reactiva con alertas de umbral
+│   │   ├── router/                             # Router cliente SPA (Cero recargas de página)
+│   │   │   └── view-navigator.router.ts        # Navegador de vistas y despachador de plantillas
+│   │   ├── state/                              # Estado global y bus de comunicaciones
+│   │   │   ├── app-store.state.ts              # Almacén de estado reactivo global
+│   │   │   └── event-bus.ts                    # Bus central de eventos Pub/Sub tipado
+│   │   ├── templates/                          # Plantillas HTML semánticas y accesibles (con label for)
+│   │   │   ├── layouts/
+│   │   │   │   ├── app-shell.template.html     # Marco HTML raíz de la aplicación (SPA Shell)
+│   │   │   │   ├── dock.template.html          # Barra inferior fija de consola y telemetría
+│   │   │   │   ├── header.template.html        # Cabecera universal, buscador global y salud
+│   │   │   │   ├── modal-edit.template.html    # Diálogo modal de edición de cadenas
+│   │   │   │   └── sidebar.template.html       # Menú lateral unificado (Maestro / Legacy)
+│   │   │   └── views/                          # Fragmentos de vistas puros (Solo Skeletons / Slots)
+│   │   │       ├── convert.template.html       # Interface CLI ConvertData
+│   │   │       ├── dashboard.template.html     # Panel maestro de métricas e historial
+│   │   │       ├── entities.template.html      # Inspector de entidades y EHP
+│   │   │       ├── galaxy.template.html        # Canvas topológico de galaxias
+│   │   │       ├── mods.template.html          # Gestor VFS y jerarquía de mods
+│   │   │       ├── network.template.html       # Monitor de red y workshop
+│   │   │       ├── pipeline.template.html      # Pipeline de shaders y materiales
+│   │   │       ├── studio.template.html        # Vista unificada Studio Edition
+│   │   │       ├── swarm.template.html         # Monitor de clúster P2P
+│   │   │       ├── system.template.html        # Diagnóstico de entorno y permisos WAMP
+│   │   │       ├── translation.template.html   # Editor de diccionarios .str en 4 pestañas
+│   │   │       └── vault.template.html         # Bóveda de respaldos automáticos
+│   │   └── main.ts                             # Punto de entrada principal y bootstrap del frontend
+│   │
+│   ├── shared/                                 # [ACTIVO] Contratos tipados compartidos (TypeScript)
+│   │   ├── constants/
+│   │   │   ├── engine-limits.constants.ts      # Límites de RAM LAA (2048/4096MB) y constantes de motor
+│   │   │   └── reserved-tokens.constants.ts    # Patrones de variables protegidas {0}, {1}
+│   │   └── types/
+│   │       ├── api-response.types.ts           # Overlays canónicos de respuesta JSON {success, data, error, uuid}
+│   │       ├── entity-inspection.types.ts      # Interfaces de propiedades de entidades (.entity)
+│   │       ├── localization.types.ts           # Interfaces para entradas léxicas, diccionarios y TM
+│   │       └── mod-vfs.types.ts                # Interfaces para manifiestos de mods, VFS y colisiones
+│   │
+│   └── scss/                                   # [ACTIVO] Arquitectura de estilos SASS (Patrón 7-1)
+│       ├── abstracts/
+│       │   ├── _functions.scss                 # Funciones de cálculo px a rem y contraste
+│       │   ├── _mixins.scss                    # Mixins de flexbox, grid, breakpoints y glassmorphism
+│       │   └── _variables.scss                 # Paleta sci-fi espacial, tipografías y sombras
+│       ├── base/
+│       │   ├── _reset.scss                     # Reset universal y box-sizing: border-box
+│       │   ├── _typography.scss                # Fuentes sans-serif limpias y monospace
+│       │   └── _utilities.scss                 # Clases de apoyo (.u-text-center, .u-hidden, .sr-only)
+│       ├── components/
+│       │   ├── _buttons.scss                   # Botones primarios, secundarios, peligro y acciones
+│       │   ├── _cards.scss                     # Contenedores de métricas y paneles neumórficos
+│       │   ├── _empty-state.scss               # Estilos del estado vacío contextual
+│       │   ├── _inputs.scss                    # Inputs unificados (.reagle-input) y textareas
+│       │   ├── _modals.scss                    # Ventanas modales accesibles con backdrop
+│       │   ├── _pagination.scss                # Barra de paginación universal
+│       │   └── _tabs-carousel.scss             # Carrusel de pestañas horizontal con flechas
+│       ├── layout/
+│       │   ├── _dock.scss                      # Barra inferior de consola
+│       │   ├── _grid.scss                      # Sistema de rejilla responsivo
+│       │   ├── _header.scss                    # Barra superior de navegación
+│       │   └── _sidebar.scss                   # Menú lateral unificado
+│       ├── pages/
+│       │   ├── _dashboard.scss                 # Estilos específicos del Dashboard
+│       │   ├── _entities.scss                  # Inspector de entidades
+│       │   ├── _galaxy.scss                    # Canvas de galaxias
+│       │   ├── _mods.scss                      # Gestor VFS y jerarquía
+│       │   ├── _studio.scss                    # Vista insignia Studio Edition
+│       │   └── _translation.scss               # Editor de diccionarios .str
+│       ├── themes/
+│       │   ├── _dark.scss                      # Tema predeterminado espacio profundo (Nexus Dark)
+│       │   └── _light.scss                     # Tema de alto contraste accesibilidad
+│       └── main.scss                           # Archivo agregador central (Compila a public/assets/css/)
 │
-├── storage/                              # Almacenamiento Seguro del Sistema
-│   ├── database.sqlite                   # Base de datos relacional local
-│   ├── backups/                          # Copias de seguridad temporales automáticas
-│   ├── logs/                             # Registros de eventos y auditoría (UUID Safety)
-│   └── temp/                             # Archivos temporales de conversión
+├── public/                                     # [DISTRIBUCIÓN PÚBLICA EN PRODUCCIÓN]
+│   ├── .htaccess                               # Reescritura de URL hacia index.php (Front Controller)
+│   ├── index.php                               # Punto de entrada HTTP y arranque del App Shell OOP (<100 líneas)
+│   └── assets/                                 # Artefactos compilados y estáticos puros (Cero .ts, cero .scss)
+│       ├── css/
+│       │   ├── main-theme.css                  # CSS global compilado
+│       │   ├── datatable-virtual.css           # Grillas virtuales
+│       │   └── modules/                        # Estilos modulares auxiliares
+│       │       ├── animations.css              # Keyframes GPU
+│       │       ├── entity-editor.css           # Editor de entidades
+│       │       ├── galaxy-forge.css            # Canvas galaxias
+│       │       ├── mods-manager.css            # Gestor de mods
+│       │       └── nexus-components.css        # Componentes UI
+│       ├── js/                                 # Scripts de runtime cliente
+│       └── media/                              # Estructura multimedia organizada
+│           ├── avatars/                        # [.gitkeep]
+│           ├── banners/                        # [.gitkeep]
+│           ├── fonts/                          # [.gitkeep]
+│           ├── icons/                          # [.gitkeep]
+│           ├── sounds/                         # [.gitkeep]
+│           ├── svg/                            # [.gitkeep]
+│           └── videos/                         # [.gitkeep]
 │
-└── tests/                                # Suite Automatizada de Pruebas (11 Fases)
-    ├── run-all-tests.php                 # Runner unificado de pruebas
-    └── phases/                           # Suites de pruebas por fase (Fase 0 a 12)
+├── storage/                                    # Persistencia local, caché y registros de seguridad
+│   ├── database.sqlite                         # Base de datos relacional local SQLite 3
+│   ├── backups/                                # Copias de seguridad automáticas de proyectos (.bak)
+│   ├── cache/                                  # Caché JIT de compilación de diccionarios
+│   └── logs/                                   # Registros de auditoría con UUID Safety (nexus-YYYY-MM-DD.log)
+│
+└── tests/                                      # [ACTIVO] Suite de Pruebas Automatizadas (11 Fases de Certificación)
+    ├── run-all-tests.php                       # Runner centralizado de la suite de pruebas
+    ├── fixtures/                               # Archivos estáticos de muestra para pruebas
+    │   ├── sample_demo.entity
+    │   ├── sample_demo.entity.converted
+    │   ├── sample-corrupted.str
+    │   └── sample-valid.str
+    └── unit/                                   # Pruebas unitarias de las 11 fases de la arquitectura
+        ├── test-bootstrap.php                  # Fase 0: Bootstrap de entorno y verificación Fail-Fast
+        ├── str-parser.test.php                 # Fase 1: Parser .str, UTF-16LE BOM y buffers
+        ├── token-guard.test.php                # Fase 2: Blindaje de variables {0}, {1}
+        ├── mod-priority.test.php               # Fase 3: Resolutor de colisiones VFS y EnabledMods.txt
+        ├── ram-profiler.test.php               # Fase 4: Telemetría de memoria virtual de 32 bits (LAA)
+        ├── api-safety.test.php                 # Fase 5: Protocolo UUID Safety y sobre envelope REST
+        ├── database-persistence.test.php       # Fase 8: Persistencia SQLite y Memoria de Traducción (TM)
+        ├── language-synthesizer.test.php       # Fase 9: Sintetizador JIT de diccionarios
+        ├── convert-data.test.php               # Fase 10: Integración CLI ConvertData_Rebellion.exe
+        ├── entity-inspector.test.php           # Fase 11: Inspector de propiedades de entidades
+        └── galaxy-forge.test.php               # Fase 12: Generación topológica galáctica
 ```

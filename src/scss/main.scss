@@ -1,0 +1,40 @@
+// ==============================================================================
+// SOLARIS NEXUS STUDIO - SASS 7-1 MASTER COMPILER
+// ==============================================================================
+
+// 1. Abstracts
+@use "abstracts/functions";
+@use "abstracts/variables";
+@use "abstracts/mixins";
+
+// 2. Base
+@use "base/reset";
+@use "base/typography";
+@use "base/utilities";
+
+// 3. Components
+@use "components/buttons";
+@use "components/cards";
+@use "components/empty-state";
+@use "components/inputs";
+@use "components/modals";
+@use "components/pagination";
+@use "components/tabs-carousel";
+
+// 4. Layout
+@use "layout/dock";
+@use "layout/grid";
+@use "layout/header";
+@use "layout/sidebar";
+
+// 5. Pages
+@use "pages/dashboard";
+@use "pages/entities";
+@use "pages/galaxy";
+@use "pages/mods";
+@use "pages/studio";
+@use "pages/translation";
+
+// 6. Themes
+@use "themes/dark";
+@use "themes/light";

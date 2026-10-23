@@ -1,0 +1,60 @@
+      <!-- ======================================================================
+           VISTA 6: CONVERTDATA CLI & ENGINE TOOLS
+           ====================================================================== -->
+      <section id="tab-convert" class="view-panel">
+        <div class="reagle-card-panel" style="max-width: 720px; margin: 0 auto; width: 100%; padding: 18px 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 8px;">
+            <div>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">ConvertData CLI - Pipeline DirectX ↔ Texto</h3>
+              <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">
+                Subproceso nativo ConvertData_Rebellion.exe con cálculo de integridad SHA-256.
+              </p>
+            </div>
+            <span class="metric-badge-pill" id="cli-status-badge">CLI NATIVO DISPONIBLE</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+            <!-- Selectores de Tipo y Dirección -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
+              <div>
+                <label for="convert-resource-type" style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Tipo de Recurso:</label>
+                <select id="convert-resource-type" class="reagle-input" style="width: 100%; margin-top: 3px;">
+                  <option value="entity">Entidad (.entity)</option>
+                  <option value="mesh">Malla 3D (.mesh)</option>
+                  <option value="particle">Efecto Partícula (.particle)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="convert-direction" style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Dirección:</label>
+                <select id="convert-direction" class="reagle-input" style="width: 100%; margin-top: 3px;">
+                  <option value="bin_to_txt">Binario DirectX ➔ Texto Editable (TXT)</option>
+                  <option value="txt_to_bin">Texto Editable ➔ Binario DirectX (BIN)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Entrada de Ruta de Archivo -->
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label for="convert-file-path" style="font-size: 0.74rem; font-weight: 700; color: var(--text-secondary);">Ruta del Archivo Objetivo:</label>
+                <div style="display: flex; gap: 4px; font-size: 0.68rem;">
+                  <span style="color: var(--text-muted);">Presets:</span>
+                  <a href="#" style="color: var(--text-blue); text-decoration: underline;" onclick="document.getElementById('convert-file-path').value='C:/Games/Sins of a Solar Empire Rebellion/GameInfo/CAPITALSHIP_TECHBATTLESHIP.entity'; return false;">Kol</a> |
+                  <a href="#" style="color: var(--text-blue); text-decoration: underline;" onclick="document.getElementById('convert-file-path').value='C:/Games/Sins of a Solar Empire Rebellion/GameInfo/CAPITALSHIP_TECHSUPPORT.entity'; return false;">Dunov</a> |
+                  <a href="#" style="color: var(--text-blue); text-decoration: underline;" onclick="document.getElementById('convert-file-path').value='tests/fixtures/sample_demo.entity'; return false;">Fixture</a>
+                </div>
+              </div>
+              <input type="text" id="convert-file-path" class="reagle-input" value="C:/Games/Sins of a Solar Empire Rebellion/GameInfo/CAPITALSHIP_TECHBATTLESHIP.entity" style="width: 100%; margin-top: 3px; font-family: var(--font-mono); font-size: 0.78rem;">
+            </div>
+
+            <!-- Botón de Ejecución -->
+            <button class="btn-reagle btn-reagle-primary" id="btn-run-cli-main" style="align-self: flex-start; margin-top: 2px;">
+              ⚡ Ejecutar Conversión Nativa
+            </button>
+
+            <!-- Terminal / Caja de Salida -->
+            <div id="convert-result-box" style="display: none; background: var(--neu-slot-bg); box-shadow: var(--neu-shadow-inset); border-radius: 12px; padding: 12px; border: 1px solid rgba(255, 255, 255, 0.45); margin-top: 4px;"></div>
+          </div>
+        </div>
+      </section>

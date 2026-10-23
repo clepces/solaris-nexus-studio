@@ -1,0 +1,25 @@
+// Barra inferior fija de consola y dock de estado
+.reagle-dock {
+  height: 38px;
+  background: var(--neu-card-bg, #151a23);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 0.74rem;
+  z-index: 50;
+
+  .dock-left, .dock-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .dock-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary, #94a3b8);
+  }
+}

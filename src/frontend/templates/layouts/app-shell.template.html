@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solaris Nexus Studio - Enterprise Mod & Localization Engine</title>
+  <link rel="stylesheet" href="assets/css/main-theme.css">
+  <link rel="stylesheet" href="assets/css/datatable-virtual.css">
+  <link rel="stylesheet" href="assets/css/modules/animations.css">
+  <link rel="stylesheet" href="assets/css/modules/mods-manager.css">
+  <link rel="stylesheet" href="assets/css/modules/entity-editor.css">
+  <link rel="stylesheet" href="assets/css/modules/galaxy-forge.css">
+  <link rel="stylesheet" href="assets/css/modules/nexus-components.css">
+</head>
+<body>
+  <!-- DOCK DE ESTADO INFERIOR -->
+  {{dock}}
+
+  <div class="reagle-window">
+    <!-- MENÚ LATERAL UNIFICADO -->
+    {{sidebar}}
+
+    <!-- ESPACIO DE TRABAJO PRINCIPAL -->
+    <main class="reagle-workspace">
+      <!-- CABECERA UNIVERSAL -->
+      {{header}}
+
+      <!-- CONTENEDOR DE VISTAS (APP SHELL) -->
+      <div id="nexus-view-container" class="nexus-view-container">
+        {{views}}
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL GLOBAL GENÉRICO -->
+  {{modal}}
+
+  <!-- SCRIPTS DEL SISTEMA -->
+  <script src="assets/js/nexus-core.js?v=0.4.1"></script>
+  <script src="assets/js/modules/nexus-components.js?v=0.4.1"></script>
+  <script src="assets/js/modules/view-navigator.js?v=0.4.1"></script>
+  <script src="assets/js/modules/translation-studio.js?v=0.4.1"></script>
+  <script src="assets/js/modules/mod-manager.js?v=0.4.1"></script>
+  <script src="assets/js/modules/entity-editor.js?v=0.4.1"></script>
+  <script src="assets/js/modules/galaxy-forge.js?v=0.4.1"></script>
+  <script src="assets/js/modules/convert-cli.js?v=0.4.1"></script>
+  <script src="assets/js/modules/system-health.js?v=0.4.1"></script>
+  <script src="assets/js/nexus-ui.js?v=0.4.1"></script>
+  <!-- BUNDLE TYPESCRIPT EMPAQUETADO -->
+  <script type="module" src="assets/js/bundle.js?v=0.4.1"></script>
+</body>
+</html>

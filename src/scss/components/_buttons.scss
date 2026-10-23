@@ -1,0 +1,51 @@
+// Botones corporativos Sci-Fi Neumórficos
+.btn-reagle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm, 8px);
+  background: var(--neu-btn-bg, #1e2430);
+  box-shadow: var(--neu-shadow-btn, 2px 2px 5px rgba(0,0,0,0.4));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-main, #e2e8f0);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--trans-fast, 0.15s ease);
+  user-select: none;
+
+  &:hover {
+    background: var(--neu-btn-hover, #283040);
+    box-shadow: var(--neu-shadow-btn-hover, 3px 3px 8px rgba(0,0,0,0.5));
+    border-color: rgba(56,189,248,0.3);
+  }
+
+  &:active {
+    box-shadow: var(--neu-shadow-inset, inset 2px 2px 4px rgba(0,0,0,0.6));
+    transform: translateY(1px);
+  }
+
+  &.btn-reagle-primary {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #fff;
+    border-color: rgba(56,189,248,0.5);
+
+    &:hover {
+      background: linear-gradient(135deg, #0369a1, #075985);
+      border-color: #38bdf8;
+    }
+  }
+
+  &.btn-reagle-success {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: #fff;
+    border-color: rgba(52,211,153,0.5);
+  }
+
+  &.btn-reagle-danger {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: #fff;
+    border-color: rgba(248,113,113,0.5);
+  }
+}
