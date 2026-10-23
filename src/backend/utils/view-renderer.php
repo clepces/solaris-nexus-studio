@@ -88,6 +88,11 @@ final class ViewRenderer
   {$modal}
   <script src="assets/js/nexus-core.js?v=0.4.1"></script>
   <script src="assets/js/modules/nexus-components.js?v=0.4.1"></script>
+  <script src="assets/js/modules/contextual-actions.js?v=0.4.1"></script>
+  <script src="assets/js/modules/dashboard-handler.js?v=0.4.1"></script>
+  <script src="assets/js/modules/sidebar-tree.js?v=0.4.1"></script>
+  <script src="assets/js/modules/platform-detector.js?v=0.4.1"></script>
+  <script src="assets/js/modules/minimod-injector.js?v=0.4.1"></script>
   <script src="assets/js/modules/view-navigator.js?v=0.4.1"></script>
   <script src="assets/js/nexus-ui.js?v=0.4.1"></script>
   <script type="module" src="assets/js/bundle.js?v=0.4.1"></script>

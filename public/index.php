@@ -17,7 +17,10 @@ require_once dirname(__DIR__) . '/src/backend/middleware/security-headers.php';
 require_once dirname(__DIR__) . '/config/app-config.php';
 require_once dirname(__DIR__) . '/config/database-config.php';
 
-// Servicios de Dominio
+// Repositorios y Servicios de Dominio
+require_once dirname(__DIR__) . '/src/backend/repositories/entity-catalog-repo.php';
+require_once dirname(__DIR__) . '/src/backend/repositories/execution-repository.php';
+require_once dirname(__DIR__) . '/src/backend/services/system-scanner-service.php';
 require_once dirname(__DIR__) . '/src/backend/services/token-guard-service.php';
 require_once dirname(__DIR__) . '/src/backend/services/linter-service.php';
 require_once dirname(__DIR__) . '/src/backend/services/str-parser-service.php';

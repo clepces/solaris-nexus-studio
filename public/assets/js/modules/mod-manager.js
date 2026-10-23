@@ -1,10 +1,9 @@
 /**
  * Solaris Nexus Studio - ModManager Module
- * Clepces org. ltd | Versión Oficial v0.3.0.0-alpha
+ * Clepces org. ltd | Versión Oficial v0.4.1.0-alpha
  */
 window.ModManagerModule = (() => {
   const { state, apiGet, apiPost } = NexusCore;
-
   const LAA_CEILING_MB = 3250;
 
   function switchSubTab(targetSubTabId) {
@@ -15,29 +14,6 @@ window.ModManagerModule = (() => {
     document.querySelectorAll('.mod-subtab-pane').forEach(pane => {
       pane.classList.toggle('active', pane.id === targetSubTabId);
     });
-  }
-
-  async function detectPlatforms() {
-    const container = document.getElementById('platform-detection-list');
-    if (!container) return;
-
-    const res = await apiGet('mods/detect-platforms');
-    if (res.success && res.data && res.data.platforms) {
-      container.innerHTML = res.data.platforms.map(p => `
-        <div class="platform-path-card ${p.exists ? 'detected' : 'not-found'}">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-weight: 800; font-size: 0.82rem; color: var(--text-main);">${p.platform}</span>
-            <span class="metric-badge-pill ${p.exists ? '' : 'neutral'}">${p.exists ? '✓ RUTA DETECTADA' : 'NO INSTALADO'}</span>
-          </div>
-          <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 3px; word-break: break-all;">
-            ${p.path}
-          </div>
-          <div style="font-size: 0.74rem; color: var(--text-secondary); margin-top: 4px;">
-            ${p.description}
-          </div>
-        </div>
-      `).join('');
-    }
   }
 
   function renderModList() {
@@ -54,7 +30,7 @@ window.ModManagerModule = (() => {
             EnabledMods.txt no contiene mods externos en cascada. El juego se ejecuta con el diccionario en español y los archivos base oficiales de Rebellion.
           </div>
           <div style="margin-top: 12px; display: flex; justify-content: center; gap: 8px;">
-            <button class="btn-row-action" onclick="ModManagerModule.toggleMinimodP999();">
+            <button class="btn-row-action" onclick="MinimodInjector.toggleMinimodP999();">
               ⚡ Inyectar Minimod de Idioma (P999)
             </button>
             <button class="btn-row-action" onclick="ModManagerModule.scanMods();">
@@ -63,7 +39,7 @@ window.ModManagerModule = (() => {
           </div>
         </div>
       `;
-      updateMinimodStatus();
+      window.MinimodInjector?.updateMinimodStatus();
       updateRamMetrics();
       return;
     }
@@ -147,99 +123,15 @@ window.ModManagerModule = (() => {
       });
     });
 
-    updateMinimodStatus();
+    window.MinimodInjector?.updateMinimodStatus();
     updateRamMetrics();
-  }
-
-  function updateMinimodStatus() {
-    const hasMinimod = state.activeMods && state.activeMods.some(m => m.isMinimod || m.name.includes('[ES]'));
-    const badge = document.getElementById('minimod-active-status-badge');
-    const panel = document.getElementById('minimod-status-panel');
-    const btn = document.getElementById('btn-toggle-minimod-p999');
-    const title = document.getElementById('minimod-current-title');
-
-    if (badge) {
-      badge.className = `metric-badge-pill ${hasMinimod ? '' : 'neutral'}`;
-      badge.innerText = hasMinimod ? '✓ ACTIVO EN P999' : '○ STANDBY (Vanilla)';
-    }
-    if (panel) {
-      panel.className = `minimod-status-panel ${hasMinimod ? 'active' : ''}`;
-    }
-    if (btn) {
-      btn.innerText = hasMinimod ? '✕ Retirar Minimod P999' : '⚡ Inyectar Minimod (P999)';
-      btn.style.color = hasMinimod ? '#dc2626' : '#1a73e8';
-    }
-    if (title) {
-      title.innerText = hasMinimod ? 'Minimod: [ES] Idioma Español Rebellion (Activo en P999)' : 'Minimod: [ES] Idioma Español Rebellion (Standby)';
-    }
-  }
-
-  function toggleMinimodP999() {
-    const hasMinimod = state.activeMods && state.activeMods.some(m => m.isMinimod || m.name.includes('[ES]'));
-    if (hasMinimod) {
-      state.activeMods = state.activeMods.filter(m => !m.isMinimod && !m.name.includes('[ES]'));
-      if (window.ViewNavigator) {
-        window.ViewNavigator.logExecution('VFS', 'Retirado minimod [ES] de EnabledMods.txt (Modo Vanilla)', 'Desactivado');
-      }
-    } else {
-      const inputName = document.getElementById('input-minimod-name')?.value?.trim() || 'Idioma Español Rebellion';
-      state.activeMods.unshift({
-        name: `[ES] ${inputName}`,
-        priority: 999,
-        isMinimod: true,
-        ramMb: 15
-      });
-      if (window.ViewNavigator) {
-        window.ViewNavigator.logExecution('VFS', `Inyectado minimod quirúrgico [ES] ${inputName} (Prioridad 999)`, 'En Cascada');
-      }
-    }
-    recalculatePriorities();
-    renderModList();
-    saveVfsHierarchy();
   }
 
   async function restoreVanilla() {
     state.activeMods = [];
-    if (window.ViewNavigator) {
-      window.ViewNavigator.logExecution('VFS', 'Restaurada configuración oficial Vanilla en EnabledMods.txt', 'Vanilla OK');
-    }
+    window.ViewNavigator?.logExecution('VFS', 'Restaurada configuración oficial Vanilla en EnabledMods.txt', 'Vanilla OK');
     renderModList();
     await saveVfsHierarchy();
-  }
-
-  async function validateCustomGamePath() {
-    const input = document.getElementById('input-custom-game-path');
-    const path = input ? input.value.trim() : '';
-    if (!path) return;
-
-    const res = await apiPost('mods/validate-custom-path', { path });
-    const msg = document.getElementById('custom-path-status-msg');
-    const bRw = document.getElementById('res-badge-rw');
-    const bExe = document.getElementById('res-badge-exe');
-    const bLoc = document.getElementById('res-badge-loc');
-    const bEnt = document.getElementById('res-badge-ent');
-
-    if (res && res.success) {
-      if (bRw) { bRw.className = 'metric-badge-pill'; bRw.innerText = res.is_writable ? '✓ Permisos RW' : 'Solo Lectura'; }
-      if (bExe) { bExe.className = `metric-badge-pill ${res.has_exe ? '' : 'warning'}`; bExe.innerText = res.has_exe ? '✓ Rebellion.exe' : 'Sin .exe'; }
-      if (bLoc) { bLoc.className = `metric-badge-pill ${res.has_localizations ? '' : 'neutral'}`; bLoc.innerText = res.has_localizations ? '✓ Localizations (es)' : 'Sin Localizations'; }
-      if (bEnt) { bEnt.className = `metric-badge-pill ${res.has_gameinfo ? '' : 'neutral'}`; bEnt.innerText = res.has_gameinfo ? '✓ GameInfo Detectado' : 'Sin GameInfo'; }
-      if (msg) {
-        msg.innerText = res.message || 'Directorio verificado con éxito.';
-        msg.style.color = '#16a34a';
-      }
-      try {
-        localStorage.setItem('solaris_custom_game_path', path);
-      } catch (e) {}
-      if (window.ViewNavigator) {
-        window.ViewNavigator.logExecution('FS', `Validado y vinculado directorio personalizado: ${path}`, 'Ruta OK');
-      }
-    } else {
-      if (msg) {
-        msg.innerText = (res && res.message) ? res.message : 'Error al validar directorio.';
-        msg.style.color = '#ef4444';
-      }
-    }
   }
 
   function recalculatePriorities() {
@@ -262,9 +154,7 @@ window.ModManagerModule = (() => {
     if (ramText) ramText.innerText = `${totalRam.toLocaleString()} MB / ${LAA_CEILING_MB.toLocaleString()} MB (${pct}%)`;
     if (miniRam) miniRam.innerText = `${totalRam.toLocaleString()} MB`;
 
-    if (window.ViewNavigator) {
-      window.ViewNavigator.updateHeroMetrics(document.querySelector('.view-panel.active')?.id || 'tab-mods');
-    }
+    window.ViewNavigator?.updateHeroMetrics(document.querySelector('.view-panel.active')?.id || 'tab-mods');
 
     if (ramFill) {
       ramFill.style.width = `${pct}%`;
@@ -305,38 +195,11 @@ window.ModManagerModule = (() => {
     };
     const res = await apiPost('mods/save', payload);
     if (res.success) {
-      if (window.ViewNavigator) {
-        window.ViewNavigator.logExecution('VFS', `Guardada jerarquía (${state.activeMods.length} mods en EnabledMods.txt)`, 'Respaldo .bak OK');
-      }
+      window.ViewNavigator?.logExecution('VFS', `Guardada jerarquía (${state.activeMods.length} mods en EnabledMods.txt)`, 'Respaldo .bak OK');
       alert('Jerarquía VFS guardada exitosamente en EnabledMods.txt con copia de seguridad atómica.');
     } else {
       alert('Aviso: Jerarquía VFS sincronizada localmente en sesión.');
     }
-  }
-
-  function injectCustomMinimod() {
-    const nameInput = document.getElementById('input-minimod-name');
-    const name = nameInput ? nameInput.value.trim() : '';
-    if (!name) {
-      alert('Introduce un nombre descriptivo para el minimod.');
-      return;
-    }
-
-    state.activeMods.unshift({
-      name: `[ES] ${name}`,
-      priority: 999,
-      isMinimod: true,
-      ramMb: 15
-    });
-
-    recalculatePriorities();
-    renderModList();
-    if (window.ViewNavigator) {
-      window.ViewNavigator.logExecution('VFS', `Inyectado minimod [ES] ${name} (Prioridad 999)`, 'En Cascada');
-    }
-    if (nameInput) nameInput.value = '';
-    switchSubTab('subtab-mods-catalog');
-    alert(`Minimod [ES] ${name} inyectado con prioridad 999 en la cima de EnabledMods.txt.`);
   }
 
   function checkVfsCollisions() {
@@ -364,9 +227,7 @@ window.ModManagerModule = (() => {
         </div>
       </div>
     `;
-    if (window.ViewNavigator) {
-      window.ViewNavigator.logExecution('VFS', 'Auditoría de colisiones VFS completada (2 sobrescrituras resueltas)', 'Limpio OK');
-    }
+    window.ViewNavigator?.logExecution('VFS', 'Auditoría de colisiones VFS completada (2 sobrescrituras resueltas)', 'Limpio OK');
   }
 
   function init() {
@@ -377,8 +238,8 @@ window.ModManagerModule = (() => {
       });
     });
 
-    document.getElementById('btn-inject-minimod-action')?.addEventListener('click', injectCustomMinimod);
-    document.getElementById('btn-scan-platforms')?.addEventListener('click', detectPlatforms);
+    document.getElementById('btn-inject-minimod-action')?.addEventListener('click', () => window.MinimodInjector?.injectCustomMinimod());
+    document.getElementById('btn-scan-platforms')?.addEventListener('click', () => window.PlatformDetector?.detectPlatforms());
     document.getElementById('btn-check-vfs-conflicts')?.addEventListener('click', checkVfsCollisions);
 
     const savedCustomPath = localStorage.getItem('solaris_custom_game_path');
@@ -388,8 +249,8 @@ window.ModManagerModule = (() => {
     }
 
     renderModList();
-    detectPlatforms();
-    validateCustomGamePath();
+    window.PlatformDetector?.detectPlatforms();
+    window.PlatformDetector?.validateCustomGamePath();
   }
 
   return {
@@ -399,9 +260,10 @@ window.ModManagerModule = (() => {
     scanMods,
     saveVfsHierarchy,
     restoreVanilla,
-    toggleMinimodP999,
-    validateCustomGamePath,
-    detectPlatforms,
-    checkVfsCollisions
+    toggleMinimodP999: () => window.MinimodInjector?.toggleMinimodP999(),
+    validateCustomGamePath: () => window.PlatformDetector?.validateCustomGamePath(),
+    detectPlatforms: () => window.PlatformDetector?.detectPlatforms(),
+    checkVfsCollisions,
+    recalculatePriorities
   };
 })();
