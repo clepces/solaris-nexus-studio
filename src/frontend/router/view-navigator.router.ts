@@ -1,6 +1,14 @@
 import { GlobalEventBus } from '@/state/event-bus';
 import { GlobalStore } from '@/state/app-store.state';
 
+declare global {
+  interface Window {
+    ViewNavigator?: {
+      switchTab: (tabId: string) => void;
+    };
+  }
+}
+
 export class ViewNavigatorRouter {
   private activeTabId: string = 'tab-dashboard';
 
@@ -11,40 +19,24 @@ export class ViewNavigatorRouter {
   private init(): void {
     window.addEventListener('hashchange', () => this.handleHashChange());
     document.addEventListener('click', (e) => this.handleNavigationClick(e));
-
-    // Carga inicial basada en URL hash o estado por defecto
-    const initialHash = window.location.hash.replace('#', '');
-    if (initialHash && document.getElementById(initialHash)) {
-      this.switchTab(initialHash);
-    } else {
-      this.switchTab('tab-dashboard');
-    }
   }
 
   public switchTab(targetTabId: string): void {
     if (!targetTabId) return;
 
-    const panels = document.querySelectorAll<HTMLElement>('.view-panel');
-    panels.forEach((p) => {
-      p.classList.remove('active');
-      p.style.display = 'none';
-    });
+    if (window.ViewNavigator && typeof window.ViewNavigator.switchTab === 'function') {
+      window.ViewNavigator.switchTab(targetTabId);
+    } else {
+      const panels = document.querySelectorAll<HTMLElement>('.view-panel');
+      panels.forEach((p) => {
+        p.classList.toggle('active', p.id === targetTabId);
+      });
 
-    const targetPanel = document.getElementById(targetTabId);
-    if (targetPanel) {
-      targetPanel.classList.add('active');
-      targetPanel.style.display = 'block';
+      const navItems = document.querySelectorAll<HTMLElement>('.sidebar-nav-item');
+      navItems.forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.tab === targetTabId);
+      });
     }
-
-    // Sincronizar botones de la barra lateral
-    const navItems = document.querySelectorAll<HTMLElement>('.sidebar-nav-item');
-    navItems.forEach((btn) => {
-      if (btn.dataset.tab === targetTabId) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
 
     this.activeTabId = targetTabId;
     GlobalStore.setActiveTab(targetTabId);
@@ -69,7 +61,6 @@ export class ViewNavigatorRouter {
   private handleNavigationClick(e: MouseEvent): void {
     const target = (e.target as HTMLElement).closest<HTMLElement>('[data-tab]');
     if (target && target.dataset.tab) {
-      e.preventDefault();
       this.switchTab(target.dataset.tab);
     }
   }

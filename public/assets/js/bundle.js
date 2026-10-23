@@ -70,33 +70,21 @@ var ViewNavigatorRouter = class {
   init() {
     window.addEventListener("hashchange", () => this.handleHashChange());
     document.addEventListener("click", (e) => this.handleNavigationClick(e));
-    const initialHash = window.location.hash.replace("#", "");
-    if (initialHash && document.getElementById(initialHash)) {
-      this.switchTab(initialHash);
-    } else {
-      this.switchTab("tab-dashboard");
-    }
   }
   switchTab(targetTabId) {
     if (!targetTabId) return;
-    const panels = document.querySelectorAll(".view-panel");
-    panels.forEach((p) => {
-      p.classList.remove("active");
-      p.style.display = "none";
-    });
-    const targetPanel = document.getElementById(targetTabId);
-    if (targetPanel) {
-      targetPanel.classList.add("active");
-      targetPanel.style.display = "block";
+    if (window.ViewNavigator && typeof window.ViewNavigator.switchTab === "function") {
+      window.ViewNavigator.switchTab(targetTabId);
+    } else {
+      const panels = document.querySelectorAll(".view-panel");
+      panels.forEach((p) => {
+        p.classList.toggle("active", p.id === targetTabId);
+      });
+      const navItems = document.querySelectorAll(".sidebar-nav-item");
+      navItems.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.tab === targetTabId);
+      });
     }
-    const navItems = document.querySelectorAll(".sidebar-nav-item");
-    navItems.forEach((btn) => {
-      if (btn.dataset.tab === targetTabId) {
-        btn.classList.add("active");
-      } else {
-        btn.classList.remove("active");
-      }
-    });
     this.activeTabId = targetTabId;
     GlobalStore.setActiveTab(targetTabId);
     GlobalEventBus.emit("router:navigated", targetTabId);
@@ -116,7 +104,6 @@ var ViewNavigatorRouter = class {
   handleNavigationClick(e) {
     const target = e.target.closest("[data-tab]");
     if (target && target.dataset.tab) {
-      e.preventDefault();
       this.switchTab(target.dataset.tab);
     }
   }

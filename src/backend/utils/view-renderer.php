@@ -10,7 +10,7 @@ final class ViewRenderer
      */
     public static function renderSpa(?string $templatesDir = null): string
     {
-        $baseDir = dirname(__DIR__, 2);
+        $baseDir = dirname(__DIR__, 3);
         $tplDir = $templatesDir ?? ($baseDir . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'frontend' . DIRECTORY_SEPARATOR . 'templates');
         
         $layoutsDir = $tplDir . DIRECTORY_SEPARATOR . 'layouts';
