@@ -1,42 +1,21 @@
 // ==============================================================================
-// SOLARIS NEXUS STUDIO - SASS 7-1 MASTER COMPILER
+// SOLARIS NEXUS STUDIO - SASS MASTER COMPILER (100% REAGLE NEUMORPHISM SOFT UI)
+// Fidelidad Absoluta a la Maqueta Oficial Corporativa (A.I.P.A. Enterprise)
 // ==============================================================================
 
-// 1. Abstracts
-@use "abstracts/functions";
-@use "abstracts/variables";
-@use "abstracts/mixins";
+// 1. Sistema Canónico de Diseño Neumórfico Reagle (Dock, Window, Sidebar, Header, Dashboard, Cards, Modals)
+@use "canonical-neumorphic";
 
-// 2. Base
-@use "base/reset";
-@use "base/typography";
-@use "base/utilities";
+// 2. Animaciones y Transiciones Suaves
 @use "base/animations";
 
-// 3. Components
-@use "components/buttons";
-@use "components/cards";
+// 3. Componentes Modulares del Kit UI
+@use "components/datatable-virtual";
 @use "components/empty-state";
-@use "components/inputs";
-@use "components/modals";
 @use "components/pagination";
 @use "components/tabs-carousel";
-@use "components/datatable-virtual";
 
-// 4. Layout
-@use "layout/dock";
-@use "layout/grid";
-@use "layout/header";
-@use "layout/sidebar";
-
-// 5. Pages
-@use "pages/dashboard";
+// 4. Vistas Especializadas
+@use "pages/mods";
 @use "pages/entities";
 @use "pages/galaxy";
-@use "pages/mods";
-@use "pages/studio";
-@use "pages/translation";
-
-// 6. Themes
-@use "themes/dark";
-@use "themes/light";
