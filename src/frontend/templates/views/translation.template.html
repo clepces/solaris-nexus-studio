@@ -27,25 +27,30 @@
           </div>
 
           <!-- Modo 2: Navegación Contextual del Editor en Vivo (Se activa solo al editar un archivo) -->
-          <div class="str-nav-contextual-group" id="str-nav-contextual-group" style="display: none; gap: 8px; align-items: center; width: 100%;">
-            <button class="btn-reagle" id="btn-str-exit-live" data-action="exit-live-editor" title="Salir del editor en vivo y volver al Workspace">
-              ← Salir
-            </button>
-            <button class="str-subtab-btn" data-action="exit-live-editor" style="padding: 6px 10px;">
-              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-              <span>Workspace</span>
-            </button>
-            <span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 700;">&gt;</span>
-            <div class="str-subtab-btn active" style="cursor: default; pointer-events: none; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;">
-              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-              <span>Editor (Live):</span>
-              <strong id="live-nav-mod-name" style="color: var(--text-main);">Sins Base</strong>
-              <span style="color: var(--text-muted); margin: 0 4px;">|</span>
-              <span id="live-nav-file-name" style="font-family: var(--font-mono); font-size: 0.70rem; color: var(--text-secondary);">English.str</span>
+          <div class="str-nav-contextual-group" id="str-nav-contextual-group" style="display: none;">
+            <div class="str-ctx-left">
+              <button class="btn-reagle btn-reagle-back" id="btn-str-exit-live" data-action="exit-live-editor" title="Salir del editor en vivo y volver al Workspace">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Salir</span>
+              </button>
+              <div class="str-breadcrumb-pill">
+                <button class="breadcrumb-crumb" data-action="exit-live-editor" title="Regresar al Workspace">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                  <span>Workspace</span>
+                </button>
+                <span class="breadcrumb-sep">&gt;</span>
+                <div class="breadcrumb-active" title="Archivo activo en edición">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <span class="active-badge">Live:</span>
+                  <strong id="live-nav-mod-name" class="crumb-mod">Sins Base</strong>
+                  <span class="crumb-divider">|</span>
+                  <span id="live-nav-file-name" class="crumb-file">English.str</span>
+                </div>
+              </div>
             </div>
-            <div style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
-              <button class="btn-reagle" id="btn-live-auto-propagate" data-action="live:auto-propagate" title="Autocompletar cadenas usando la Memoria de Traducción (TM)">
-                🧠 Auto-Propagar TM
+            <div class="str-ctx-actions">
+              <button class="btn-reagle btn-live-tool" id="btn-live-auto-propagate" data-action="live:auto-propagate" title="Autocompletar cadenas usando la Memoria de Traducción (TM)">
+                🧠 Auto-Propagar
               </button>
               <button class="btn-reagle btn-reagle-success" id="btn-live-export" data-action="live:export-str" title="Exportar diccionario canónico listo para el juego">
                 💾 Exportar .str
@@ -86,41 +91,50 @@
             </div>
           </div>
 
-          <!-- Grilla de Proyectos .str Activos en SQLite -->
-          <div class="reagle-card-panel" style="padding: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <div>
-                <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">Proyectos de Traducción Registrados</h3>
-                <p style="font-size: 0.72rem; color: var(--text-secondary); margin: 2px 0 0 0;">Archivos persistidos en la base de datos SQLite relacional.</p>
-              </div>
-              <span class="metric-badge-pill" id="workspace-projects-count">0 Proyectos</span>
-            </div>
-
-            <div class="str-workspace-grid" id="str-projects-container">
-              <!-- Renderizado dinámico desde /api/strings/workspace -->
-              <div class="str-project-card">
-                <div class="str-project-header">
+          <!-- Distribución Dual Responsiva: Proyectos Registrados (Izq) vs. Archivos Físicos (Der) -->
+          <div class="str-workspace-dual-layout">
+            <!-- Columna Principal: Proyectos .str Activos en SQLite -->
+            <div class="str-workspace-col-main">
+              <div class="reagle-card-panel str-section-card">
+                <div class="str-section-header">
                   <div>
-                    <div class="name">Cargando proyectos reales...</div>
-                    <div class="path">Conectando con storage/database.sqlite</div>
+                    <h3 class="str-section-title">Proyectos de Traducción Registrados</h3>
+                    <p class="str-section-desc">Archivos persistidos en la base de datos SQLite relacional.</p>
                   </div>
-                  <span class="metric-badge-pill">Verificando</span>
+                  <span class="metric-badge-pill" id="workspace-projects-count">0 Proyectos</span>
+                </div>
+
+                <div class="str-workspace-grid" id="str-projects-container">
+                  <!-- Renderizado dinámico desde /api/strings/workspace -->
+                  <div class="str-project-card">
+                    <div class="str-project-header">
+                      <div>
+                        <div class="name">Cargando proyectos reales...</div>
+                        <div class="path">Conectando con storage/database.sqlite</div>
+                      </div>
+                      <span class="metric-badge-pill">Verificando</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Archivos Físicos Descubiertos en el Directorio del Juego y Mods -->
-          <div class="str-discovered-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <div>
-                <h4 style="font-size: 0.88rem; font-weight: 800; color: var(--text-main); margin: 0;">Archivos .str Físicos Detectados</h4>
-                <p style="font-size: 0.70rem; color: var(--text-secondary); margin: 2px 0 0 0;">Exploración directa en rutas de instalación y mods.</p>
+            <!-- Columna Lateral: Archivos Físicos Descubiertos en el Directorio del Juego y Mods -->
+            <div class="str-workspace-col-side">
+              <div class="str-discovered-card">
+                <div class="str-section-header">
+                  <div>
+                    <h4 class="str-section-title">Archivos .str Físicos Detectados</h4>
+                    <p class="str-section-desc">Exploración directa en rutas de instalación y mods.</p>
+                  </div>
+                  <span class="metric-badge-pill neutral" id="workspace-discovered-count">0 Archivos</span>
+                </div>
+                <div class="str-files-slot-container">
+                  <div id="str-discovered-files-list" class="str-files-list">
+                    <!-- Se puebla dinámicamente con archivos reales -->
+                  </div>
+                </div>
               </div>
-              <span class="metric-badge-pill neutral" id="workspace-discovered-count">0 Archivos</span>
-            </div>
-            <div id="str-discovered-files-list" style="display: flex; flex-direction: column; gap: 4px;">
-              <!-- Se puebla dinámicamente con archivos reales -->
             </div>
           </div>
 
@@ -180,8 +194,35 @@
               <div style="text-align: right;">Acción</div>
             </div>
             <div class="virtual-viewport" id="virtual-viewport">
-              <div class="virtual-runway" id="virtual-runway" style="display: none;"></div>
+              <div class="virtual-runway" id="virtual-runway"></div>
             </div>
+
+            <!-- Barra de Paginación Reactiva Neumórfica -->
+            <div class="nexus-pagination-bar" id="str-grid-pagination">
+              <div class="nexus-pagination-info" id="str-pagination-info">
+                Cargando cadenas...
+              </div>
+              <div class="nexus-pagination-controls">
+                <button class="nexus-pagination-btn" id="btn-page-prev" data-action="page:prev" title="Página anterior">
+                  ‹ Anterior
+                </button>
+                <div class="nexus-pagination-pages" id="str-pagination-pages"></div>
+                <button class="nexus-pagination-btn" id="btn-page-next" data-action="page:next" title="Página siguiente">
+                  Siguiente ›
+                </button>
+                <div class="pagination-size-selector" style="margin-left: 8px; display: inline-flex; align-items: center; gap: 4px;">
+                  <span style="font-size: 0.70rem; color: var(--text-secondary); font-weight: 600;">Filas:</span>
+                  <select id="str-page-size-select" style="width: auto; padding: 2px 6px; height: 26px; font-size: 0.72rem; border-radius: 6px;">
+                    <option value="10">10</option>
+                    <option value="25" selected>25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="all">Todas</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
             <div class="grid-footer-hud" id="grid-footer-hud">
               <span id="hud-status-text">Cargando cadenas reales de SQLite...</span>
               <span class="hud-badge">TOKEN GUARD PROTEGIDO</span>

@@ -59,6 +59,59 @@ textarea.font-mono,
   font-size: 0.76rem !important;
 }
 
+// 1.1 Excepciones para Contenedores de Búsqueda Neumórficos (Estilo Soft UI Image Ref)
+.reagle-search-bar,
+.reagle-search-full,
+.reagle-search-slot {
+  background: var(--neu-slot-bg, #cfd4db) !important;
+  box-shadow: inset 2px 2px 5px #b4b9c2, inset -2px -2px 5px #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  border-radius: 9999px !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 170px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+  &:focus-within {
+    background: #eef2f7 !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    box-shadow: inset 2px 2px 4px #cbd5e1, inset -2px -2px 4px #ffffff, 0 0 0 3px rgba(99, 102, 241, 0.18) !important;
+  }
+
+  svg {
+    width: 14px !important;
+    height: 14px !important;
+    stroke: var(--text-secondary, #64748b) !important;
+    stroke-width: 2 !important;
+    fill: none !important;
+    flex-shrink: 0 !important;
+  }
+
+  input[type="text"],
+  input[type="search"],
+  input {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    height: 100% !important;
+    font-size: 0.76rem !important;
+    color: var(--text-main, #181a1e) !important;
+
+    &:hover,
+    &:focus {
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+      outline: none !important;
+    }
+  }
+}
+
 // Textarea Específico
 textarea,
 textarea.reagle-input {

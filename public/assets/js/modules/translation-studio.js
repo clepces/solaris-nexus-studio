@@ -121,22 +121,22 @@ window.TranslationStudioModule = (() => {
     const badge = document.getElementById('workspace-discovered-count');
     if (!list) return;
 
-    if (badge) badge.innerText = `${files.length} Archivos Físicos`;
+    if (badge) badge.innerText = `${files ? files.length : 0} Archivos Físicos`;
 
     if (!files || files.length === 0) {
-      list.innerHTML = `<div style="color: var(--text-muted); font-size: 0.72rem; padding: 6px;">No se encontraron archivos .str adicionales en las rutas estándar.</div>`;
+      list.innerHTML = `<div style="color: var(--text-muted); font-size: 0.72rem; padding: 10px; text-align: center;">No se encontraron archivos .str adicionales en las rutas estándar.</div>`;
       return;
     }
 
-    list.innerHTML = files.slice(0, 8).map(f => `
+    list.innerHTML = files.slice(0, 16).map(f => `
       <div class="str-file-row">
-        <div>
-          <strong style="color: var(--text-main);">${f.filename}</strong>
-          <span style="color: var(--text-muted); font-size: 0.68rem; margin-left: 6px;">${f.path}</span>
+        <div class="file-info">
+          <span class="file-name" title="${f.filename}">${f.filename}</span>
+          <span class="file-path" title="${f.path}">${f.path}</span>
         </div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-secondary);">${(f.size_bytes / 1024).toFixed(1)} KB</span>
-          <button class="btn-reagle" style="padding: 2px 8px; font-size: 0.68rem;" data-action="link-file" data-path="${f.path}">
+        <div class="file-actions">
+          <span class="file-size">${(f.size_bytes / 1024).toFixed(1)} KB</span>
+          <button class="btn-reagle" style="padding: 3px 8px; font-size: 0.68rem;" data-action="link-file" data-path="${f.path}" title="Vincular a nuevo proyecto">
             Vincular
           </button>
         </div>
@@ -149,7 +149,7 @@ window.TranslationStudioModule = (() => {
    */
   async function selectProject(projectId, switchToLiveTab = true) {
     try {
-      const res = await fetch(`api/strings/project-strings?project_id=${encodeURIComponent(projectId)}&limit=500`);
+      const res = await fetch(`api/strings/project-strings?project_id=${encodeURIComponent(projectId)}&limit=1000`);
       const json = await res.json();
 
       if (json.success && json.data) {
@@ -167,12 +167,20 @@ window.TranslationStudioModule = (() => {
           index: idx
         }));
         state.filteredEntries = state.allEntries;
+        state.page = 1;
 
-        // Actualizar barra de contexto del Live Editor
+        // Actualizar barra de contexto del Live Editor con tooltip y truncado elegante
         const navMod = document.getElementById('live-nav-mod-name');
         const navFile = document.getElementById('live-nav-file-name');
-        if (navMod) navMod.innerText = currentProject.name;
-        if (navFile) navFile.innerText = currentProject.target_file_path || currentProject.base_file_path;
+        if (navMod) {
+          navMod.innerText = currentProject.name;
+          navMod.setAttribute('title', currentProject.name);
+        }
+        if (navFile) {
+          const filePath = currentProject.target_file_path || currentProject.base_file_path || 'English.str';
+          navFile.innerText = filePath;
+          navFile.setAttribute('title', filePath);
+        }
 
         // Actualizar métricas en Telemetría
         updateTelemetry();
@@ -202,6 +210,7 @@ window.TranslationStudioModule = (() => {
       pane.classList.toggle('active', pane.id === 'subtab-str-live');
     });
 
+    state.page = 1;
     renderVirtualGrid();
   }
 
@@ -283,7 +292,7 @@ window.TranslationStudioModule = (() => {
   }
 
   /**
-   * Renderiza el grid virtual interactivo de cadenas reales.
+   * Renderiza el grid de cadenas reales con paginación reactiva y estilo Neumórfico.
    */
   function renderVirtualGrid() {
     if (!viewport || !runway) return;
@@ -306,22 +315,27 @@ window.TranslationStudioModule = (() => {
       `;
       const hudText = document.getElementById('hud-status-text');
       if (hudText) hudText.innerText = 'Cadenas 0 - 0 de 0';
+      renderPagination(0);
       return;
     }
 
-    runway.style.display = 'block';
-    runway.style.height = `${total * state.rowHeight}px`;
+    const pageSize = state.pageSize === 'all' ? total : (parseInt(state.pageSize, 10) || 25);
+    const totalPages = Math.ceil(total / pageSize);
+    if (!state.page || state.page < 1) state.page = 1;
+    if (state.page > totalPages) state.page = totalPages;
 
-    const scrollTop = viewport.scrollTop;
-    const startIndex = Math.max(0, Math.floor(scrollTop / state.rowHeight) - 5);
-    const endIndex = Math.min(total, startIndex + state.visibleCount);
+    const startIndex = (state.page - 1) * pageSize;
+    const endIndex = Math.min(total, startIndex + pageSize);
+
+    runway.style.display = 'flex';
+    runway.style.flexDirection = 'column';
+    runway.style.height = 'auto';
+    runway.innerHTML = '';
 
     const hudText = document.getElementById('hud-status-text');
     if (hudText) {
       hudText.innerText = `Mostrando ${(startIndex + 1).toLocaleString()} - ${endIndex.toLocaleString()} de ${total.toLocaleString()} cadenas reales`;
     }
-
-    runway.innerHTML = '';
 
     for (let i = startIndex; i < endIndex; i++) {
       const item = state.filteredEntries[i];
@@ -329,7 +343,6 @@ window.TranslationStudioModule = (() => {
 
       const row = document.createElement('div');
       row.className = 'virtual-row';
-      row.style.transform = `translateY(${i * state.rowHeight}px)`;
 
       const tokenPills = (item.tokens || []).map(t => {
         let colorClass = 'token-pill';
@@ -344,7 +357,7 @@ window.TranslationStudioModule = (() => {
         <div class="col-id" title="${item.id}">${item.id}</div>
         <div class="col-text" title="${item.original}">${item.original}</div>
         <div class="col-text" title="${item.translated || item.original}">
-          ${hasTranslation ? item.translated : `<span style="color:#94a3b8; font-style:italic;">(Sin traducir)</span>`}
+          ${hasTranslation ? `<span style="color: var(--text-blue); font-weight: 600;">${item.translated}</span>` : `<span style="color:#94a3b8; font-style:italic;">(Sin traducir)</span>`}
         </div>
         <div class="col-tokens">${tokenPills}</div>
         <div class="col-actions">
@@ -354,6 +367,81 @@ window.TranslationStudioModule = (() => {
         </div>
       `;
       runway.appendChild(row);
+    }
+
+    renderPagination(total);
+  }
+
+  /**
+   * Renderiza la barra de paginación reactiva Neumórfica.
+   */
+  function renderPagination(total) {
+    const infoEl = document.getElementById('str-pagination-info');
+    const pagesEl = document.getElementById('str-pagination-pages');
+    const prevBtn = document.getElementById('btn-page-prev');
+    const nextBtn = document.getElementById('btn-page-next');
+    if (!infoEl || !pagesEl) return;
+
+    if (total === 0) {
+      infoEl.innerText = '0 cadenas encontradas';
+      pagesEl.innerHTML = '';
+      if (prevBtn) prevBtn.disabled = true;
+      if (nextBtn) nextBtn.disabled = true;
+      return;
+    }
+
+    const pageSize = state.pageSize === 'all' ? total : (parseInt(state.pageSize, 10) || 25);
+    const totalPages = Math.ceil(total / pageSize);
+    const startNum = (state.page - 1) * pageSize + 1;
+    const endNum = Math.min(total, state.page * pageSize);
+
+    infoEl.innerText = `Pág. ${state.page} / ${totalPages} (${startNum}-${endNum} de ${total.toLocaleString()})`;
+
+    if (prevBtn) prevBtn.disabled = state.page <= 1;
+    if (nextBtn) nextBtn.disabled = state.page >= totalPages;
+
+    let pagesHtml = '';
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, state.page - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    for (let p = startPage; p <= endPage; p++) {
+      pagesHtml += `
+        <button class="nexus-pagination-page ${p === state.page ? 'active' : ''}" data-action="page:goto" data-page="${p}">
+          ${p}
+        </button>
+      `;
+    }
+    pagesEl.innerHTML = pagesHtml;
+  }
+
+  /**
+   * Búsqueda reactiva de concordancias en la Memoria de Traducción.
+   */
+  async function searchTm() {
+    const input = document.getElementById('tm-search-input');
+    const query = input ? input.value.trim() : '';
+    const resultsContainer = document.getElementById('tm-search-results');
+    if (resultsContainer) {
+      resultsContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 0.74rem; padding: 12px; text-align: center;">🔍 Buscando concordancias en la memoria SQLite3...</div>';
+    }
+
+    try {
+      const res = await fetch(`api/strings/tm-search?query=${encodeURIComponent(query)}`);
+      const json = await res.json();
+      if (json.success && Array.isArray(json.data?.items)) {
+        renderTmRecent(json.data.items);
+      } else {
+        renderTmRecent([]);
+      }
+    } catch (err) {
+      console.warn('[TranslationStudio] Error al buscar en TM:', err);
+      if (resultsContainer) {
+        resultsContainer.innerHTML = '<div style="color: var(--text-danger); font-size: 0.74rem; padding: 8px;">Error al consultar la memoria de traducción.</div>';
+      }
     }
   }
 
@@ -633,6 +721,38 @@ window.TranslationStudioModule = (() => {
         } else if (action === 'telemetry:recheck') {
           updateTelemetry();
         } else if (action === 'tm:search') {
+          searchTm();
+        } else if (action === 'page:prev') {
+          if (state.page > 1) {
+            state.page--;
+            renderVirtualGrid();
+          }
+        } else if (action === 'page:next') {
+          state.page = (state.page || 1) + 1;
+          renderVirtualGrid();
+        } else if (action === 'page:goto' && target.dataset.page) {
+          state.page = parseInt(target.dataset.page, 10);
+          renderVirtualGrid();
+        }
+      });
+    }
+
+    // Selector de tamaño de página
+    const pageSizeSelect = document.getElementById('str-page-size-select');
+    if (pageSizeSelect) {
+      pageSizeSelect.addEventListener('change', (e) => {
+        state.pageSize = e.target.value;
+        state.page = 1;
+        renderVirtualGrid();
+      });
+    }
+
+    // Buscador de concordancias TM en tecla Enter
+    const tmSearchInput = document.getElementById('tm-search-input');
+    if (tmSearchInput) {
+      tmSearchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
           searchTm();
         }
       });

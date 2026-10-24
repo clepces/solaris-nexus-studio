@@ -91,6 +91,8 @@ try {
     $router->get('/api/strings/project-strings', fn() => json((new StringController(null, null, $logger))->getProjectStrings($_GET, $config)));
     $router->post('/api/strings/save-entry', fn() => json((new StringController(null, null, $logger))->saveEntry($payload, $config)));
     $router->get('/api/strings/tm-stats', fn() => json((new StringController(null, null, $logger))->getTmStats($config)));
+    $router->get('/api/strings/tm-search', fn() => json((new StringController(null, null, $logger))->searchTm($_GET, $config)));
+    $router->post('/api/strings/tm-search', fn() => json((new StringController(null, null, $logger))->searchTm($payload, $config)));
     $router->post('/api/strings/suggest-tm', fn() => json((new StringController(null, null, $logger))->suggestTm($payload, $config)));
     $router->post('/api/strings/auto-propagate', fn() => json((new StringController(null, null, $logger))->autoPropagate($payload, $config)));
     $router->post('/api/strings/parse', fn() => json((new StringController(null, null, $logger))->parse($payload)));

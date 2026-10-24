@@ -198,6 +198,30 @@ final class StringController
     }
 
     /**
+     * Búsqueda por coincidencia de segmentos en la Memoria de Traducción.
+     */
+    public function searchTm(array $payload, array $config): array
+    {
+        $query = (string)($payload['query'] ?? ($_GET['query'] ?? ''));
+        $pdo = $this->getPdo($config);
+        $tmRepo = new TranslationMemoryRepo($pdo);
+
+        if (trim($query) === '') {
+            $stats = $tmRepo->getStats();
+            return [
+                'success' => true,
+                'items' => $stats['recent'] ?? [],
+            ];
+        }
+
+        $items = $tmRepo->search($query, 30);
+        return [
+            'success' => true,
+            'items' => $items,
+        ];
+    }
+
+    /**
      * Busca una sugerencia exacta en la Memoria de Traducción.
      */
     public function suggestTm(array $payload, array $config): array
