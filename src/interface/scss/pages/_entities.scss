@@ -1,7 +1,7 @@
-/* ==========================================================================
-   SOLARIS NEXUS STUDIO - ENTITY EDITOR STYLES (MODERNIZADO V0.3)
-   Clepces org. ltd | Datos 100% Auténticos Sins of a Solar Empire
-   ========================================================================== */
+// ==============================================================================
+// ENTITY EDITOR & INSPECTOR STYLES
+// Migrado desde: public/assets/css/modules/entity-editor.css
+// ==============================================================================
 
 .entity-layout-grid {
   display: grid;
@@ -11,10 +11,10 @@
   min-height: 0;
   min-width: 0;
   width: 100%;
-}
 
-.entity-layout-grid > div {
-  min-width: 0;
+  > div {
+    min-width: 0;
+  }
 }
 
 .entity-catalog-column {
@@ -26,7 +26,7 @@
   padding-right: 4px;
 }
 
-/* Filtros por facción */
+// Filtros por facción
 .entity-faction-filter-bar {
   display: flex;
   gap: 4px;
@@ -46,21 +46,21 @@
   transition: all 0.15s ease;
   flex: 1;
   text-align: center;
+
+  &:hover {
+    color: var(--text-main);
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: var(--text-blue);
+    color: #ffffff;
+    box-shadow: var(--neu-shadow-button-pressed);
+    border-color: transparent;
+  }
 }
 
-.entity-faction-btn:hover {
-  color: var(--text-main);
-  transform: translateY(-1px);
-}
-
-.entity-faction-btn.active {
-  background: var(--text-blue);
-  color: #ffffff;
-  box-shadow: var(--neu-shadow-button-pressed);
-  border-color: transparent;
-}
-
-/* Tarjeta en catálogo */
+// Tarjeta en catálogo
 .entity-card-item {
   background: var(--neu-card-bg);
   box-shadow: var(--neu-shadow-card-sm);
@@ -72,17 +72,17 @@
   flex-direction: column;
   gap: 4px;
   transition: all 0.15s ease;
-}
 
-.entity-card-item:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--neu-shadow-card);
-}
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--neu-shadow-card);
+  }
 
-.entity-card-item.selected {
-  border: 1.5px solid var(--text-blue);
-  box-shadow: var(--neu-shadow-inset);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(255, 255, 255, 0.5));
+  &.selected {
+    border: 1.5px solid var(--text-blue);
+    box-shadow: var(--neu-shadow-inset);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(255, 255, 255, 0.5));
+  }
 }
 
 .entity-faction-tag {
@@ -92,24 +92,24 @@
   border-radius: 6px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-}
 
-.entity-faction-tag.tag-tec {
-  background: rgba(59, 130, 246, 0.15);
-  color: #2563eb;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
+  &.tag-tec {
+    background: rgba(59, 130, 246, 0.15);
+    color: #2563eb;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
 
-.entity-faction-tag.tag-adv {
-  background: rgba(168, 85, 247, 0.15);
-  color: #7c3aed;
-  border: 1px solid rgba(168, 85, 247, 0.3);
-}
+  &.tag-adv {
+    background: rgba(168, 85, 247, 0.15);
+    color: #7c3aed;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
 
-.entity-faction-tag.tag-vas {
-  background: rgba(16, 185, 129, 0.15);
-  color: #059669;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  &.tag-vas {
+    background: rgba(16, 185, 129, 0.15);
+    color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
 }
 
 .entity-mini-stat-bar {
@@ -123,7 +123,7 @@
   border-top: 1px solid rgba(160, 168, 180, 0.15);
 }
 
-/* Panel de edición principal */
+// Panel de edición principal
 .entity-form-container {
   position: relative;
   display: flex;
@@ -134,7 +134,7 @@
   max-height: calc(100vh - 160px);
 }
 
-/* Sub-pestañas del editor */
+// Sub-pestañas del editor
 .entity-subtab-bar {
   display: flex;
   gap: 6px;
@@ -154,20 +154,20 @@
   cursor: pointer;
   transition: all 0.15s ease;
   white-space: nowrap;
+
+  &:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  &.active {
+    background: #ffffff;
+    color: var(--text-blue);
+    box-shadow: var(--neu-shadow-pill-active);
+  }
 }
 
-.entity-subtab-btn:hover {
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.entity-subtab-btn.active {
-  background: #ffffff;
-  color: var(--text-blue);
-  box-shadow: var(--neu-shadow-pill-active);
-}
-
-/* Rejilla de parámetros interactivos */
+// Rejilla de parámetros interactivos
 .entity-param-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -200,7 +200,7 @@
   font-family: var(--font-mono);
 }
 
-/* Telemetría EHP */
+// Telemetría EHP
 .entity-telemetry-hud {
   background: var(--neu-card-bg);
   box-shadow: var(--neu-shadow-inset);
@@ -220,15 +220,15 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+
+  .val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+  }
 }
 
-.entity-telemetry-metric .val {
-  font-size: 1.15rem;
-  font-weight: 800;
-  font-family: var(--font-mono);
-}
-
-/* Armamento */
+// Armamento
 .entity-weapons-grid {
   display: flex;
   flex-direction: column;
@@ -247,7 +247,7 @@
   gap: 10px;
 }
 
-/* Habilidades */
+// Habilidades
 .entity-abilities-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -265,7 +265,7 @@
   gap: 4px;
 }
 
-/* Costes y Logística */
+// Costes y Logística
 .entity-costs-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -279,18 +279,16 @@
   padding: 12px 14px;
   border: 1px solid rgba(255, 255, 255, 0.85);
   text-align: center;
+
+  .cost-num {
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    margin-top: 2px;
+  }
 }
 
-.entity-cost-item .cost-num {
-  font-size: 1.25rem;
-  font-weight: 800;
-  font-family: var(--font-mono);
-  margin-top: 2px;
-}
-
-/* ==========================================================================
-   RESPONSIVIDAD (1016x648 Y PANTALLAS COMPACTAS)
-   ========================================================================== */
+// Responsividad
 @media (max-width: 980px) {
   .entity-layout-grid {
     grid-template-columns: minmax(190px, 220px) 1fr;

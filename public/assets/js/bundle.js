@@ -69,22 +69,22 @@ var ViewNavigatorRouter = class {
   }
   init() {
     window.addEventListener("hashchange", () => this.handleHashChange());
-    document.addEventListener("click", (e) => this.handleNavigationClick(e));
+    document.addEventListener("click", (e) => this.handleDelegatedClick(e));
   }
   switchTab(targetTabId) {
     if (!targetTabId) return;
-    if (window.ViewNavigator && typeof window.ViewNavigator.switchTab === "function") {
-      window.ViewNavigator.switchTab(targetTabId);
-    } else {
-      const panels = document.querySelectorAll(".view-panel");
-      panels.forEach((p) => {
-        p.classList.toggle("active", p.id === targetTabId);
-      });
-      const navItems = document.querySelectorAll(".sidebar-nav-item");
-      navItems.forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.tab === targetTabId);
-      });
-    }
+    const panels = document.querySelectorAll(".view-panel");
+    panels.forEach((p) => {
+      p.classList.toggle("active", p.id === targetTabId);
+    });
+    const navItems = document.querySelectorAll(".sidebar-nav-item");
+    navItems.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.tab === targetTabId);
+    });
+    const dockBtns = document.querySelectorAll(".dock-btn");
+    dockBtns.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.tab === targetTabId);
+    });
     this.activeTabId = targetTabId;
     GlobalStore.setActiveTab(targetTabId);
     GlobalEventBus.emit("router:navigated", targetTabId);
@@ -101,11 +101,45 @@ var ViewNavigatorRouter = class {
       this.switchTab(hash);
     }
   }
-  handleNavigationClick(e) {
-    const target = e.target.closest("[data-tab]");
-    if (target && target.dataset.tab) {
-      this.switchTab(target.dataset.tab);
+  /**
+   * Delegación centralizada de clicks en todo el documento.
+   * Captura data-tab (navegación), data-action (comandos),
+   * y data-message (alertas placeholder para features en desarrollo).
+   */
+  handleDelegatedClick(e) {
+    const clicked = e.target;
+    const tabTarget = clicked.closest("[data-tab]");
+    if (tabTarget?.dataset.tab) {
+      e.preventDefault();
+      this.switchTab(tabTarget.dataset.tab);
+      return;
     }
+    const actionTarget = clicked.closest("[data-action]");
+    if (actionTarget?.dataset.action) {
+      e.preventDefault();
+      this.handleDataAction(actionTarget);
+      return;
+    }
+  }
+  /**
+   * Despacha data-action al EventBus o ejecuta lógica inline específica.
+   */
+  handleDataAction(el) {
+    const action = el.dataset.action;
+    if (!action) return;
+    if (el.dataset.message) {
+      GlobalEventBus.emit("ui:notify", { message: el.dataset.message, type: "info" });
+      return;
+    }
+    if (action === "set-input-value" && el.dataset.target && el.dataset.value) {
+      const input = document.querySelector(el.dataset.target);
+      if (input) {
+        input.value = el.dataset.value;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+      return;
+    }
+    GlobalEventBus.emit(action, { source: el });
   }
 };
 var GlobalRouter = new ViewNavigatorRouter();

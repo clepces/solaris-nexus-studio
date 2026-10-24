@@ -1,9 +1,9 @@
-/* ==========================================================================
-   SOLARIS NEXUS STUDIO - GLOBAL ANIMATIONS & TRANSITIONS LIBRARY
-   AIPA Enterprise v2.24.0 | Zero-flicker Smooth Transitions
-   ========================================================================== */
+// ==============================================================================
+// GLOBAL ANIMATIONS & TRANSITIONS LIBRARY
+// Migrado desde: public/assets/css/modules/animations.css
+// ==============================================================================
 
-/* --- 1. KEYFRAME DEFINITIONS --- */
+// --- 1. KEYFRAME DEFINITIONS ---
 
 @keyframes paneFadeSlideIn {
   from {
@@ -65,12 +65,8 @@
 }
 
 @keyframes skeletonShimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 @keyframes modalBackdropFadeIn {
@@ -95,7 +91,7 @@
   }
 }
 
-/* --- 2. GLOBAL UTILITY CLASSES --- */
+// --- 2. GLOBAL UTILITY CLASSES ---
 
 .anim-fade-in {
   animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -113,15 +109,13 @@
   animation: pulseSubtle 2s ease-in-out infinite;
 }
 
-/* --- 3. HARDWARE-ACCELERATED HOVER GUARDS (ANTI-FLICKER) --- */
+// --- 3. HARDWARE-ACCELERATED HOVER GUARDS (ANTI-FLICKER) ---
 
-/* Evita oscilaciones por cambio de tamaño de caja en :hover */
 .btn-reagle-action,
 .btn-row-action,
 .tab-link-btn,
 .sidebar-nav-item {
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform, background-color, border-color, box-shadow;
 }

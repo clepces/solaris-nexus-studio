@@ -20,18 +20,17 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
 
-    /* ⚡ Integración con Vite / Bundler */
+    /* ⚡ Integración con Bundler / Vite */
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noEmit": true,
 
-    /* 🗺️ Alias de Módulos */
-    "baseUrl": ".",
+    /* 🗺️ Alias de Módulos (TypeScript 7+) */
     "paths": {
-      "@/*": ["src/frontend/*"],
-      "@shared/*": ["src/shared/*"]
+      "@/*": ["./src/frontend/*"],
+      "@shared/*": ["./src/shared/*"]
     }
   },
   "include": [

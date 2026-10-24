@@ -19,7 +19,7 @@
           </div>
 
           <div style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
-            <button class="btn-row-action" onclick="ViewNavigator.switchTab('tab-translation');" title="Abrir vista completa de traducción">
+            <button class="btn-row-action" data-tab="tab-translation" title="Abrir vista completa de traducción">
               <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
               <span>Vista Extendida</span>
             </button>
@@ -53,7 +53,7 @@
           <div class="reagle-card-panel" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:18px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <h4 style="font-size:0.88rem; font-weight:700; color:#0f172a;">Vista Rápida: Cadenas Léxicas Recientes</h4>
-              <button class="btn-row-action" onclick="ViewNavigator.switchTab('tab-translation');">Abrir Editor Completo →</button>
+              <button class="btn-row-action" data-tab="tab-translation">Abrir Editor Completo →</button>
             </div>
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px; font-size:0.82rem; color:#475569;">
               Diccionario activo: <code>Localizations/es/String/English.str</code> · 7.828 cadenas protegidas por Token Guard.
@@ -65,7 +65,7 @@
           <div class="reagle-card-panel" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:18px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <h4 style="font-size:0.88rem; font-weight:700; color:#0f172a;">Vista Rápida: Entidades de Flota y Estructuras</h4>
-              <button class="btn-row-action" onclick="ViewNavigator.switchTab('tab-entities');">Abrir Inspector de Entidades →</button>
+              <button class="btn-row-action" data-tab="tab-entities">Abrir Inspector de Entidades →</button>
             </div>
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px; font-size:0.82rem; color:#475569;">
               Base de datos <code>GameInfo/</code> · 1.872 entidades indexadas · Validación de bancos de armas contra mallas .mesh.
@@ -77,7 +77,7 @@
           <div class="reagle-card-panel" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:14px; padding:18px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <h4 style="font-size:0.88rem; font-weight:700; color:#0f172a;">Vista Rápida: Topología Galáctica</h4>
-              <button class="btn-row-action" onclick="ViewNavigator.switchTab('tab-galaxy');">Abrir Galaxy Forge →</button>
+              <button class="btn-row-action" data-tab="tab-galaxy">Abrir Galaxy Forge →</button>
             </div>
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px; font-size:0.82rem; color:#475569;">
               Mapas estelares <code>Galaxy/</code> · 126 escenarios disponibles · Generador topológico procedural.

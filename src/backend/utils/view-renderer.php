@@ -72,9 +72,7 @@ final class ViewRenderer
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solaris Nexus Studio</title>
-  <link rel="stylesheet" href="assets/css/main-theme.css">
-  <link rel="stylesheet" href="assets/css/datatable-virtual.css">
-  <link rel="stylesheet" href="assets/css/modules/animations.css">
+  <link rel="stylesheet" href="assets/css/main-theme.css?v=0.4.1">
 </head>
 <body>
   {$dock}

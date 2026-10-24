@@ -11,6 +11,7 @@
 @use "base/reset";
 @use "base/typography";
 @use "base/utilities";
+@use "base/animations";
 
 // 3. Components
 @use "components/buttons";
@@ -20,6 +21,7 @@
 @use "components/modals";
 @use "components/pagination";
 @use "components/tabs-carousel";
+@use "components/datatable-virtual";
 
 // 4. Layout
 @use "layout/dock";

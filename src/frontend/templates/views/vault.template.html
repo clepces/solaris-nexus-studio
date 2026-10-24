@@ -38,7 +38,7 @@
                     <div style="font-size: 0.72rem; color: var(--text-muted);">Copia de seguridad previa a la inyección del minimod P999</div>
                   </div>
                   <div><span class="metric-badge-pill">✓ SHA-256 Verificado</span></div>
-                  <button class="btn-reagle" onclick="alert('Respaldo íntegro verificado en storage/backups/.');">Auditar Hash</button>
+                  <button class="btn-reagle" data-action="vault:audit-hash" data-message="Respaldo íntegro verificado en storage/backups/.">Auditar Hash</button>
                 </div>
 
                 <div class="workflow-task-item">
@@ -47,7 +47,7 @@
                     <div style="font-size: 0.72rem; color: var(--text-muted);">Parámetros de combate de fábrica del Acorazado Kol</div>
                   </div>
                   <div><span class="metric-badge-pill">✓ VFS Canónico</span></div>
-                  <button class="btn-reagle" onclick="alert('Copia de fábrica protegida contra escritura.');">Auditar Hash</button>
+                  <button class="btn-reagle" data-action="vault:audit-hash" data-message="Copia de fábrica protegida contra escritura.">Auditar Hash</button>
                 </div>
 
                 <div class="workflow-task-item">
@@ -56,16 +56,16 @@
                     <div style="font-size: 0.72rem; color: var(--text-muted);">Diccionario de traducción original en inglés de Rebellion v1.85</div>
                   </div>
                   <div><span class="metric-badge-pill">✓ 7.828 Cadenas</span></div>
-                  <button class="btn-reagle" onclick="alert('Diccionario original preservado en UTF-8 con BOM.');">Auditar Hash</button>
+                  <button class="btn-reagle" data-action="vault:audit-hash" data-message="Diccionario original preservado en UTF-8 con BOM.">Auditar Hash</button>
                 </div>
               </div>
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
-              <button class="btn-reagle btn-reagle-primary" onclick="alert('Empaquetador ZIP en desarrollo: generará el paquete estándar para ModDB/NexusMods.');">
+              <button class="btn-reagle btn-reagle-primary" data-action="vault:package-mod" data-message="Empaquetador ZIP en desarrollo: generará el paquete estándar para ModDB/NexusMods.">
                 📦 Empaquetar Mod en Archivo Canónico (.zip)
               </button>
-              <button class="btn-reagle" onclick="NexusUI.switchTab('tab-dashboard');">← Volver al Dashboard</button>
+              <button class="btn-reagle" data-tab="tab-dashboard">← Volver al Dashboard</button>
             </div>
           </div>
         </div>

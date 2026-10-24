@@ -24,6 +24,6 @@
 ## 3. AISLAMIENTO DE ARQUITECTURA
 1. **Prohibido Modificar Compilados:**
    - Nunca editar `public/assets/js/bundle.js` ni `public/assets/css/main-theme.css` directamente.
-   - Todo cambio de frontend se realiza en `src/frontend/` (TypeScript) y `src/scss/` (SASS).
+   - Todo cambio de frontend se realiza en `src/frontend/` (TypeScript) y `src/interface/scss/` (SASS).
 2. **Límite de Modularidad:**
    - Ningún archivo debe superar las 300 líneas de código. Toda entidad extensa debe desacoplarse en sub-manejadores especializados.

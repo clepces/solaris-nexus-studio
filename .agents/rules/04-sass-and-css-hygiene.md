@@ -1,5 +1,5 @@
 # ESTÁNDARES DE DISEÑO SASS Y PROHIBICIÓN DE CSS EN LÍNEA
-**Módulo:** `src/scss/` & `src/frontend/templates/`  
+**Módulo:** `src/interface/scss/` & `src/frontend/templates/`  
 **Objetivo:** Eliminar estilos en línea (`style="..."`), evitar colisiones de especificidad y consolidar la arquitectura 7-1 Neumórfica.
 
 ---
@@ -18,7 +18,7 @@
    - Bloque: `.c-entity-card`
    - Elemento: `.c-entity-card__header`
    - Modificador: `.c-entity-card--active`
-2. **Organización en `src/scss/`:**
+2. **Organización en `src/interface/scss/`:**
    - `abstracts/`: Variables, tokens neumórficos, mixins y funciones.
    - `base/`: Reset y tipografía global.
    - `components/`: Componentes atómicos reutilizables (botones, modales, tarjetas, barras de progreso).

@@ -1,6 +1,7 @@
-/* ==========================================================================
-   SOLARIS NEXUS STUDIO - GALAXY FORGE STYLES
-   ========================================================================== */
+// ==============================================================================
+// GALAXY FORGE STYLES
+// Migrado desde: public/assets/css/modules/galaxy-forge.css
+// ==============================================================================
 
 .galaxy-workspace-layout {
   display: grid;
@@ -10,10 +11,10 @@
   min-height: 0;
   min-width: 0;
   width: 100%;
-}
 
-.galaxy-workspace-layout > div {
-  min-width: 0;
+  > div {
+    min-width: 0;
+  }
 }
 
 .galaxy-canvas-container {
@@ -29,15 +30,15 @@
   min-height: 280px;
   width: 100%;
   overflow: hidden;
-}
 
-.galaxy-canvas-container canvas {
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 680 / 420;
-  display: block;
+  canvas {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 680 / 420;
+    display: block;
+  }
 }
 
 .galaxy-nodes-scroll {
@@ -49,7 +50,6 @@
   padding-right: 4px;
 }
 
-/* Responsividad para 1016x648 y pantallas estrechas */
 @media (max-width: 980px) {
   .galaxy-workspace-layout {
     grid-template-columns: 1fr;

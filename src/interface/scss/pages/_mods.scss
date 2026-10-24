@@ -1,6 +1,7 @@
-/* ==========================================================================
-   SOLARIS NEXUS STUDIO - MOD MANAGER STYLES (ESTILO GOOGLE AI STUDIO)
-   ========================================================================== */
+// ==============================================================================
+// MOD MANAGER STYLES
+// Migrado desde: public/assets/css/modules/mods-manager.css
+// ==============================================================================
 
 .mod-subtab-bar {
   display: flex;
@@ -27,40 +28,40 @@
   align-items: center;
   gap: 6px;
   white-space: nowrap;
-}
 
-.mod-subtab-btn svg {
-  width: 15px;
-  height: 15px;
-  stroke: currentColor;
-  stroke-width: 2;
-  fill: none;
-}
+  svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
 
-.mod-subtab-btn:hover {
-  color: #0f172a;
-  background: rgba(255, 255, 255, 0.6);
-}
+  &:hover {
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.6);
+  }
 
-.mod-subtab-btn.active {
-  color: #0f172a;
-  background: #ffffff;
-  font-weight: 700;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  &.active {
+    color: #0f172a;
+    background: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .mod-subtab-pane {
   display: none;
   flex-direction: column;
   gap: 12px;
+
+  &.active {
+    display: flex;
+    animation: paneFadeSlideIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 }
 
-.mod-subtab-pane.active {
-  display: flex;
-  animation: paneFadeSlideIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Tarjetas de Plataformas y Detección de Rutas */
+// Tarjetas de Plataformas
 .platform-path-card {
   background: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
@@ -71,23 +72,13 @@
   flex-direction: column;
   gap: 4px;
   transition: all 0.15s ease;
+
+  &.detected { border-left: 3px solid #16a34a; }
+  &.not-found { opacity: 0.65; border-left: 3px solid #94a3b8; }
+  &.custom-active { border-left: 3px solid #1a73e8; background: #f8fafd; }
 }
 
-.platform-path-card.detected {
-  border-left: 3px solid #16a34a;
-}
-
-.platform-path-card.not-found {
-  opacity: 0.65;
-  border-left: 3px solid #94a3b8;
-}
-
-.platform-path-card.custom-active {
-  border-left: 3px solid #1a73e8;
-  background: #f8fafd;
-}
-
-/* Fila de Mods Activos */
+// Fila de Mods Activos
 .mod-item-card {
   display: flex;
   justify-content: space-between;
@@ -99,11 +90,11 @@
   border: 1px solid #e2e8f0;
   gap: 10px;
   transition: all 0.15s ease;
-}
 
-.mod-item-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  &:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
 }
 
 .mod-priority-badge {
@@ -116,15 +107,15 @@
   border-radius: 6px;
   border: 1px solid rgba(26, 115, 232, 0.18);
   flex-shrink: 0;
+
+  .mod-item-card.is-minimod & {
+    color: #137333;
+    background: #e6f4ea;
+    border-color: rgba(19, 115, 51, 0.2);
+  }
 }
 
-.mod-item-card.is-minimod .mod-priority-badge {
-  color: #137333;
-  background: #e6f4ea;
-  border-color: rgba(19, 115, 51, 0.2);
-}
-
-/* Tarjetas y Matriz de Colisiones VFS */
+// Colisiones VFS
 .vfs-collision-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -134,21 +125,13 @@
   flex-direction: column;
   gap: 6px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+
+  &.critical { border-left: 4px solid #ef4444; }
+  &.resolved { border-left: 4px solid #16a34a; }
+  &.warning { border-left: 4px solid #f59e0b; }
 }
 
-.vfs-collision-card.critical {
-  border-left: 4px solid #ef4444;
-}
-
-.vfs-collision-card.resolved {
-  border-left: 4px solid #16a34a;
-}
-
-.vfs-collision-card.warning {
-  border-left: 4px solid #f59e0b;
-}
-
-/* Indicador de Estado Minimod P999 */
+// Minimod P999
 .minimod-status-panel {
   display: flex;
   align-items: center;
@@ -158,14 +141,14 @@
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   margin-top: 8px;
+
+  &.active {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
 }
 
-.minimod-status-panel.active {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
-}
-
-/* Monitor de RAM LAA Desglosado */
+// RAM LAA
 .ram-breakdown-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -184,8 +167,7 @@
   font-size: 0.72rem;
 }
 
-/* === Clases reutilizables para mods.view (sustituyen inline style="") === */
-
+// Clases reutilizables
 .mod-card-panel {
   padding: 14px 18px;
   background: #ffffff;
@@ -200,10 +182,8 @@
   margin-bottom: 10px;
   gap: 8px;
   flex-wrap: wrap;
-}
 
-.mod-card-header--top {
-  align-items: flex-start;
+  &--top { align-items: flex-start; }
 }
 
 .mod-card-title {
@@ -256,13 +236,13 @@
   display: flex;
   gap: 8px;
   margin-top: 8px;
-}
 
-.mod-input-row .reagle-input {
-  flex: 1;
-  height: 34px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  .reagle-input {
+    flex: 1;
+    height: 34px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
 }
 
 .mod-platform-grid {
@@ -296,14 +276,9 @@
   font-size: 1.1rem;
   font-weight: 800;
   color: #0f172a;
-}
 
-.mod-collision-metric-value.primary {
-  color: #1a73e8;
-}
-
-.mod-collision-metric-value.success {
-  color: #16a34a;
+  &.primary { color: #1a73e8; }
+  &.success { color: #16a34a; }
 }
 
 .mod-collision-list {
@@ -313,21 +288,9 @@
   font-size: 0.78rem;
 }
 
-.mod-collision-file {
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.mod-collision-desc {
-  font-size: 0.72rem;
-  color: #64748b;
-}
-
-.mod-collision-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.mod-collision-file { font-weight: 700; color: #0f172a; }
+.mod-collision-desc { font-size: 0.72rem; color: #64748b; }
+.mod-collision-row { display: flex; justify-content: space-between; align-items: center; }
 
 .mod-injector-grid {
   display: grid;
@@ -335,28 +298,10 @@
   gap: 12px;
 }
 
-.mod-injector-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mod-injector-desc {
-  font-size: 0.72rem;
-  color: #64748b;
-  margin-top: 4px;
-}
-
-.mod-minimod-title {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.mod-minimod-detail {
-  font-size: 0.68rem;
-  color: #64748b;
-}
+.mod-injector-header { display: flex; justify-content: space-between; align-items: center; }
+.mod-injector-desc { font-size: 0.72rem; color: #64748b; margin-top: 4px; }
+.mod-minimod-title { font-size: 0.78rem; font-weight: 700; color: #0f172a; }
+.mod-minimod-detail { font-size: 0.68rem; color: #64748b; }
 
 .mod-custom-name-group {
   margin-top: 10px;
@@ -365,38 +310,12 @@
   gap: 6px;
 }
 
-.mod-custom-name-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #475569;
-}
+.mod-custom-name-label { font-size: 0.72rem; font-weight: 700; color: #475569; }
 
-.mod-ram-info {
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.mod-ram-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-.mod-ram-track {
-  height: 8px;
-  background: #e2e8f0;
-  border-radius: 9999px;
-  overflow: hidden;
-}
-
-.mod-ram-fill {
-  height: 100%;
-  background: #16a34a;
-  transition: width 0.3s ease;
-}
+.mod-ram-info { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.mod-ram-row { display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 700; }
+.mod-ram-track { height: 8px; background: #e2e8f0; border-radius: 9999px; overflow: hidden; }
+.mod-ram-fill { height: 100%; background: #16a34a; transition: width 0.3s ease; }
 
 .mod-ram-risk {
   font-size: 0.72rem;
@@ -404,24 +323,10 @@
   padding: 6px 10px;
   border-radius: 8px;
   margin-top: 4px;
-}
 
-.mod-ram-risk.safe {
-  color: #16a34a;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-}
-
-.mod-ram-risk.warning {
-  color: #f59e0b;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-}
-
-.mod-ram-risk.danger {
-  color: #ef4444;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  &.safe { color: #16a34a; background: #f0fdf4; border: 1px solid #bbf7d0; }
+  &.warning { color: #f59e0b; background: #fffbeb; border: 1px solid #fde68a; }
+  &.danger { color: #ef4444; background: #fef2f2; border: 1px solid #fecaca; }
 }
 
 .mod-active-list {
@@ -433,18 +338,11 @@
 }
 
 @media (max-width: 1100px) {
-  .mod-injector-grid {
-    grid-template-columns: 1fr;
-  }
-  .mod-collision-metrics {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .mod-btn-group {
-    gap: 4px;
-  }
+  .mod-injector-grid { grid-template-columns: 1fr; }
+  .mod-collision-metrics { grid-template-columns: repeat(2, 1fr); }
+  .mod-btn-group { gap: 4px; }
 }
 
-/* Override: botones dentro de mods NO se colapsan a círculos */
 @media (max-width: 1140px) {
   #tab-mods .btn-reagle-action,
   #tab-mods .btn-row-action {
@@ -454,6 +352,7 @@
     border-radius: 8px;
     font-size: 0.72rem;
   }
+
   #tab-mods .btn-reagle-action span {
     max-width: none;
     opacity: 1;

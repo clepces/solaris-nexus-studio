@@ -37,15 +37,15 @@
                 </p>
               </div>
               <div class="mod-btn-group">
-                <button class="btn-row-action" onclick="ModManagerModule.scanMods();" title="Escanear mods instalados">
+                <button class="btn-row-action" data-action="mod:scan" title="Escanear mods instalados">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
                   Escanear Directorio
                 </button>
-                <button class="btn-row-action" onclick="ModManagerModule.restoreVanilla();" title="Restaurar a Vanilla oficial">
+                <button class="btn-row-action" data-action="mod:restore-vanilla" title="Restaurar a Vanilla oficial">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
                   Restaurar Vanilla
                 </button>
-                <button class="btn-reagle-action btn-reagle-primary" onclick="ModManagerModule.saveVfsHierarchy();" title="Guardar cambios con respaldo atómico .bak">
+                <button class="btn-reagle-action btn-reagle-primary" data-action="mod:save-vfs" title="Guardar cambios con respaldo atómico .bak">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
                   <span>Guardar VFS (.bak)</span>
                 </button>
@@ -75,7 +75,7 @@
 
             <div class="mod-input-row">
               <input type="text" id="input-custom-game-path" aria-label="Introduce la ruta física del juego" class="reagle-input" value="C:\Games\Sins of a Solar Empire Rebellion" placeholder="Introduce la ruta física del juego...">
-              <button class="btn-reagle-action btn-reagle-primary" id="btn-validate-custom-path" onclick="ModManagerModule.validateCustomGamePath();">
+              <button class="btn-reagle-action btn-reagle-primary" id="btn-validate-custom-path" data-action="mod:validate-custom-path">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
                 <span>Validar y Vincular Ruta</span>
               </button>
@@ -102,7 +102,7 @@
                   Escaneo automático de rutas estándar registradas en el perfil de usuario del sistema operativo.
                 </p>
               </div>
-              <button class="btn-row-action" id="btn-scan-platforms" onclick="ModManagerModule.detectPlatforms();">
+              <button class="btn-row-action" id="btn-scan-platforms" data-action="mod:detect-platforms">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
                 Re-escanear Plataformas
               </button>
@@ -122,7 +122,7 @@
                 </p>
               </div>
               <div class="mod-btn-group">
-                <button class="btn-row-action" onclick="ModManagerModule.checkVfsCollisions();">
+                <button class="btn-row-action" data-action="mod:check-collisions">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                   Re-auditar Colisiones
                 </button>
@@ -193,7 +193,7 @@
                 <div class="mod-minimod-title" id="minimod-current-title">Minimod: [ES] Idioma Español Rebellion</div>
                 <div class="mod-minimod-detail" id="minimod-current-desc">Prioridad asignada: P999 · Consumo estimado: 15 MB RAM</div>
               </div>
-              <button class="btn-row-action" id="btn-toggle-minimod-p999" onclick="ModManagerModule.toggleMinimodP999();">
+              <button class="btn-row-action" id="btn-toggle-minimod-p999" data-action="mod:toggle-minimod">
                 ⚡ Inyectar Minimod
               </button>
             </div>

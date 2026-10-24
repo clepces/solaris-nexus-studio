@@ -137,7 +137,8 @@ solaris-nexus-studio/
 │   │       ├── localization.types.ts           # Interfaces para entradas léxicas, diccionarios y TM
 │   │       └── mod-vfs.types.ts                # Interfaces para manifiestos de mods, VFS y colisiones
 │   │
-│   └── scss/                                   # [ACTIVO] Arquitectura de estilos SASS (Patrón 7-1)
+│   ├── interface/                              # [ACTIVO] Fuentes de Diseño e Interfaz de Usuario
+│   │   └── scss/                               # [ACTIVO] Arquitectura de estilos SASS (Patrón 7-1)
 │       ├── abstracts/
 │       │   ├── _functions.scss                 # Funciones de cálculo px a rem y contraste
 │       │   ├── _mixins.scss                    # Mixins de flexbox, grid, breakpoints y glassmorphism
