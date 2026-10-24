@@ -1,9 +1,424 @@
-// Editor de diccionarios .str
+// ==============================================================================
+// SOLARIS NEXUS STUDIO - TRANSLATION STUDIO (SASS 7-1 PAGE COMPONENT)
+// Arquitectura 5 Subpestañas: Workspace, Editor (Live), Telemetría, Memoria Cruzada, Agents
+// ==============================================================================
+
 #tab-translation {
-  .translation-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;
+
+  // Barra de Navegación de Subpestañas
+  .str-subtab-bar {
+    display: flex;
+    gap: 6px;
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-inset);
+    padding: 6px 8px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .str-subtab-btn {
+    background: transparent;
+    border: none;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 7px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+
+    svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    &.active {
+      color: var(--text-blue);
+      background: #ffffff;
+      box-shadow: var(--neu-shadow-pill-active);
+    }
+  }
+
+  // Contenedor de Paneles
+  .str-subtab-pane {
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    animation: paneFadeSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+    &.active {
+      display: flex;
+    }
+  }
+
+  // --- 1. SUBPESTAÑA: WORKSPACE ---
+  .str-workspace-hero {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(206, 210, 216, 0.6) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: var(--neu-shadow-card-sm);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .str-workspace-greeting {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    gap: 4px;
+
+    .title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .desc {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      line-height: 1.4;
+    }
+  }
+
+  .str-workspace-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .str-workspace-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px;
+  }
+
+  // Tarjeta de Proyecto .str
+  .str-project-card {
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-card);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
     gap: 12px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 12px 12px 24px #bcc1cb, -12px -12px 24px #ffffff;
+    }
+
+    &.active-project {
+      border: 1.5px solid var(--text-blue);
+      box-shadow: var(--neu-shadow-inset);
+    }
+  }
+
+  .str-project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+
+    .name {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .path {
+      font-size: 0.70rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+  }
+
+  .str-progress-track {
+    height: 8px;
+    background: var(--neu-slot-bg);
+    box-shadow: var(--neu-shadow-inset);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .str-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #059669);
+    border-radius: 9999px;
+    transition: width 0.4s ease;
+  }
+
+  .str-project-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .str-project-btn-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 4px;
+    flex-wrap: wrap;
+
+    .btn-edit-live {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+
+  // Lista de Archivos Físicos Descubiertos
+  .str-discovered-card {
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-card-sm);
+    border-radius: 14px;
+    padding: 14px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+  }
+
+  .str-file-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(160, 168, 180, 0.15);
+    font-size: 0.74rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  // Bloque Educativo / Formativo
+  .str-guide-panel {
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-inset);
+    border-radius: 16px;
+    padding: 16px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .str-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .str-guide-card {
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    h4 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    p {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin: 0;
+    }
+  }
+
+  // --- 2. SUBPESTAÑA: EDITOR EN VIVO ---
+  .str-live-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-card-sm);
+    border-radius: 14px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .str-live-context-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    .mod-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .file-tag {
+      font-size: 0.70rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+  }
+
+  // --- 3. SUBPESTAÑA: TELEMETRÍA ---
+  .str-telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .str-telemetry-box {
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-card-sm);
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .label {
+      font-size: 0.70rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+    }
+
+    .desc {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+  }
+
+  // --- 4. SUBPESTAÑA: MEMORIA CRUZADA (TM) ---
+  .str-tm-card {
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-card);
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+  }
+
+  .str-tm-search-row {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  // --- 5. SUBPESTAÑA: AGENTS (EXPERIMENTALES) ---
+  .str-agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .str-agent-card {
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-card);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+
+    &.beta-agent {
+      border-top: 3px solid #2563eb;
+    }
+  }
+
+  .str-agent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+  }
+
+  .str-agent-desc {
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+  }
+
+  .str-agent-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid rgba(160, 168, 180, 0.15);
+  }
+
+  // Responsividad total
+  @media (max-width: 900px) {
+    .str-workspace-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .str-agents-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .str-live-toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 }

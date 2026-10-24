@@ -61,8 +61,26 @@ final class ProjectRepository
     {
         $stmt = $this->pdo->prepare("SELECT * FROM tbl_projects WHERE project_id = :id");
         $stmt->execute([':id' => $projectId]);
-        $row = $stmt->fetch();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row ?: null;
+    }
+
+    /**
+     * Lista todos los proyectos con métricas agregadas reales de SQLite3.
+     */
+    public function listProjects(): array
+    {
+        $stmt = $this->pdo->query("
+            SELECT p.*,
+                   COUNT(e.entry_id) as total_entries,
+                   COALESCE(SUM(CASE WHEN e.status = 'TRANSLATED' THEN 1 ELSE 0 END), 0) as translated_count,
+                   COALESCE(SUM(CASE WHEN e.has_tokens = 1 THEN 1 ELSE 0 END), 0) as tokens_count
+            FROM tbl_projects p
+            LEFT JOIN tbl_string_entries e ON p.project_id = e.project_id
+            GROUP BY p.project_id
+            ORDER BY p.updated_at DESC
+        ");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
     /**

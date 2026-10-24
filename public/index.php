@@ -18,6 +18,8 @@ require_once dirname(__DIR__) . '/config/app-config.php';
 require_once dirname(__DIR__) . '/config/database-config.php';
 
 // Repositorios y Servicios de Dominio
+require_once dirname(__DIR__) . '/src/backend/repositories/project-repository.php';
+require_once dirname(__DIR__) . '/src/backend/repositories/translation-memory-repo.php';
 require_once dirname(__DIR__) . '/src/backend/repositories/entity-catalog-repo.php';
 require_once dirname(__DIR__) . '/src/backend/repositories/execution-repository.php';
 require_once dirname(__DIR__) . '/src/backend/services/system-scanner-service.php';
@@ -85,6 +87,12 @@ try {
     $router->post('/api/engine/convert', fn() => json((new SystemController(null, $logger))->convertResource($payload, $config)));
 
     // Endpoints de Cadenas y Localización (.str)
+    $router->get('/api/strings/workspace', fn() => json((new StringController(null, null, $logger))->workspace($config)));
+    $router->get('/api/strings/project-strings', fn() => json((new StringController(null, null, $logger))->getProjectStrings($_GET, $config)));
+    $router->post('/api/strings/save-entry', fn() => json((new StringController(null, null, $logger))->saveEntry($payload, $config)));
+    $router->get('/api/strings/tm-stats', fn() => json((new StringController(null, null, $logger))->getTmStats($config)));
+    $router->post('/api/strings/suggest-tm', fn() => json((new StringController(null, null, $logger))->suggestTm($payload, $config)));
+    $router->post('/api/strings/auto-propagate', fn() => json((new StringController(null, null, $logger))->autoPropagate($payload, $config)));
     $router->post('/api/strings/parse', fn() => json((new StringController(null, null, $logger))->parse($payload)));
     $router->post('/api/strings/validate', fn() => json((new StringController(null, null, $logger))->validateEntry($payload)));
     $router->post('/api/strings/export', fn() => json((new StringController(null, null, $logger))->export($payload)));

@@ -116,4 +116,50 @@ final class TranslationMemoryRepo
             'remainingPending' => count($untranslated) - $propagatedCount,
         ];
     }
+
+    /**
+     * Retorna métricas cuantitativas reales del banco relacional de memoria de traducción.
+     */
+    public function getStats(): array
+    {
+        $stmt = $this->pdo->query("
+            SELECT COUNT(*) as total_segments,
+                   COALESCE(SUM(usage_count), 0) as total_reuses,
+                   COALESCE(SUM(CASE WHEN verified = 1 THEN 1 ELSE 0 END), 0) as verified_count
+            FROM tbl_translation_memory
+        ");
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $recentStmt = $this->pdo->query("
+            SELECT tm_id, source_text, translated_text, context_tag, usage_count, verified, created_at
+            FROM tbl_translation_memory
+            ORDER BY tm_id DESC
+            LIMIT 15
+        ");
+        $recent = $recentStmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+
+        return [
+            'total_segments' => (int)($res['total_segments'] ?? 0),
+            'total_reuses' => (int)($res['total_reuses'] ?? 0),
+            'verified_count' => (int)($res['verified_count'] ?? 0),
+            'recent' => $recent,
+        ];
+    }
+
+    /**
+     * Búsqueda difusa o parcial de concordancias en la memoria de traducción.
+     */
+    public function search(string $query, int $limit = 20): array
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT * FROM tbl_translation_memory 
+            WHERE source_text LIKE :q OR translated_text LIKE :q 
+            ORDER BY usage_count DESC 
+            LIMIT :limit
+        ");
+        $stmt->bindValue(':q', '%' . $query . '%');
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
 }
