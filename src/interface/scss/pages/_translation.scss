@@ -498,6 +498,299 @@
     border: 1px solid rgba(255, 255, 255, 0.6);
   }
 
+  // ── Discovered Files: Header Actions ──
+  .str-disc-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .btn-mini-pill {
+    font-size: 0.66rem !important;
+    padding: 3px 10px !important;
+    border-radius: 9999px !important;
+    white-space: nowrap;
+  }
+
+  // ── Test Fixtures Panel ──
+  .str-test-fixtures-panel {
+    background: var(--neu-slot-bg, #cfd4db);
+    box-shadow: var(--neu-shadow-inset);
+    border-radius: 10px;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+
+    .str-test-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+  }
+
+  // ── Discovered Tabs (Idiomas Base | Mods) ──
+  .str-disc-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--neu-slot-bg, #cfd4db);
+    box-shadow: var(--neu-shadow-inset);
+    border-radius: 10px;
+    padding: 3px 4px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+  }
+
+  .str-disc-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 0.70rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 5px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+
+    &.active {
+      background: #ffffff;
+      color: var(--text-blue);
+      box-shadow: 2px 2px 6px #bcc1cb, -2px -2px 6px #ffffff;
+    }
+
+    .disc-tab-count {
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--text-blue);
+      font-size: 0.60rem;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 9999px;
+    }
+  }
+
+  .str-disc-pane {
+    &.active {
+      display: block;
+    }
+  }
+
+  // ── Tarjeta de Idioma Base ──
+  .str-lang-card {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 5px;
+
+    &:hover {
+      background: #ffffff;
+      transform: translateX(2px);
+    }
+
+    .lang-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .lang-flag {
+        font-size: 1.15rem;
+        flex-shrink: 0;
+      }
+
+      .lang-meta {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .lang-name {
+          font-weight: 800;
+          font-size: 0.78rem;
+          color: var(--text-main);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .lang-locale-badge {
+          background: rgba(37, 99, 235, 0.1);
+          color: var(--text-blue);
+          font-size: 0.60rem;
+          font-weight: 800;
+          padding: 1px 6px;
+          border-radius: 9999px;
+          text-transform: uppercase;
+          flex-shrink: 0;
+        }
+      }
+
+      .lang-size {
+        font-family: var(--font-mono);
+        font-size: 0.64rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+    }
+
+    .lang-card-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  // ── Efecto Marquee para Paths Largos ──
+  .lang-path-marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+    background: var(--neu-slot-bg, #cfd4db);
+    border-radius: 6px;
+    padding: 3px 8px;
+    box-shadow: inset 1px 1px 3px #b4b9c2, inset -1px -1px 3px #ffffff;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    height: 18px;
+    line-height: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+
+    .marquee-inner {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marqueeScroll 18s linear infinite;
+      padding-right: 60px;
+    }
+  }
+
+  @keyframes marqueeScroll {
+    0%   { transform: translateX(10%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  // ── Grupo Expandible de Mod ──
+  .str-mod-group {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    margin-bottom: 5px;
+    overflow: hidden;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: #ffffff;
+    }
+  }
+
+  .str-mod-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+
+    &:hover {
+      background: rgba(37, 99, 235, 0.04);
+    }
+
+    .mod-header-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      flex: 1;
+
+      .mod-chevron {
+        stroke: var(--text-secondary);
+        stroke-width: 2.5;
+        fill: none;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        flex-shrink: 0;
+      }
+
+      .mod-name {
+        font-weight: 700;
+        font-size: 0.74rem;
+        color: var(--text-main);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .mod-header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+  }
+
+  .str-mod-files-collapse {
+    border-top: 1px solid rgba(160, 168, 180, 0.15);
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: var(--neu-slot-bg, #cfd4db);
+    box-shadow: var(--neu-shadow-inset);
+  }
+
+  .str-mod-file-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px 8px;
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+
+    .file-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .file-name {
+        font-weight: 700;
+        font-size: 0.72rem;
+        color: var(--text-main);
+      }
+
+      .file-size {
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
+    }
+
+    .btn-reagle {
+      align-self: flex-end;
+      margin-top: 2px;
+    }
+  }
+
   .str-guide-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

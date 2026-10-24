@@ -15,6 +15,7 @@ window.TranslationStudioModule = (() => {
   let currentProject = null;
   let workspaceData = null;
   const changeHistory = [];
+  let _initialized = false;
 
   function getCount() {
     return state.allEntries ? state.allEntries.length : 0;
@@ -114,34 +115,128 @@ window.TranslationStudioModule = (() => {
   }
 
   /**
-   * Renderiza la lista de archivos .str detectados físicamente en disco.
+   * Renderiza los archivos .str detectados categorizados: Idiomas Base, Mods, y Test Fixtures.
    */
-  function renderDiscoveredFiles(files) {
-    const list = document.getElementById('str-discovered-files-list');
+  function renderDiscoveredFiles(data) {
     const badge = document.getElementById('workspace-discovered-count');
-    if (!list) return;
+    const baseLangsList = document.getElementById('str-base-langs-list');
+    const modsList = document.getElementById('str-mods-list');
+    const testList = document.getElementById('str-test-fixtures-list');
+    const testPanel = document.getElementById('str-test-fixtures-panel');
+    const baseCountEl = document.getElementById('disc-tab-base-count');
+    const modsCountEl = document.getElementById('disc-tab-mods-count');
+    const testCountEl = document.getElementById('test-fixtures-count');
 
-    if (badge) badge.innerText = `${files ? files.length : 0} Archivos Físicos`;
+    if (!data || typeof data !== 'object') return;
 
-    if (!files || files.length === 0) {
-      list.innerHTML = `<div style="color: var(--text-muted); font-size: 0.72rem; padding: 10px; text-align: center;">No se encontraron archivos .str adicionales en las rutas estándar.</div>`;
-      return;
+    const baseLangs = data.base_languages || [];
+    const mods = data.mods || [];
+    const tests = data.test_fixtures || [];
+    const totalFiles = (data.total_base || 0) + (data.total_mods || 0);
+
+    if (badge) badge.innerText = `${totalFiles} Archivos`;
+    if (baseCountEl) baseCountEl.innerText = baseLangs.length;
+    if (modsCountEl) modsCountEl.innerText = mods.length;
+    if (testCountEl) testCountEl.innerText = tests.length;
+
+    // ── Idiomas Base ──
+    if (baseLangsList) {
+      if (baseLangs.length === 0) {
+        baseLangsList.innerHTML = '<div style="color: var(--text-muted); font-size: 0.72rem; padding: 10px; text-align: center;">No se encontraron idiomas base del juego.</div>';
+      } else {
+        baseLangsList.innerHTML = baseLangs.map(lang => {
+          const file = lang.files[0];
+          const sizeKb = file ? (file.size_bytes / 1024).toFixed(1) : '0';
+          return `
+            <div class="str-lang-card">
+              <div class="lang-card-header">
+                <span class="lang-flag">${lang.flag}</span>
+                <div class="lang-meta">
+                  <span class="lang-name">${lang.lang_name}</span>
+                  <span class="lang-locale-badge">${lang.locale}</span>
+                </div>
+                <span class="lang-size">${sizeKb} KB</span>
+              </div>
+              <div class="lang-path-marquee">
+                <div class="marquee-inner" title="${file ? file.path : ''}">${file ? file.path : ''}</div>
+              </div>
+              <div class="lang-card-actions">
+                <button class="btn-reagle btn-mini-pill" data-action="link-file" data-path="${file ? file.path : ''}" title="Vincular a proyecto de traducción">
+                  Vincular
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
     }
 
-    list.innerHTML = files.slice(0, 16).map(f => `
-      <div class="str-file-row">
-        <div class="file-info">
-          <span class="file-name" title="${f.filename}">${f.filename}</span>
-          <span class="file-path" title="${f.path}">${f.path}</span>
-        </div>
-        <div class="file-actions">
-          <span class="file-size">${(f.size_bytes / 1024).toFixed(1)} KB</span>
-          <button class="btn-reagle" style="padding: 3px 8px; font-size: 0.68rem;" data-action="link-file" data-path="${f.path}" title="Vincular a nuevo proyecto">
-            Vincular
-          </button>
-        </div>
-      </div>
-    `).join('');
+    // ── Mods ──
+    if (modsList) {
+      if (mods.length === 0) {
+        modsList.innerHTML = '<div style="color: var(--text-muted); font-size: 0.72rem; padding: 10px; text-align: center;">No se encontraron mods con archivos .str.</div>';
+      } else {
+        modsList.innerHTML = mods.map((mod, idx) => {
+          const fileCount = mod.files.length;
+          const totalSize = mod.files.reduce((sum, f) => sum + f.size_bytes, 0);
+          const filesHtml = mod.files.map(f => `
+            <div class="str-mod-file-row">
+              <div class="file-info">
+                <span class="file-name">${f.filename}</span>
+                <span class="file-size">${(f.size_bytes / 1024).toFixed(1)} KB</span>
+              </div>
+              <div class="lang-path-marquee">
+                <div class="marquee-inner" title="${f.path}">${f.path}</div>
+              </div>
+              <button class="btn-reagle btn-mini-pill" data-action="link-file" data-path="${f.path}">Vincular</button>
+            </div>
+          `).join('');
+
+          return `
+            <div class="str-mod-group" data-mod-index="${idx}">
+              <div class="str-mod-header" data-action="toggle-mod" data-mod-index="${idx}">
+                <div class="mod-header-left">
+                  <svg class="mod-chevron" viewBox="0 0 24 24" width="14" height="14"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <span class="mod-name" title="${mod.mod_name}">${mod.mod_name}</span>
+                </div>
+                <div class="mod-header-right">
+                  <span class="disc-tab-count">${fileCount} .str</span>
+                  <span class="file-size">${(totalSize / 1024).toFixed(0)} KB</span>
+                </div>
+              </div>
+              <div class="str-mod-files-collapse" id="mod-files-${idx}" style="display: none;">
+                ${filesHtml}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // ── Test Fixtures ──
+    if (testList) {
+      if (tests.length === 0) {
+        testList.innerHTML = '<div style="color: var(--text-muted); font-size: 0.72rem; padding: 6px; text-align: center;">No hay archivos .str de testing.</div>';
+      } else {
+        testList.innerHTML = tests.map(f => `
+          <div class="str-file-row">
+            <div class="file-info">
+              <span class="file-name" title="${f.filename}">${f.filename}</span>
+              <div class="lang-path-marquee">
+                <div class="marquee-inner" title="${f.path}">${f.path}</div>
+              </div>
+            </div>
+            <div class="file-actions">
+              <span class="file-size">${(f.size_bytes / 1024).toFixed(1)} KB</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // ── Tabs internas de idiomas/mods (se re-bindan desde renderDiscoveredFiles) ──
+    // Los listeners de disc-tabs se registran dentro de renderDiscoveredFiles para
+    // funcionar con contenido dinámico. Aquí solo va la delegación en contenedor estático.
   }
 
   /**
@@ -615,6 +710,38 @@ window.TranslationStudioModule = (() => {
   }
 
   /**
+   * Búsqueda de concordancias en la Memoria de Traducción (TM).
+   */
+  async function searchTm() {
+    const tmSearchInput = document.getElementById('tm-search-input');
+    const resultsContainer = document.getElementById('tm-search-results');
+    if (!tmSearchInput || !resultsContainer) return;
+
+    const query = tmSearchInput.value.trim();
+    if (!query) {
+      resultsContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 0.74rem;">Escribe un texto para buscar coincidencias en la memoria de traducción.</div>';
+      return;
+    }
+
+    try {
+      const res = await fetch('api/strings/tm-search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+      });
+      const json = await res.json();
+      if (json.success && json.data && json.data.results && json.data.results.length > 0) {
+        renderTmRecent(json.data.results);
+      } else {
+        resultsContainer.innerHTML = `<div style="color: var(--text-muted); font-size: 0.74rem;">No se encontraron coincidencias para "<strong>${query}</strong>".</div>`;
+      }
+    } catch (err) {
+      console.warn('[TranslationStudio] Error al buscar en TM:', err);
+      resultsContainer.innerHTML = '<div style="color: var(--text-danger); font-size: 0.74rem;">Error al conectar con el servicio de TM.</div>';
+    }
+  }
+
+  /**
    * Autopropagación masiva de memoria de traducción sobre cadenas pendientes.
    */
   async function autoPropagateTm() {
@@ -661,8 +788,59 @@ window.TranslationStudioModule = (() => {
    * Inicialización del módulo con delegación de eventos.
    */
   function init() {
+    if (_initialized) return;
+    _initialized = true;
+
     if (viewport) {
       viewport.addEventListener('scroll', renderVirtualGrid);
+    }
+
+    // ── Delegación en .str-discovered-card (toggle-mod, toggle-test-str, disc-tabs) ──
+    const discCard = document.querySelector('.str-discovered-card');
+    if (discCard) {
+      // Click delegation para expand/collapse de mods y test fixtures
+      discCard.addEventListener('click', (e) => {
+        const actionEl = e.target.closest('[data-action]');
+        if (actionEl) {
+          const act = actionEl.dataset.action;
+          if (act === 'toggle-mod' && actionEl.dataset.modIndex !== undefined) {
+            const collapseEl = document.getElementById('mod-files-' + actionEl.dataset.modIndex);
+            const group = actionEl.closest('.str-mod-group');
+            if (collapseEl) {
+              const isOpen = collapseEl.style.display !== 'none';
+              collapseEl.style.display = isOpen ? 'none' : 'block';
+              if (group) group.classList.toggle('expanded', !isOpen);
+            }
+            return;
+          }
+          if (act === 'toggle-test-str') {
+            const testPanel = document.getElementById('str-test-fixtures-panel');
+            if (testPanel) {
+              const isVisible = testPanel.style.display !== 'none';
+              testPanel.style.display = isVisible ? 'none' : 'block';
+              actionEl.classList.toggle('active', !isVisible);
+            }
+            return;
+          }
+        }
+
+        // Disc-tab switching (Idiomas Base / Mods)
+        const tabEl = e.target.closest('.str-disc-tab');
+        if (tabEl && tabEl.dataset.discTab) {
+          const tabId = tabEl.dataset.discTab;
+          discCard.querySelectorAll('.str-disc-tab').forEach(t => t.classList.remove('active'));
+          tabEl.classList.add('active');
+          discCard.querySelectorAll('.str-disc-pane').forEach(p => {
+            p.style.display = 'none';
+            p.classList.remove('active');
+          });
+          const targetPane = document.getElementById('str-disc-pane-' + tabId);
+          if (targetPane) {
+            targetPane.style.display = 'block';
+            targetPane.classList.add('active');
+          }
+        }
+      });
     }
 
     // Buscador y filtros

@@ -104,13 +104,13 @@ final class StringController
             $projects = $repo->listProjects();
         }
 
-        // Escanear archivos .str adicionales en el sistema de archivos real
-        $discoveredFiles = $this->scanFilesystemStrFiles($config);
+        // Escanear archivos .str adicionales en el sistema de archivos real (categorizado)
+        $discoveredData = $this->scanFilesystemStrFiles($config);
 
         return [
             'success' => true,
             'projects' => $projects,
-            'discovered_files' => $discoveredFiles,
+            'discovered_files' => $discoveredData,
             'total_projects' => count($projects),
             'database' => 'SQLite3 (storage/database.sqlite)',
         ];
@@ -287,33 +287,100 @@ final class StringController
     }
 
     /**
-     * Escanea archivos .str en disco en rutas directas (sin escaneo masivo bloqueante).
+     * Escanea archivos .str en disco y los devuelve categorizados:
+     *   - base_languages: Idiomas base del juego (Localizations/XX/String/)
+     *   - mods: Archivos de mods agrupados por nombre de mod
+     *   - test_fixtures: Archivos de testing del proyecto
      */
     private function scanFilesystemStrFiles(array $config): array
     {
-        $found = [];
-        $candidates = [
-            dirname(__DIR__, 3) . '/tests/fixtures/*.str',
-            dirname(__DIR__, 3) . '/storage/backups/*.str',
-            $config['sins']['install_path'] . '/String/*.str',
-            $config['sins']['install_path'] . '/Localizations/*/String/*.str',
-            $config['sins']['mods_path'] . '/*/String/*.str',
+        $installPath = str_replace('\\', '/', $config['sins']['install_path'] ?? '');
+        $modsPath    = str_replace('\\', '/', $config['sins']['mods_path'] ?? '');
+        $projectRoot = str_replace('\\', '/', dirname(__DIR__, 3));
+
+        // ── Mapa canónico de idiomas base de Sins of a Solar Empire: Rebellion ──
+        $langMap = [
+            'de'    => ['name' => 'Deutsch',             'flag' => '🇩🇪'],
+            'en'    => ['name' => 'English',             'flag' => '🇺🇸'],
+            'fr'    => ['name' => 'Français',            'flag' => '🇫🇷'],
+            'it'    => ['name' => 'Italiano',            'flag' => '🇮🇹'],
+            'ja'    => ['name' => '日本語',               'flag' => '🇯🇵'],
+            'pl'    => ['name' => 'Polski',              'flag' => '🇵🇱'],
+            'ru'    => ['name' => 'Русский',             'flag' => '🇷🇺'],
+            'zh-CN' => ['name' => '简体中文',             'flag' => '🇨🇳'],
         ];
 
-        foreach ($candidates as $pattern) {
-            $matches = glob($pattern, GLOB_NOSORT) ?: [];
-            foreach ($matches as $filePath) {
-                if (is_file($filePath)) {
-                    $found[] = [
-                        'filename' => basename($filePath),
-                        'path' => str_replace('\\', '/', $filePath),
-                        'size_bytes' => filesize($filePath) ?: 0,
-                        'modified_at' => date('c', filemtime($filePath) ?: time()),
+        // ── 1. Idiomas Base (Localizations/{locale}/String/*.str) ──
+        $baseLanguages = [];
+        $basePattern = $installPath . '/Localizations/*/String/*.str';
+        foreach (glob($basePattern, GLOB_NOSORT) ?: [] as $filePath) {
+            $normalized = str_replace('\\', '/', $filePath);
+            if (preg_match('#/Localizations/([^/]+)/String/([^/]+)$#', $normalized, $m)) {
+                $locale   = $m[1];
+                $filename = $m[2];
+                $info = $langMap[$locale] ?? ['name' => ucfirst($locale), 'flag' => '🌐'];
+
+                if (!isset($baseLanguages[$locale])) {
+                    $baseLanguages[$locale] = [
+                        'locale'      => $locale,
+                        'lang_name'   => $info['name'],
+                        'flag'        => $info['flag'],
+                        'files'       => [],
                     ];
                 }
+                $baseLanguages[$locale]['files'][] = [
+                    'filename'    => $filename,
+                    'path'        => $normalized,
+                    'size_bytes'  => filesize($filePath) ?: 0,
+                    'modified_at' => date('c', filemtime($filePath) ?: time()),
+                ];
             }
         }
 
-        return $found;
+        // ── 2. Mods (mods_path/{ModName}/String/*.str) ──
+        $mods = [];
+        $modsPattern = $modsPath . '/*/String/*.str';
+        foreach (glob($modsPattern, GLOB_NOSORT) ?: [] as $filePath) {
+            $normalized = str_replace('\\', '/', $filePath);
+            if (preg_match('#/([^/]+)/String/([^/]+)$#', $normalized, $m)) {
+                $modName  = $m[1];
+                $filename = $m[2];
+
+                if (!isset($mods[$modName])) {
+                    $mods[$modName] = [
+                        'mod_name' => $modName,
+                        'files'    => [],
+                    ];
+                }
+                $mods[$modName]['files'][] = [
+                    'filename'    => $filename,
+                    'path'        => $normalized,
+                    'size_bytes'  => filesize($filePath) ?: 0,
+                    'modified_at' => date('c', filemtime($filePath) ?: time()),
+                ];
+            }
+        }
+
+        // ── 3. Test Fixtures (tests/fixtures/*.str) ──
+        $testFixtures = [];
+        $testPattern = $projectRoot . '/tests/fixtures/*.str';
+        foreach (glob($testPattern, GLOB_NOSORT) ?: [] as $filePath) {
+            $normalized = str_replace('\\', '/', $filePath);
+            $testFixtures[] = [
+                'filename'    => basename($filePath),
+                'path'        => $normalized,
+                'size_bytes'  => filesize($filePath) ?: 0,
+                'modified_at' => date('c', filemtime($filePath) ?: time()),
+            ];
+        }
+
+        return [
+            'base_languages' => array_values($baseLanguages),
+            'mods'           => array_values($mods),
+            'test_fixtures'  => $testFixtures,
+            'total_base'     => count($baseLanguages),
+            'total_mods'     => array_sum(array_map(fn($m) => count($m['files']), $mods)),
+            'total_tests'    => count($testFixtures),
+        ];
     }
 }

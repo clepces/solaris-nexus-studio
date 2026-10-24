@@ -9,6 +9,9 @@
 // 2. Animaciones y Transiciones Suaves
 @use "base/animations";
 
+// 2.1. Scrollbar Global Neumórfico
+@use "base/scrollbar";
+
 // 3. Componentes Modulares del Kit UI
 @use "components/inputs";
 @use "components/datatable-virtual";

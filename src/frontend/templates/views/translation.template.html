@@ -119,19 +119,57 @@
               </div>
             </div>
 
-            <!-- Columna Lateral: Archivos Físicos Descubiertos en el Directorio del Juego y Mods -->
+            <!-- Columna Lateral: Archivos .str Físicos Detectados (Categorizado) -->
             <div class="str-workspace-col-side">
               <div class="str-discovered-card">
                 <div class="str-section-header">
                   <div>
-                    <h4 class="str-section-title">Archivos .str Físicos Detectados</h4>
-                    <p class="str-section-desc">Exploración directa en rutas de instalación y mods.</p>
+                    <h4 class="str-section-title">Archivos .str Detectados</h4>
+                    <p class="str-section-desc">Exploración de rutas de instalación y mods.</p>
                   </div>
-                  <span class="metric-badge-pill neutral" id="workspace-discovered-count">0 Archivos</span>
+                  <div class="str-disc-header-actions">
+                    <button class="btn-reagle btn-mini-pill" id="btn-show-test-str" data-action="toggle-test-str" title="Mostrar archivos .str de testing">
+                      🧪 Test STR
+                    </button>
+                    <span class="metric-badge-pill neutral" id="workspace-discovered-count">0 Archivos</span>
+                  </div>
                 </div>
+
+                <!-- Panel colapsable de Test Fixtures (oculto por defecto) -->
+                <div class="str-test-fixtures-panel" id="str-test-fixtures-panel" style="display: none;">
+                  <div class="str-test-header">
+                    <span>🧪 Archivos .str de Testing</span>
+                    <span class="metric-badge-pill" id="test-fixtures-count" style="background:#fef3c7; color:#92400e; font-size: 0.60rem;">0</span>
+                  </div>
+                  <div id="str-test-fixtures-list" class="str-files-list">
+                    <!-- Poblado por JS -->
+                  </div>
+                </div>
+
+                <!-- Vista Tabulada: Idiomas Base | Mods -->
+                <div class="str-disc-tabs">
+                  <button class="str-disc-tab active" data-disc-tab="base-langs" id="disc-tab-base">
+                    🌐 Idiomas Base
+                    <span class="disc-tab-count" id="disc-tab-base-count">0</span>
+                  </button>
+                  <button class="str-disc-tab" data-disc-tab="mods" id="disc-tab-mods">
+                    🧩 Mods
+                    <span class="disc-tab-count" id="disc-tab-mods-count">0</span>
+                  </button>
+                </div>
+
                 <div class="str-files-slot-container">
-                  <div id="str-discovered-files-list" class="str-files-list">
-                    <!-- Se puebla dinámicamente con archivos reales -->
+                  <!-- Panel Idiomas Base -->
+                  <div id="str-disc-pane-base-langs" class="str-disc-pane active">
+                    <div id="str-base-langs-list" class="str-files-list">
+                      <!-- Poblado dinámicamente con cards de idioma -->
+                    </div>
+                  </div>
+                  <!-- Panel Mods -->
+                  <div id="str-disc-pane-mods" class="str-disc-pane" style="display: none;">
+                    <div id="str-mods-list" class="str-files-list">
+                      <!-- Poblado dinámicamente con cards de mod expandibles -->
+                    </div>
                   </div>
                 </div>
               </div>
