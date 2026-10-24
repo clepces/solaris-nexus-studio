@@ -169,19 +169,17 @@ window.TranslationStudioModule = (() => {
         state.filteredEntries = state.allEntries;
 
         // Actualizar barra de contexto del Live Editor
-        const titleEl = document.getElementById('live-editor-project-title');
-        const fileEl = document.getElementById('live-editor-file-path');
-        const verEl = document.getElementById('live-editor-version-tag');
-        if (titleEl) titleEl.innerText = currentProject.name;
-        if (fileEl) fileEl.innerText = currentProject.target_file_path || currentProject.base_file_path;
-        if (verEl) verEl.innerText = currentProject.version || 'v1.85';
+        const navMod = document.getElementById('live-nav-mod-name');
+        const navFile = document.getElementById('live-nav-file-name');
+        if (navMod) navMod.innerText = currentProject.name;
+        if (navFile) navFile.innerText = currentProject.target_file_path || currentProject.base_file_path;
 
         // Actualizar métricas en Telemetría
         updateTelemetry();
 
         // Conmutar a la subpestaña Editor en Vivo si se solicitó
         if (switchToLiveTab) {
-          switchSubTab('subtab-str-live');
+          enterLiveEditor();
         } else {
           renderVirtualGrid();
         }
@@ -189,6 +187,34 @@ window.TranslationStudioModule = (() => {
     } catch (err) {
       console.warn('[TranslationStudio] Error al cargar cadenas de proyecto:', err);
     }
+  }
+
+  /**
+   * Entra al modo Editor en Vivo contextual: oculta pestañas normales y muestra [← Salir] [Workspace] > [Editor].
+   */
+  function enterLiveEditor() {
+    const normalGroup = document.getElementById('str-nav-normal-group');
+    const contextualGroup = document.getElementById('str-nav-contextual-group');
+    if (normalGroup) normalGroup.style.display = 'none';
+    if (contextualGroup) contextualGroup.style.display = 'flex';
+
+    document.querySelectorAll('.str-subtab-pane').forEach(pane => {
+      pane.classList.toggle('active', pane.id === 'subtab-str-live');
+    });
+
+    renderVirtualGrid();
+  }
+
+  /**
+   * Sale del modo Editor en Vivo y regresa al Workspace general restaurando la barra de pestañas.
+   */
+  function exitLiveEditor() {
+    const normalGroup = document.getElementById('str-nav-normal-group');
+    const contextualGroup = document.getElementById('str-nav-contextual-group');
+    if (normalGroup) normalGroup.style.display = 'flex';
+    if (contextualGroup) contextualGroup.style.display = 'none';
+
+    switchSubTab('subtab-str-workspace');
   }
 
   /**
@@ -583,7 +609,9 @@ window.TranslationStudioModule = (() => {
         if (!target) return;
         const action = target.dataset.action;
 
-        if (action === 'open-project' && target.dataset.projectId) {
+        if (action === 'exit-live-editor') {
+          exitLiveEditor();
+        } else if (action === 'open-project' && target.dataset.projectId) {
           selectProject(target.dataset.projectId, true);
         } else if (action === 'audit-project') {
           alert('Auditoría sintáctica: Cero colisiones de claves y encabezado NumStrings válido.');
@@ -604,6 +632,8 @@ window.TranslationStudioModule = (() => {
           applyFilters();
         } else if (action === 'telemetry:recheck') {
           updateTelemetry();
+        } else if (action === 'tm:search') {
+          searchTm();
         }
       });
     }

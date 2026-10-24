@@ -10,6 +10,7 @@
 @use "base/animations";
 
 // 3. Componentes Modulares del Kit UI
+@use "components/inputs";
 @use "components/datatable-virtual";
 @use "components/empty-state";
 @use "components/pagination";
@@ -19,3 +20,4 @@
 @use "pages/mods";
 @use "pages/entities";
 @use "pages/galaxy";
+@use "pages/translation";

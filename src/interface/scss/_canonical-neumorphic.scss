@@ -1310,10 +1310,12 @@ body {
 #tab-translation.view-panel {
   display: none;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
 }
 
 #tab-translation.view-panel.active {
