@@ -16,13 +16,16 @@
 }
 
 .view-panel {
-  display: none;
+  display: none !important;
   flex-direction: column;
   gap: 16px;
   flex: 1;
+  min-height: 0;
+  width: 100%;
 
   &.active {
-    display: flex;
+    display: flex !important;
+    animation: paneFadeSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 

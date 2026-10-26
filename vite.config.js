@@ -5,14 +5,16 @@ export default defineConfig({
   root: '.',
   publicDir: false,
   esbuild: {
+    target: 'esnext',
     tsconfigRaw: {
       compilerOptions: {
-        target: 'ES2022',
+        target: 'ESNext',
         useDefineForClassFields: true,
       },
     },
   },
   build: {
+    target: 'esnext',
     outDir: 'public/assets',
     emptyOutDir: false,
     rollupOptions: {

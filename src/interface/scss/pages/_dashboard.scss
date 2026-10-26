@@ -5,9 +5,12 @@
 // ==============================================================================
 
 #tab-dashboard {
-  display: flex;
   flex-direction: column;
   gap: 12px;
+
+  &.active {
+    display: flex !important;
+  }
 
   .dashboard-grid {
     display: grid;
