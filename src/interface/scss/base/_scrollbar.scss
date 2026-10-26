@@ -3,10 +3,12 @@
 // Estilo aplicado globalmente a todas las barras de desplazamiento de la app.
 // ==============================================================================
 
-// ── Webkit (Chrome, Edge, Safari, Opera) ──
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #b4b9c3 transparent;
+// ── Modern browsers (Firefox, Chrome 121+, Edge 121+) ──
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #b4b9c3 transparent;
+  }
 }
 
 ::-webkit-scrollbar {

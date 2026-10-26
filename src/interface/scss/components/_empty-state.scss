@@ -1,60 +1,68 @@
-// =============================================================================
+// ==============================================================================
 // SOLARIS NEXUS STUDIO - SASS 7-1: COMPONENTS / EMPTY STATE
-// =============================================================================
-@use "../abstracts/variables" as *;
+// Componente de estado vacío unificado
+// ==============================================================================
 
+.virtual-empty-state,
 .nexus-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 32px 16px;
+  min-height: 220px;
+  text-align: center;
+}
+
+.empty-state-card {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-card);
+  border-radius: 18px;
+  padding: 24px 28px;
+  max-width: 440px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 40px 24px;
-  text-align: center;
-  background: #ffffff;
-  border: 1px dashed #cbd5e1;
-  border-radius: 14px;
-  margin: 12px 0;
-  animation: paneFadeSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  gap: 10px;
+  border: 1px solid var(--neu-border-subtle);
+}
 
-  .nexus-empty-icon-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: #f1f5f9;
-    color: #64748b;
-    margin-bottom: 12px;
-  }
+.empty-state-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--color-blue);
+  background: rgba(37, 99, 235, 0.08);
+  padding: 2px 9px;
+  border-radius: 8px;
+}
 
-  .nexus-empty-icon {
-    width: 24px;
-    height: 24px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-  }
+.empty-state-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
 
-  .nexus-empty-glyph {
-    font-size: 26px;
-  }
+.empty-state-desc {
+  font-size: 0.80rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
 
-  .nexus-empty-title {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 4px;
-  }
-
-  .nexus-empty-desc {
+  code {
+    font-family: var(--font-mono);
+    background: var(--neu-slot-bg);
+    padding: 1px 5px;
+    border-radius: 5px;
     font-size: 0.74rem;
-    color: #64748b;
-    max-width: 420px;
-    line-height: 1.45;
   }
+}
 
-  .nexus-empty-btn {
-    margin-top: 14px;
-  }
+.empty-state-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
 }

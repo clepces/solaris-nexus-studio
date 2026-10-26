@@ -1,51 +1,132 @@
-// Botones corporativos Sci-Fi Neumórficos
+// ==============================================================================
+// SOLARIS NEXUS STUDIO - SASS 7-1: COMPONENTS / BUTTONS
+// Botones corporativos modulares (Reagle Button Suite)
+// Adaptable 100% a Modo Base (flat), Neumorphism y Glassmorphism
+// ==============================================================================
+
 .btn-reagle {
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-card-sm);
+  border: 1px solid var(--neu-border-subtle);
+  border-radius: 12px;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
-  border-radius: var(--radius-sm, 8px);
-  background: var(--neu-btn-bg, #1e2430);
-  box-shadow: var(--neu-shadow-btn, 2px 2px 5px rgba(0,0,0,0.4));
-  border: 1px solid rgba(255,255,255,0.06);
-  color: var(--text-main, #e2e8f0);
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--trans-fast, 0.15s ease);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
   user-select: none;
+  -webkit-user-select: none;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--text-secondary);
+    stroke-width: 2;
+    fill: none;
+    flex-shrink: 0;
+    transition: stroke 0.15s ease;
+  }
 
   &:hover {
-    background: var(--neu-btn-hover, #283040);
-    box-shadow: var(--neu-shadow-btn-hover, 3px 3px 8px rgba(0,0,0,0.5));
-    border-color: rgba(56,189,248,0.3);
+    box-shadow: var(--neu-shadow-card-hover);
+    transform: translateY(-1px);
+    color: var(--text-main);
+
+    svg {
+      stroke: var(--text-main);
+    }
   }
 
   &:active {
-    box-shadow: var(--neu-shadow-inset, inset 2px 2px 4px rgba(0,0,0,0.6));
+    box-shadow: var(--neu-shadow-inset-soft);
     transform: translateY(1px);
   }
 
   &.btn-reagle-primary {
-    background: linear-gradient(135deg, #0284c7, #0369a1);
-    color: #fff;
-    border-color: rgba(56,189,248,0.5);
+    color: var(--color-blue);
+    font-weight: 700;
 
-    &:hover {
-      background: linear-gradient(135deg, #0369a1, #075985);
-      border-color: #38bdf8;
+    svg {
+      stroke: var(--color-blue);
     }
   }
 
   &.btn-reagle-success {
-    background: linear-gradient(135deg, #059669, #047857);
-    color: #fff;
-    border-color: rgba(52,211,153,0.5);
+    color: var(--color-success);
+    font-weight: 700;
+
+    svg {
+      stroke: var(--color-success);
+    }
   }
 
   &.btn-reagle-danger {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-    color: #fff;
-    border-color: rgba(248,113,113,0.5);
+    color: var(--color-danger);
+    font-weight: 700;
+
+    svg {
+      stroke: var(--color-danger);
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+  }
+}
+
+.btn-icon-reagle {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: var(--neu-card-bg);
+  box-shadow: var(--neu-shadow-card-sm);
+  border: 1px solid var(--neu-border-subtle);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--text-main);
+    box-shadow: var(--neu-shadow-card-hover);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    box-shadow: var(--neu-shadow-inset-soft);
+    transform: scale(0.95);
+  }
+}
+
+.btn-mini-pill {
+  padding: 3px 8px;
+  font-size: 0.68rem;
+  border-radius: 6px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  border: 1px solid var(--neu-border-subtle);
+  background: var(--neu-slot-bg);
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: var(--color-blue);
+    color: #ffffff;
+    border-color: var(--color-blue);
   }
 }

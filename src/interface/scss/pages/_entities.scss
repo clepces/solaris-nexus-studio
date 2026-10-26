@@ -228,6 +228,149 @@
   }
 }
 
+.entity-catalog-card {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.entity-catalog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.entity-catalog-title {
+  font-size: 0.90rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.entity-search-wrap {
+  margin-bottom: 8px;
+}
+
+.entity-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(160, 168, 180, 0.2);
+  padding-bottom: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.entity-header-left {
+  min-width: 0;
+  flex: 1;
+}
+
+.entity-header-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entity-title-main {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.entity-role-text {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.entity-filepath-text {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.entity-header-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.entity-checksum-alert {
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  color: var(--text-danger);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entity-input-field {
+  width: 100%;
+  margin-top: 4px;
+  font-size: 0.90rem;
+  font-weight: 700;
+}
+
+.entity-param-help {
+  margin-top: 3px;
+}
+
+.entity-telemetry-hud-title {
+  font-size: 0.70rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.entity-metric-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.entity-subtab-content {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.entity-cost-label {
+  font-size: 0.70rem;
+  font-weight: 700;
+
+  &--credits { color: #d97706; }
+  &--metal { color: #4b5563; }
+  &--crystal { color: #2563eb; }
+  &--buildtime { color: #059669; }
+  &--supply { color: #7c3aed; }
+  &--research { color: var(--text-secondary); }
+}
+
+.cost-num {
+  &--credits { color: #b45309; }
+  &--metal { color: #374151; }
+  &--crystal { color: #1d4ed8; }
+  &--buildtime { color: #047857; }
+  &--supply { color: #6d28d9; }
+  &--research { color: var(--text-main); }
+}
+
+.entity-cost-desc {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+}
+
 // Armamento
 .entity-weapons-grid {
   display: flex;

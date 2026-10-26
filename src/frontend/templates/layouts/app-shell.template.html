@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-mode="light" data-theme="base">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solaris Nexus Studio - Clepces org. ltd</title>
+  <script>
+    (function() {
+      try {
+        const mode = localStorage.getItem('solaris_color_mode') || 'light';
+        const theme = localStorage.getItem('solaris_surface_theme') || 'base';
+        document.documentElement.setAttribute('data-mode', mode);
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="assets/css/main-theme.css?v=0.4.1">
 </head>
 <body>

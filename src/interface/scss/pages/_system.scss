@@ -1,0 +1,27 @@
+// ==============================================================================
+// SYSTEM HEALTH DIAGNOSTICS PAGE
+// ==============================================================================
+
+.system-card-panel {
+  width: 100%;
+  padding: 18px 22px;
+}
+
+.system-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.system-card-title {
+  font-size: 1.10rem;
+  font-weight: 800;
+  color: var(--text-color, #0f172a);
+}
+
+.system-card-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted, #64748b);
+  margin-top: 2px;
+}

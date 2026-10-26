@@ -21,12 +21,12 @@ export class ModalComponent {
       wrapper.className = 'modal-overlay';
       wrapper.innerHTML = `
         <div class="modal-card">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-blue);">${this.options.title}</h3>
+          <div class="modal-card-header">
+            <h3 class="modal-card-title">${this.options.title}</h3>
             <button class="btn-icon-reagle modal-close-btn">&times;</button>
           </div>
-          <div class="modal-body" style="margin: 14px 0;">${this.options.content}</div>
-          <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <div class="modal-body">${this.options.content}</div>
+          <div class="modal-card-btn-group modal-card-btn-group--right">
             <button class="btn-reagle modal-cancel-btn">${this.options.cancelLabel ?? 'Cancelar'}</button>
             <button class="btn-reagle btn-reagle-primary modal-confirm-btn">${this.options.confirmLabel ?? 'Aceptar'}</button>
           </div>
@@ -47,12 +47,12 @@ export class ModalComponent {
     }
 
     this.element = existing;
-    this.element.style.display = 'flex';
+    this.element.classList.add('active');
   }
 
   public close(): void {
     if (this.element) {
-      this.element.style.display = 'none';
+      this.element.classList.remove('active');
     }
   }
 }

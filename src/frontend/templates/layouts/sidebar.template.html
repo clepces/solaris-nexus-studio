@@ -42,7 +42,7 @@
             <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             <span>Studio Edition</span>
           </div>
-          <span class="sidebar-pill-badge" style="background: #1a73e8; color: #ffffff; font-weight: 700;">PRO</span>
+          <span class="sidebar-pill-badge sidebar-pill-badge--primary">PRO</span>
         </button>
       </div>
 
@@ -110,7 +110,7 @@
       <!-- Sección: History (Conectada a Bóveda & Diálogos Contextuales) -->
       <div class="sidebar-section-title">History</div>
       <div class="sidebar-items-list">
-        <div class="sidebar-nav-item" style="cursor: pointer;" id="btn-sidebar-recent" title="Ver archivos modificados recientemente">
+        <div class="sidebar-nav-item u-cursor-pointer" id="btn-sidebar-recent" title="Ver archivos modificados recientemente">
           <div class="sidebar-nav-left">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <span>Recently Edited</span>
@@ -123,7 +123,7 @@
             <svg viewBox="0 0 24 24"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><line x1="10" y1="12" x2="14" y2="12"></line></svg>
             <span>Archive (.bak)</span>
           </div>
-          <span class="sidebar-pill-badge" style="background:#d1fae5; color:#059669;">VAULT</span>
+          <span class="sidebar-pill-badge sidebar-pill-badge--success">VAULT</span>
         </button>
       </div>
 
@@ -158,7 +158,7 @@
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
               <span>EnabledMods.txt</span>
             </div>
-            <span class="sidebar-pill-badge" style="background: #f1f5f9; color: #64748b;">0 ACT</span>
+            <span class="sidebar-pill-badge sidebar-pill-badge--muted">0 ACT</span>
           </div>
         </div>
 
@@ -169,7 +169,7 @@
             <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
             <span>Sins Rebellion (Vanilla)</span>
           </div>
-          <span class="sidebar-pill-badge" style="background:#e6f4ea; color:#137333;">INSTALADO</span>
+          <span class="sidebar-pill-badge sidebar-pill-badge--success">INSTALADO</span>
         </div>
 
         <div class="tree-sub-group" id="tree-group-vanilla">
@@ -199,11 +199,11 @@
         </div>
 
         <!-- Panel Informativo de Inspección del Árbol (Sin saltos de vista desordenados) -->
-        <div id="tree-selection-inspector" style="margin-top: 8px; padding: 8px 10px; background: rgba(0,0,0,0.03); border-radius: 10px; font-size: 0.72rem; color: var(--text-secondary); display: none;">
-          <div><strong>Elemento:</strong> <span id="tree-sel-name" style="color: var(--text-main); font-weight:700;">-</span></div>
-          <div style="margin-top: 4px; display: flex; justify-content: space-between; align-items: center;">
-            <span id="tree-sel-type" style="font-family: var(--font-mono);">-</span>
-            <button class="btn-reagle" id="btn-tree-open-target" style="padding: 2px 8px; font-size: 0.68rem;">Abrir en Módulo →</button>
+        <div id="tree-selection-inspector" class="tree-selection-inspector">
+          <div><strong>Elemento:</strong> <span id="tree-sel-name" class="tree-sel-name">-</span></div>
+          <div class="tree-sel-meta">
+            <span id="tree-sel-type" class="tree-sel-type">-</span>
+            <button class="btn-reagle btn-tree-open" id="btn-tree-open-target">Abrir en Módulo →</button>
           </div>
         </div>
       </div>

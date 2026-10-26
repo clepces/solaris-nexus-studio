@@ -52,6 +52,7 @@
     align-items: center;
     gap: 4px;
     transition: all 0.15s ease;
+    -webkit-user-select: none;
     user-select: none;
     min-width: 28px;
     justify-content: center;

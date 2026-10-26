@@ -4,16 +4,16 @@
       <section id="tab-entities" class="view-panel">
         <div class="entity-layout-grid">
           <!-- Columna Izquierda: Catálogo de la Flota Espacial -->
-          <div class="reagle-card-panel" style="padding: 14px; display: flex; flex-direction: column;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <h3 style="font-size: 0.90rem; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+          <div class="reagle-card-panel entity-catalog-card">
+            <div class="entity-catalog-header">
+              <h3 class="entity-catalog-title">
                 🚀 Flota Espacial
               </h3>
               <span class="metric-badge-pill" id="entity-count-badge">5 Naves</span>
             </div>
 
             <!-- Búsqueda Rápida -->
-            <div class="reagle-search-inset" style="margin-bottom: 8px;">
+            <div class="reagle-search-inset entity-search-wrap">
               <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input type="text" id="entity-search-input" aria-label="Buscar por nave o rol" placeholder="Buscar por nave o rol...">
             </div>
@@ -31,28 +31,28 @@
           </div>
 
           <!-- Columna Derecha: Inspector & Editor Táctico -->
-          <div class="reagle-card-panel entity-form-container" id="entity-editor-form-panel" style="padding: 16px;">
+          <div class="reagle-card-panel entity-form-container" id="entity-editor-form-panel">
             <!-- Encabezado de la Nave Seleccionada -->
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 10px; gap: 10px; flex-wrap: wrap;">
-              <div style="min-width: 0; flex: 1;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <h3 id="selected-entity-title" style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0;">Acorazado Kol (TEC)</h3>
+            <div class="entity-header-row">
+              <div class="entity-header-left">
+                <div class="entity-header-title-row">
+                  <h3 id="selected-entity-title" class="entity-title-main">Acorazado Kol (TEC)</h3>
                   <span class="entity-faction-tag tag-tec" id="selected-entity-faction-tag">TEC</span>
                   <span class="metric-badge-pill" id="selected-entity-badge">CANÓNICO 1.85</span>
                 </div>
-                <div id="selected-entity-role" style="font-size: 0.74rem; color: var(--text-secondary); margin-top: 3px;">TEC Loyalists · Nave Insignia de Combate Pesado</div>
-                <div id="selected-entity-filepath" style="font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px;">GameInfo/CAPITALSHIP_TECHBATTLESHIP.entity</div>
+                <div id="selected-entity-role" class="entity-role-text">TEC Loyalists · Nave Insignia de Combate Pesado</div>
+                <div id="selected-entity-filepath" class="entity-filepath-text">GameInfo/CAPITALSHIP_TECHBATTLESHIP.entity</div>
               </div>
 
               <!-- Acciones Superiores -->
-              <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
+              <div class="entity-header-actions">
                 <button class="btn-reagle" id="btn-reset-entity" title="Restablecer valores vanilla de fábrica">🔄 Vanilla</button>
                 <button class="btn-reagle btn-reagle-success" id="btn-save-entity-action">💾 Guardar Sandbox</button>
               </div>
             </div>
 
             <!-- Aviso de Cheksum Multijugador -->
-            <div style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.2); border-radius: 10px; padding: 6px 12px; font-size: 0.72rem; color: var(--text-danger); display: flex; align-items: center; gap: 8px;">
+            <div class="entity-checksum-alert">
               <span>⚠️</span>
               <div>
                 <strong>AVISO DE CHECKSUM:</strong> Modificar atributos altera el hash SHA-256 en partidas multijugador online. Válido para escaramuzas Sandbox y desarrollo de Mods.
@@ -68,7 +68,7 @@
             </div>
 
             <!-- Panel 1: Supervivencia & Casco -->
-            <div class="entity-subtab-content" id="subtab-panel-survival">
+            <div class="entity-subtab-content active" id="subtab-panel-survival">
               <div class="entity-param-grid">
                 <!-- Casco -->
                 <div class="entity-param-box">
@@ -76,8 +76,8 @@
                     <label for="entity-input-hull">Puntos de Casco (HullPoints)</label>
                     <span class="entity-param-sub" id="lbl-hull-regen">Regen: 1.80 HP/s</span>
                   </div>
-                  <input type="number" id="entity-input-hull" class="reagle-input" style="width: 100%; margin-top: 4px; font-size: 0.90rem; font-weight: 700;">
-                  <div class="entity-param-sub" style="margin-top: 3px;">+144 HP por cada nivel de experiencia ganado</div>
+                  <input type="number" id="entity-input-hull" class="reagle-input entity-input-field">
+                  <div class="entity-param-sub entity-param-help">+144 HP por cada nivel de experiencia ganado</div>
                 </div>
 
                 <!-- Escudos -->
@@ -86,8 +86,8 @@
                     <label for="entity-input-shield">Puntos de Escudo (ShieldPoints)</label>
                     <span class="entity-param-sub" id="lbl-shield-regen">Regen: 3.60 HP/s</span>
                   </div>
-                  <input type="number" id="entity-input-shield" class="reagle-input" style="width: 100%; margin-top: 4px; font-size: 0.90rem; font-weight: 700;">
-                  <div class="entity-param-sub" style="margin-top: 3px;">+162 Pts por nivel · Matriz reflectora integrada</div>
+                  <input type="number" id="entity-input-shield" class="reagle-input entity-input-field">
+                  <div class="entity-param-sub entity-param-help">+162 Pts por nivel · Matriz reflectora integrada</div>
                 </div>
 
                 <!-- Blindaje -->
@@ -96,8 +96,8 @@
                     <label for="entity-input-armor">Blindaje Táctico (ArmorPoints)</label>
                     <span class="entity-param-sub" id="lbl-armor-level">+0.54 / Nivel</span>
                   </div>
-                  <input type="number" step="0.5" id="entity-input-armor" class="reagle-input" style="width: 100%; margin-top: 4px; font-size: 0.90rem; font-weight: 700;">
-                  <div class="entity-param-sub" style="margin-top: 3px;">Tipo: CapitalShip · Mitigación límite: 65%</div>
+                  <input type="number" step="0.5" id="entity-input-armor" class="reagle-input entity-input-field">
+                  <div class="entity-param-sub entity-param-help">Tipo: CapitalShip · Mitigación límite: 65%</div>
                 </div>
 
                 <!-- Antimateria -->
@@ -106,75 +106,75 @@
                     <label for="entity-input-antimatter">Reserva Antimateria (AntiMatter)</label>
                     <span class="entity-param-sub" id="lbl-antimatter-regen">Regen: 0.75 /s</span>
                   </div>
-                  <input type="number" id="entity-input-antimatter" class="reagle-input" style="width: 100%; margin-top: 4px; font-size: 0.90rem; font-weight: 700;">
-                  <div class="entity-param-sub" style="margin-top: 3px;">+20 AM por nivel · Alimenta habilidades activas</div>
+                  <input type="number" id="entity-input-antimatter" class="reagle-input entity-input-field">
+                  <div class="entity-param-sub entity-param-help">+20 AM por nivel · Alimenta habilidades activas</div>
                 </div>
               </div>
 
               <!-- Telemetría HUD de Supervivencia -->
-              <div class="entity-telemetry-hud" style="margin-top: 10px;">
-                <div style="font-size: 0.70rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">
+              <div class="entity-telemetry-hud entity-search-wrap">
+                <div class="entity-telemetry-hud-title">
                   Telemetría de Supervivencia en Combate (EHP)
                 </div>
                 <div class="entity-telemetry-grid">
                   <div class="entity-telemetry-metric">
-                    <span style="font-size: 0.68rem; color: var(--text-muted);">EHP Estimado</span>
-                    <span class="val" id="hud-calc-ehp" style="color: var(--text-blue);">6.180 HP</span>
+                    <span class="entity-metric-label">EHP Estimado</span>
+                    <span class="val value--blue" id="hud-calc-ehp">6.180 HP</span>
                   </div>
                   <div class="entity-telemetry-metric">
-                    <span style="font-size: 0.68rem; color: var(--text-muted);">Mitigación Pasiva</span>
-                    <span class="val" id="hud-calc-mitigation" style="color: var(--text-success);">+23.1%</span>
+                    <span class="entity-metric-label">Mitigación Pasiva</span>
+                    <span class="val value--success" id="hud-calc-mitigation">+23.1%</span>
                   </div>
                   <div class="entity-telemetry-metric">
-                    <span style="font-size: 0.68rem; color: var(--text-muted);">Ratio Escudo/Casco</span>
-                    <span class="val" id="hud-calc-ratio" style="color: var(--text-main);">0.42</span>
+                    <span class="entity-metric-label">Ratio Escudo/Casco</span>
+                    <span class="val" id="hud-calc-ratio">0.42</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Panel 2: Armamento & Baterías -->
-            <div class="entity-subtab-content" id="subtab-panel-weapons" style="display: none;">
+            <div class="entity-subtab-content" id="subtab-panel-weapons">
               <div class="entity-weapons-grid" id="entity-weapons-container"></div>
             </div>
 
             <!-- Panel 3: Habilidades Tácticas -->
-            <div class="entity-subtab-content" id="subtab-panel-abilities" style="display: none;">
+            <div class="entity-subtab-content" id="subtab-panel-abilities">
               <div class="entity-abilities-grid" id="entity-abilities-container"></div>
             </div>
 
             <!-- Panel 4: Costes & Logística -->
-            <div class="entity-subtab-content" id="subtab-panel-logistics" style="display: none;">
+            <div class="entity-subtab-content" id="subtab-panel-logistics">
               <div class="entity-costs-grid">
                 <div class="entity-cost-item">
-                  <div style="font-size: 0.70rem; font-weight: 700; color: #d97706;">🪙 CRÉDITOS</div>
-                  <div class="cost-num" id="cost-credits" style="color: #b45309;">3.000</div>
-                  <div style="font-size: 0.66rem; color: var(--text-muted);">Coste de Adquisición</div>
+                  <div class="entity-cost-label entity-cost-label--credits">🪙 CRÉDITOS</div>
+                  <div class="cost-num cost-num--credits" id="cost-credits">3.000</div>
+                  <div class="entity-cost-desc">Coste de Adquisición</div>
                 </div>
                 <div class="entity-cost-item">
-                  <div style="font-size: 0.70rem; font-weight: 700; color: #4b5563;">🔩 METAL</div>
-                  <div class="cost-num" id="cost-metal" style="color: #374151;">400</div>
-                  <div style="font-size: 0.66rem; color: var(--text-muted);">Lingotes Aleados</div>
+                  <div class="entity-cost-label entity-cost-label--metal">🔩 METAL</div>
+                  <div class="cost-num cost-num--metal" id="cost-metal">400</div>
+                  <div class="entity-cost-desc">Lingotes Aleados</div>
                 </div>
                 <div class="entity-cost-item">
-                  <div style="font-size: 0.70rem; font-weight: 700; color: #2563eb;">💎 CRISTAL</div>
-                  <div class="cost-num" id="cost-crystal" style="color: #1d4ed8;">250</div>
-                  <div style="font-size: 0.66rem; color: var(--text-muted);">Cristal Refinado</div>
+                  <div class="entity-cost-label entity-cost-label--crystal">💎 CRISTAL</div>
+                  <div class="cost-num cost-num--crystal" id="cost-crystal">250</div>
+                  <div class="entity-cost-desc">Cristal Refinado</div>
                 </div>
                 <div class="entity-cost-item">
-                  <div style="font-size: 0.70rem; font-weight: 700; color: #059669;">⏱️ TIEMPO ENSAMBLAJE</div>
-                  <div class="cost-num" id="cost-buildtime" style="color: #047857;">75 seg</div>
-                  <div style="font-size: 0.66rem; color: var(--text-muted);">En Astillero Orbital</div>
+                  <div class="entity-cost-label entity-cost-label--buildtime">⏱️ TIEMPO ENSAMBLAJE</div>
+                  <div class="cost-num cost-num--buildtime" id="cost-buildtime">75 seg</div>
+                  <div class="entity-cost-desc">En Astillero Orbital</div>
                 </div>
                 <div class="entity-cost-item">
-                  <div style="font-size: 0.70rem; font-weight: 700; color: #7c3aed;">⚓ SUMINISTRO FLOTA</div>
-                  <div class="cost-num" id="cost-supply" style="color: #6d28d9;">50 Pts</div>
-                  <div style="font-size: 0.66rem; color: var(--text-muted);">Fleet Supply SlotCount</div>
+                  <div class="entity-cost-label entity-cost-label--supply">⚓ SUMINISTRO FLOTA</div>
+                  <div class="cost-num cost-num--supply" id="cost-supply">50 Pts</div>
+                  <div class="entity-cost-desc">Fleet Supply SlotCount</div>
                 </div>
                 <div class="entity-cost-item">
-                  <div style="font-size: 0.70rem; font-weight: 700; color: var(--text-secondary);">🔬 INVESTIGACIÓN</div>
-                  <div class="cost-num" style="color: var(--text-main);">Nivel 0</div>
-                  <div style="font-size: 0.66rem; color: var(--text-muted);">Nave Inicial Disponible</div>
+                  <div class="entity-cost-label entity-cost-label--research">🔬 INVESTIGACIÓN</div>
+                  <div class="cost-num cost-num--research">Nivel 0</div>
+                  <div class="entity-cost-desc">Nave Inicial Disponible</div>
                 </div>
               </div>
             </div>

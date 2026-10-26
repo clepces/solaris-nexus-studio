@@ -2,41 +2,41 @@
            VISTA: RED GALÁCTICA & WORKSHOP (DOCK ITEM 3)
            ====================================================================== -->
       <section id="tab-network" class="view-panel">
-        <div class="reagle-card-panel" style="max-width: 780px; margin: 0 auto; width: 100%; padding: 24px;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(160, 168, 180, 0.2); padding-bottom: 12px;">
+        <div class="reagle-card-panel network-card-panel">
+          <div class="network-header">
             <div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 1.3rem;">🌐</span>
-                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Red Galáctica &amp; ModDB Workshop</h3>
+              <div class="network-header-title-wrap">
+                <span class="network-header-icon">🌐</span>
+                <h3 class="network-header-title">Red Galáctica &amp; ModDB Workshop</h3>
               </div>
-              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+              <p class="network-header-desc">
                 Ecosistema de distribución remota y repositorio global para mods de Sins of a Solar Empire: Rebellion.
               </p>
             </div>
-            <span class="metric-badge-pill neutral" style="font-size: 0.75rem; padding: 4px 10px;">EN DESARROLLO · ROADMAP V0.4</span>
+            <span class="metric-badge-pill neutral network-badge-dev">EN DESARROLLO · ROADMAP V0.4</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px;">
-            <div style="background: var(--neu-slot-bg); box-shadow: var(--neu-shadow-inset); border-radius: 14px; padding: 14px 18px;">
-              <h4 style="font-size: 0.86rem; font-weight: 800; color: var(--text-blue);">Propósito y Alcance del Módulo:</h4>
-              <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.5;">
+          <div class="network-body">
+            <div class="network-purpose-card">
+              <h4 class="network-purpose-title">Propósito y Alcance del Módulo:</h4>
+              <p class="network-purpose-text">
                 Permitirá publicar, actualizar y descargar paquetes de mods y traducciones directamente desde repositorios comunitarios verificados (ModDB, NexusMods y Steam Workshop API), resolviendo dependencias y conflictos de VFS antes de la instalación local.
               </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-              <div style="border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 12px; padding: 12px;">
-                <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-main);">1. Sincronización Remota SHA-256</div>
-                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 4px;">Verificación delta de archivos para descargar únicamente los binarios modificados.</div>
+            <div class="network-grid">
+              <div class="network-grid-item">
+                <div class="network-item-title">1. Sincronización Remota SHA-256</div>
+                <div class="network-item-desc">Verificación delta de archivos para descargar únicamente los binarios modificados.</div>
               </div>
-              <div style="border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 12px; padding: 12px;">
-                <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-main);">2. Perfiles Multijugador Idénticos</div>
-                <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 4px;">Garantiza que todos los jugadores en la sala tengan el mismo checksum para prevenir desincronizaciones (Desync Crash).</div>
+              <div class="network-grid-item">
+                <div class="network-item-title">2. Perfiles Multijugador Idénticos</div>
+                <div class="network-item-desc">Garantiza que todos los jugadores en la sala tengan el mismo checksum para prevenir desincronizaciones (Desync Crash).</div>
               </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
-              <span style="font-size: 0.74rem; color: var(--text-muted);">Integración planificada con protocolo HTTPS seguro.</span>
+            <div class="network-footer">
+              <span class="network-footer-info">Integración planificada con protocolo HTTPS seguro.</span>
               <button class="btn-reagle" data-tab="tab-dashboard">← Volver al Dashboard</button>
             </div>
           </div>

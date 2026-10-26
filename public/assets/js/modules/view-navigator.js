@@ -240,6 +240,7 @@ window.ViewNavigator = (() => {
       sidebar.classList.remove('collapsed');
       if (restoreBtn) restoreBtn.style.display = 'none';
       try { localStorage.setItem('solaris_sidebar_state', 'expanded'); } catch (e) {}
+      window.dispatchEvent(new CustomEvent('solaris:sidebar-toggled', { detail: { collapsed: false } }));
       return;
     }
 
@@ -249,6 +250,7 @@ window.ViewNavigator = (() => {
     try {
       localStorage.setItem('solaris_sidebar_state', isCollapsed ? 'collapsed' : 'expanded');
     } catch (e) {}
+    window.dispatchEvent(new CustomEvent('solaris:sidebar-toggled', { detail: { collapsed: isCollapsed } }));
   }
 
   function init() {

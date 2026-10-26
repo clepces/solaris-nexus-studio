@@ -50,6 +50,109 @@
   padding-right: 4px;
 }
 
+.galaxy-panel-card {
+  padding: 14px;
+}
+
+.galaxy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.galaxy-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.galaxy-btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.galaxy-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  justify-content: center;
+}
+
+.galaxy-legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+
+  &--star { background: #f59e0b; }
+  &--terran { background: #22c55e; }
+  &--desert { background: #eab308; }
+  &--ice { background: #38bdf8; }
+  &--volcanic { background: #ef4444; }
+  &--line {
+    width: 12px;
+    height: 2px;
+    border-radius: 0;
+    background: rgba(56, 189, 248, 0.7);
+    vertical-align: middle;
+  }
+}
+
+.galaxy-sidebar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.galaxy-stats-card {
+  padding: 12px;
+}
+
+.galaxy-scenario-name {
+  font-weight: 800;
+  font-size: 0.90rem;
+  color: var(--text-blue, #1a73e8);
+}
+
+.galaxy-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}
+
+.galaxy-stat-val {
+  color: var(--text-main);
+}
+
+.galaxy-badge-wrap {
+  margin-top: 8px;
+}
+
+.galaxy-inspector-card {
+  padding: 12px;
+  flex: 1;
+}
+
+.galaxy-section-subtitle {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.galaxy-selected-info {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
 @media (max-width: 980px) {
   .galaxy-workspace-layout {
     grid-template-columns: 1fr;

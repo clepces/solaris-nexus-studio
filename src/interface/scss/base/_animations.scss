@@ -72,10 +72,12 @@
 @keyframes modalBackdropFadeIn {
   from {
     opacity: 0;
+    -webkit-backdrop-filter: blur(0px);
     backdrop-filter: blur(0px);
   }
   to {
     opacity: 1;
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
   }
 }

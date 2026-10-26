@@ -315,7 +315,7 @@
 .mod-ram-info { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
 .mod-ram-row { display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 700; }
 .mod-ram-track { height: 8px; background: #e2e8f0; border-radius: 9999px; overflow: hidden; }
-.mod-ram-fill { height: 100%; background: #16a34a; transition: width 0.3s ease; }
+.mod-ram-fill { width: 0%; height: 100%; background: #16a34a; transition: width 0.3s ease; }
 
 .mod-ram-risk {
   font-size: 0.72rem;

@@ -1,13 +1,21 @@
-// Ventanas modales accesibles con backdrop
+// ==============================================================================
+// SOLARIS NEXUS STUDIO - SASS 7-1: COMPONENTS / MODALS
+// Ventana modal de edición y utilidades de diálogo
+// ==============================================================================
+
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.45);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
   padding: 16px;
 
   &.active {
@@ -16,15 +24,85 @@
 }
 
 .modal-card {
-  background: var(--neu-card-bg, #151a23);
-  box-shadow: var(--neu-shadow-raised, 10px 10px 30px rgba(0,0,0,0.7));
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius-lg, 16px);
-  width: 100%;
-  max-width: 600px;
-  padding: 24px;
+  background: var(--neu-window-bg);
+  box-shadow: var(--neu-shadow-floating);
+  border-radius: 24px;
+  width: 90%;
+  max-width: 640px;
+  padding: 26px;
+  border: 1px solid var(--neu-border-subtle);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  animation: paneFadeSlideIn 0.2s ease-out;
+  animation: paneFadeSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-blue, #1a73e8);
+  }
+
+  &-close {
+    font-size: 1.2rem;
+  }
+
+  &-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  &-orig-text {
+    background: var(--neu-slot-bg);
+    box-shadow: var(--neu-shadow-inset);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    margin-top: 4px;
+    color: var(--text-main);
+  }
+
+  &-textarea {
+    width: 100%;
+    height: 90px;
+    margin-top: 4px;
+    resize: vertical;
+  }
+
+  &-feedback {
+    font-size: 0.84rem;
+    padding: 10px 14px;
+    border-radius: 12px;
+    display: none;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+  }
+
+  &-btn-tm {
+    font-size: 0.8rem;
+  }
+
+  &-btn-group {
+    display: flex;
+    gap: 10px;
+
+    &--right {
+      justify-content: flex-end;
+    }
+  }
+
+  .modal-body {
+    margin: 14px 0;
+  }
 }

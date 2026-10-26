@@ -152,7 +152,7 @@ window.NexusComponents = (() => {
 
   /**
    * Componente Tab Carousel Horizontal
-   * Desplazamiento fluido, botones de navegación e integración wheel
+   * Desplazamiento fluido, botones de navegación neumórficos e integración wheel/touch
    */
   class TabCarousel {
     constructor(elementOrSelector) {
@@ -160,9 +160,14 @@ window.NexusComponents = (() => {
         ? document.querySelector(elementOrSelector)
         : elementOrSelector;
       if (!this.element) return;
-      this.track = this.element.querySelector('.tabs-track') || this.element.querySelector('.reagle-segmented-tabs') || this.element;
-      this.prevBtn = this.element.querySelector('.carousel-nav-btn.prev');
-      this.nextBtn = this.element.querySelector('.carousel-nav-btn.next');
+      this.track = this.element.querySelector('.tab-carousel-scroll') ||
+                   this.element.querySelector('.reagle-segmented-tabs') ||
+                   this.element.querySelector('.tabs-track') ||
+                   this.element;
+      this.prevBtn = this.element.querySelector('.tab-carousel-nav-btn.prev') ||
+                     this.element.querySelector('.carousel-nav-btn.prev');
+      this.nextBtn = this.element.querySelector('.tab-carousel-nav-btn.next') ||
+                     this.element.querySelector('.carousel-nav-btn.next');
       this.init();
     }
 
@@ -170,40 +175,104 @@ window.NexusComponents = (() => {
       if (this.prevBtn) {
         this.prevBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          this.scroll(-160);
+          this.scroll(-180);
         });
       }
       if (this.nextBtn) {
         this.nextBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          this.scroll(160);
+          this.scroll(180);
         });
       }
       if (this.track) {
         this.track.addEventListener('wheel', (e) => {
-          if (e.deltaY !== 0) {
+          if (e.deltaY !== 0 || e.deltaX !== 0) {
             e.preventDefault();
-            this.track.scrollLeft += e.deltaY;
+            this.track.scrollLeft += (e.deltaY || e.deltaX);
             this.updateArrows();
           }
         }, { passive: false });
+
         this.track.addEventListener('scroll', () => this.updateArrows());
+
+        if (window.ResizeObserver) {
+          const ro = new ResizeObserver(() => this.updateArrows());
+          ro.observe(this.track);
+          ro.observe(this.element);
+        } else {
+          window.addEventListener('resize', () => this.updateArrows());
+        }
       }
+
+      window.addEventListener('solaris:sidebar-toggled', () => {
+        setTimeout(() => this.updateArrows(), 260);
+      });
+
       this.updateArrows();
     }
 
     scroll(offset) {
       if (!this.track) return;
       this.track.scrollBy({ left: offset, behavior: 'smooth' });
-      setTimeout(() => this.updateArrows(), 200);
+      setTimeout(() => this.updateArrows(), 240);
     }
 
     updateArrows() {
       if (!this.track) return;
+      const scrollWidth = this.track.scrollWidth;
+      const clientWidth = this.track.clientWidth;
+      const hasOverflow = scrollWidth > clientWidth + 3;
+
+      if (this.element) {
+        this.element.classList.toggle('has-overflow', hasOverflow);
+      }
+
+      if (!hasOverflow) {
+        if (this.prevBtn) {
+          this.prevBtn.disabled = true;
+          this.prevBtn.style.opacity = '0.2';
+          this.prevBtn.style.pointerEvents = 'none';
+        }
+        if (this.nextBtn) {
+          this.nextBtn.disabled = true;
+          this.nextBtn.style.opacity = '0.2';
+          this.nextBtn.style.pointerEvents = 'none';
+        }
+        return;
+      }
+
       const atStart = this.track.scrollLeft <= 2;
-      const atEnd = this.track.scrollLeft + this.track.clientWidth >= this.track.scrollWidth - 2;
-      if (this.prevBtn) this.prevBtn.disabled = atStart;
-      if (this.nextBtn) this.nextBtn.disabled = atEnd;
+      const atEnd = this.track.scrollLeft + clientWidth >= scrollWidth - 3;
+
+      if (this.prevBtn) {
+        this.prevBtn.disabled = atStart;
+        this.prevBtn.style.opacity = atStart ? '0.25' : '1';
+        this.prevBtn.style.pointerEvents = atStart ? 'none' : 'auto';
+      }
+      if (this.nextBtn) {
+        this.nextBtn.disabled = atEnd;
+        this.nextBtn.style.opacity = atEnd ? '0.25' : '1';
+        this.nextBtn.style.pointerEvents = atEnd ? 'none' : 'auto';
+      }
+    }
+
+    static initAll() {
+      document.querySelectorAll('.tab-carousel-wrapper').forEach(wrapper => {
+        if (!wrapper.__tabCarousel) {
+          wrapper.__tabCarousel = new TabCarousel(wrapper);
+        } else {
+          wrapper.__tabCarousel.updateArrows();
+        }
+      });
+    }
+  }
+
+  // Auto-inicializar cuando el DOM esté listo
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => TabCarousel.initAll());
+    } else {
+      setTimeout(() => TabCarousel.initAll(), 100);
     }
   }
 
