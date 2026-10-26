@@ -29,13 +29,34 @@
     flex-wrap: wrap;
     align-items: center;
     min-width: 0;
-  }
 
-  .str-nav-normal-group {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    width: 100%;
+    .str-nav-normal-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .str-nav-contextual-group {
+      display: none !important;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    // Conmutación estricta de estado: En vivo vs. Normal
+    &.is-live-mode {
+      .str-nav-normal-group {
+        display: none !important;
+      }
+
+      .str-nav-contextual-group {
+        display: flex !important;
+      }
+    }
   }
 
   .str-badge-beta {
@@ -224,7 +245,7 @@
 
   // Barra Contextual del Editor en Vivo
   .str-nav-contextual-group {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -262,6 +283,7 @@
       padding: 4px 10px;
       min-width: 0;
       max-width: 100%;
+      overflow: hidden;
 
       .breadcrumb-crumb {
         background: transparent;
@@ -275,6 +297,7 @@
         cursor: pointer;
         padding: 0;
         transition: color 0.15s ease;
+        flex-shrink: 0;
 
         svg {
           width: 13px;
@@ -292,7 +315,9 @@
       .breadcrumb-sep {
         color: var(--text-muted);
         font-size: 0.72rem;
-        font-weight: 800;
+        font-weight: 700;
+        flex-shrink: 0;
+        user-select: none;
       }
 
       .breadcrumb-active {
@@ -301,6 +326,7 @@
         gap: 5px;
         min-width: 0;
         font-size: 0.72rem;
+        overflow: hidden;
 
         svg {
           width: 13px;
@@ -314,26 +340,43 @@
         .active-badge {
           color: var(--text-muted);
           font-weight: 600;
-        }
-
-        .crumb-mod {
-          max-width: 150px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          color: var(--text-main);
-          font-weight: 800;
+          flex-shrink: 0;
         }
 
         .crumb-divider {
           color: var(--text-muted);
+          flex-shrink: 0;
+          user-select: none;
         }
 
+        // ====================================================================
+        // EFECTO CINTA DE NOTICIAS (MARQUEE) AL COLOCAR EL CURSOR (HOVER)
+        // Desplazamiento fluido con @keyframes translateX suave exclusivo en :hover
+        // ====================================================================
+        .crumb-mod,
         .crumb-file {
-          max-width: 140px;
+          display: inline-block;
+          max-width: 160px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          vertical-align: middle;
+          position: relative;
+          cursor: default;
+          transition: color 0.15s ease;
+
+          &:hover {
+            text-overflow: clip;
+            animation: strMarquee 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+          }
+        }
+
+        .crumb-mod {
+          color: var(--text-main);
+          font-weight: 800;
+        }
+
+        .crumb-file {
           font-family: var(--font-mono);
           font-size: 0.68rem;
           color: var(--text-blue);
@@ -354,6 +397,131 @@
         padding: 6px 12px;
         white-space: nowrap;
       }
+
+      .export-accent {
+        color: #059669;
+        font-weight: 700;
+      }
+
+      .btn-live-settings {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+  }
+
+  // Animación tipo cinta de noticias para breadcrumb
+  @keyframes strMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    18% {
+      transform: translateX(0);
+    }
+    82% {
+      transform: translateX(min(0px, calc(-100% + 140px)));
+    }
+    100% {
+      transform: translateX(min(0px, calc(-100% + 140px)));
+    }
+  }
+
+  // ==========================================================================
+  // MODAL DE AJUSTES & METADATOS DEL PROYECTO STR
+  // ==========================================================================
+  .modal-card--lg {
+    max-width: 720px;
+    width: 95%;
+  }
+
+  .str-settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .str-settings-box {
+    background: var(--neu-card-bg);
+    box-shadow: var(--neu-shadow-card-sm);
+    border: 1px solid var(--neu-border-subtle);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .str-settings-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .str-settings-val {
+    font-size: 0.90rem;
+    font-weight: 800;
+    color: var(--text-main);
+
+    &--mono {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+    }
+
+    &--blue {
+      color: var(--text-blue, #1a73e8);
+    }
+
+    &--success {
+      color: var(--text-success, #16a34a);
+    }
+  }
+
+  .str-settings-sub {
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+  }
+
+  .str-settings-details {
+    background: var(--neu-slot-bg);
+    box-shadow: var(--neu-shadow-inset);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.74rem;
+  }
+
+  .str-settings-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+
+    .detail-label {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .detail-val {
+      color: var(--text-secondary);
+    }
+
+    .str-settings-hash {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: var(--text-blue);
+      background: rgba(26, 115, 232, 0.08);
+      padding: 2px 6px;
+      border-radius: 6px;
+      max-width: 340px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
