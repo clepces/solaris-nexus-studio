@@ -98,6 +98,8 @@ try {
     $router->post('/api/strings/parse', fn() => json((new StringController(null, null, $logger))->parse($payload)));
     $router->post('/api/strings/validate', fn() => json((new StringController(null, null, $logger))->validateEntry($payload)));
     $router->post('/api/strings/export', fn() => json((new StringController(null, null, $logger))->export($payload)));
+    $router->post('/api/strings/create-project', fn() => json((new StringController(null, null, $logger))->createProject($payload, $config)));
+    $router->post('/api/strings/delete-project', fn() => json((new StringController(null, null, $logger))->deleteProject($payload, $config)));
 
     // Endpoints del Gestor de Mods y VFS
     $router->get('/api/mods/detect-platforms', fn() => json((new ModController(null, null, $logger))->detectPlatforms()));

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run build:ts && npm run build:sass",
-    "build:ts": "esbuild src/frontend/main.ts --bundle --outfile=public/assets/js/bundle.js --format=esm --target=esnext --tsconfig=./tsconfig.json",
+    "build:ts": "esbuild src/frontend/main.ts --bundle --outfile=public/assets/js/bundle.js --format=esm --target=esnext --tsconfig=./tsconfig.json && esbuild src/frontend/modules/translation-studio.ts --bundle --outfile=public/assets/js/modules/translation-studio.js --format=iife --target=esnext --tsconfig=./tsconfig.json",
     "build:sass": "sass src/interface/scss/main.scss public/assets/css/main-theme.css --no-source-map --style=compressed",
     "watch:sass": "sass --watch src/interface/scss/main.scss:public/assets/css/main-theme.css",
     "typecheck": "tsc --noEmit",

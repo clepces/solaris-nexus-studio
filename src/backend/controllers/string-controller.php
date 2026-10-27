@@ -262,6 +262,127 @@ final class StringController
     }
 
     /**
+     * Crea un nuevo proyecto de localización .str y lo registra en SQLite3.
+     */
+    public function createProject(array $payload, array $config): array
+    {
+        $name = trim((string)($payload['name'] ?? ''));
+        if ($name === '') {
+            throw new \InvalidArgumentException('El nombre del proyecto es obligatorio.');
+        }
+
+        $version = trim((string)($payload['version'] ?? 'v1.85'));
+        $targetPath = trim((string)($payload['target_file_path'] ?? 'Localizations/es/String/English.str'));
+        $basePath = trim((string)($payload['base_file_path'] ?? $targetPath));
+        $projectId = trim((string)($payload['project_id'] ?? ''));
+
+        if ($projectId === '') {
+            $slug = preg_replace('/[^a-z0-9]+/', '_', strtolower($name));
+            $projectId = 'prj_' . trim((string)$slug, '_') . '_' . substr(md5(uniqid('', true)), 0, 4);
+        }
+
+        // Mitigación de escape de rutas (Traversal Protection)
+        if (str_contains($targetPath, '..') || str_contains($basePath, '..')) {
+            throw new \InvalidArgumentException('Ruta no permitida: traversal detectado.');
+        }
+
+        $pdo = $this->getPdo($config);
+        $repo = new ProjectRepository($pdo);
+
+        $rootDir = dirname(__DIR__, 3);
+        $fullPath = $rootDir . '/' . ltrim($targetPath, '/\\');
+        $entries = [];
+
+        if (file_exists($fullPath)) {
+            try {
+                $parsed = $this->parser->parseFile($fullPath);
+                $entries = $parsed['entries'] ?? [];
+            } catch (\Throwable $e) {
+                // Entrada limpia
+            }
+        } else {
+            $dir = dirname($fullPath);
+            if (!is_dir($dir)) {
+                @mkdir($dir, 0755, true);
+            }
+            $initialStr = "\xEF\xBB\xBFStringInfo\r\n{\r\n\tNumStrings 0\r\n}\r\n";
+            @file_put_contents($fullPath, $initialStr);
+        }
+
+        $totalStrings = count($entries);
+        $repo->saveProject([
+            'project_id' => $projectId,
+            'name' => $name,
+            'version' => $version,
+            'base_file_path' => $basePath,
+            'target_file_path' => $targetPath,
+            'total_strings' => $totalStrings,
+        ]);
+
+        if (!empty($entries)) {
+            $repo->batchInsertEntries($projectId, $entries);
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Proyecto .str creado con éxito.',
+            'data' => [
+                'project_id' => $projectId,
+                'name' => $name,
+                'total_strings' => $totalStrings,
+                'target_file_path' => $targetPath,
+            ]
+        ];
+    }
+
+    /**
+     * Elimina un proyecto de localización .str con soporte para borrado digital o físico+digital.
+     */
+    public function deleteProject(array $payload, array $config): array
+    {
+        $projectId = trim((string)($payload['project_id'] ?? ''));
+        if ($projectId === '') {
+            throw new \InvalidArgumentException('project_id es requerido para eliminar.');
+        }
+
+        $deletePhysical = (bool)($payload['delete_physical'] ?? false);
+
+        $pdo = $this->getPdo($config);
+        $repo = new ProjectRepository($pdo);
+        $project = $repo->getProject($projectId);
+
+        if (!$project) {
+            throw new \InvalidArgumentException('El proyecto especificado no existe en la base de datos.');
+        }
+
+        $physicalDeleted = false;
+        if ($deletePhysical) {
+            $relPath = $project['target_file_path'] ?: $project['base_file_path'];
+            if ($relPath && !str_contains($relPath, '..')) {
+                $rootDir = dirname(__DIR__, 3);
+                $fullPath = $rootDir . '/' . ltrim($relPath, '/\\');
+                if (file_exists($fullPath) && is_file($fullPath)) {
+                    @unlink($fullPath);
+                    $physicalDeleted = true;
+                }
+            }
+        }
+
+        $repo->deleteProject($projectId);
+
+        return [
+            'success' => true,
+            'message' => $deletePhysical 
+                ? 'Proyecto y archivo físico eliminados permanentemente.' 
+                : 'Proyecto desvinculado de la base de datos. Archivo físico preservado intacto.',
+            'data' => [
+                'project_id' => $projectId,
+                'deleted_physical' => $physicalDeleted,
+            ]
+        ];
+    }
+
+    /**
      * Inicializa proyectos reales a partir de los fixtures existentes.
      */
     private function seedInitialProjects(ProjectRepository $repo, array $config): void

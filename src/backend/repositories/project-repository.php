@@ -155,4 +155,25 @@ final class ProjectRepository
         $stmt->execute($params);
         return $stmt->fetchAll();
     }
+
+    /**
+     * Elimina un proyecto y todas sus entradas asociadas de tbl_string_entries dentro de una transacción.
+     */
+    public function deleteProject(string $projectId): bool
+    {
+        $this->pdo->beginTransaction();
+        try {
+            $stmtEntries = $this->pdo->prepare("DELETE FROM tbl_string_entries WHERE project_id = :id");
+            $stmtEntries->execute([':id' => $projectId]);
+
+            $stmtProj = $this->pdo->prepare("DELETE FROM tbl_projects WHERE project_id = :id");
+            $res = $stmtProj->execute([':id' => $projectId]);
+
+            $this->pdo->commit();
+            return $res;
+        } catch (\Throwable $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
 }

@@ -4,12 +4,18 @@
       <section id="tab-dashboard" class="view-panel active">
         <!-- Fila de Tabs de Ejecuciones y Búsqueda Global -->
         <div class="reagle-tabs-row">
+
           <div class="tabs-heading-group">
             <h2 class="section-subheading-title">Executions</h2>
             <div class="tab-carousel-wrapper" id="dash-tabs-carousel">
-              <button class="tab-carousel-nav-btn prev" data-carousel-nav="prev" aria-label="Desplazar a la izquierda" title="Ver pestañas anteriores" type="button">
+
+              <button class="tab-carousel-nav-btn prev" 
+                data-carousel-nav="prev" 
+                aria-label="Desplazar a la izquierda" 
+                title="Ver pestañas anteriores" type="button">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
               </button>
+
               <div class="tab-carousel-scroll reagle-segmented-tabs">
                 <button class="tab-link-btn active" data-dash-tab="workflows" type="button">
                   <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
@@ -24,9 +30,11 @@
                   <span>Executions (<span id="dash-exec-count">0</span>)</span>
                 </button>
               </div>
+
               <button class="tab-carousel-nav-btn next" data-carousel-nav="next" aria-label="Desplazar a la derecha" title="Ver más pestañas" type="button">
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
+              
             </div>
           </div>
 
@@ -34,6 +42,7 @@
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" id="dashboard-search-input" aria-label="Buscar flujo o registro" placeholder="Buscar flujo o registro...">
           </div>
+
         </div>
 
         <!-- Matriz de Tareas y Workflows con Paneles Conmutables -->
@@ -49,6 +58,7 @@
             <div class="dash-pane-empty"></div>
 
             <div class="dash-task-list">
+
               <!-- Tarea 1: Traducción -->
               <div class="workflow-task-item">
                 <div class="workflow-col-main">
@@ -133,6 +143,7 @@
                   <button class="btn-row-action" data-tab="tab-galaxy" type="button">Ver Mapas →</button>
                 </div>
               </div>
+
             </div>
           </div>
 

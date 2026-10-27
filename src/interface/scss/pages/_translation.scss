@@ -754,15 +754,24 @@
   }
 
   .str-project-btn-group {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 6px;
     align-items: center;
-    margin-top: 4px;
-    flex-wrap: wrap;
+    margin-top: 6px;
+
+    .btn-reagle {
+      font-size: 0.70rem;
+      padding: 6px 8px;
+      white-space: nowrap;
+      justify-content: center;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
 
     .btn-edit-live {
-      flex: 1;
-      justify-content: center;
+      font-weight: 700;
     }
   }
 
